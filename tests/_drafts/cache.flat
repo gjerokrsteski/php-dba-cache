@@ -1,0 +1,7 @@
+32
+09a15e9660c1ebc6f429d818825ce0c6241
+O:8:"stdClass":3:{s:4:"type";s:8:"stdClass";s:6:"object";O:8:"stdClass":4:{s:5:"title";s:12:"Zweiundvierz";s:4:"from";s:3:"Joe";s:2:"to";s:4:"Jane";s:4:"body";s:48:"Ich kenne die Antwort -- aber was ist die Frage?";}s:4:"time";i:1291977555;}32
+a1bce3344d2d27389dd84f81b74b827b206
+O:8:"stdClass":3:{s:4:"type";s:10:"ZipArchive";s:6:"object";O:10:"ZipArchive":5:{s:6:"status";i:0;s:9:"statusSys";i:0;s:8:"numFiles";i:0;s:8:"filename";s:0:"";s:7:"comment";s:0:"";}s:4:"time";i:1291977556;}32
+e708af0bc03ed6dd21ba2072985c7dda103
+O:8:"stdClass":3:{s:4:"type";s:9:"XMLReader";s:6:"object";O:9:"XMLReader":0:{}s:4:"time";i:1291977556;}
