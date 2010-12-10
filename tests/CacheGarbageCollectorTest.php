@@ -81,7 +81,7 @@ extends PHPUnit_Framework_TestCase
         $this->_cache->put(md5('ZipArchive'), new ZipArchive());
         $this->_cache->put(md5('XMLReader'), new XMLReader());
 
-        // wait one seccont to force the expiration-time callculation.
+        // wait two seconds to force the expiration-time-calculation.
         sleep(2);
 
         $garbageCollection = new CacheGarbageCollector($this->_cache);
@@ -91,6 +91,7 @@ extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_cache->has(md5('ZipArchive')));
         $this->assertFalse($this->_cache->has(md5('XMLReader')));
     }
+
     /**
      * @depends CacheGarbageCollectorTest::testCreatingGarbageCollectionObject
      */
@@ -108,7 +109,7 @@ extends PHPUnit_Framework_TestCase
         $this->_cache->put(md5('ZipArchive'), new ZipArchive());
         $this->_cache->put(md5('XMLReader'), new XMLReader());
 
-        // wait one seccont to force the expiration-time callculation.
+        // wait one second to force the expiration-time-calculation.
         sleep(1);
 
         $garbageCollection = new CacheGarbageCollector($this->_cache);
@@ -186,4 +187,3 @@ extends PHPUnit_Framework_TestCase
         $cache->closeDba();
     }
 }
-

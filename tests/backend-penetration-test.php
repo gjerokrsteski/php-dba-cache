@@ -10,7 +10,7 @@ require_once dirname(dirname(__FILE__)).'/src/CacheGarbageCollector.php';
 function _logger($message)
 {
     error_log(
-         '- TIME: '.time().' '.$message.PHP_EOL,
+        '- TIME: '.time().' '.$message.PHP_EOL,
         3,
         dirname(dirname(__FILE__)).'/tests/_drafts/backend-penetration-test-info.log'
     );

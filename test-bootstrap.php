@@ -11,7 +11,6 @@ ini_set('display_errors', 1);
 
 date_default_timezone_set('Europe/Berlin');
 
-// Set the paths in the ini-file.
 set_include_path(
     dirname(dirname(__FILE__))
     .'/php-dba-cache'

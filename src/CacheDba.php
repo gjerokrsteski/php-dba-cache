@@ -54,6 +54,7 @@ class CacheDba
     /**
      * @param string $identifier
      * @param object $object
+     * @return boolean
      */
     public function put($identifier, $object)
     {

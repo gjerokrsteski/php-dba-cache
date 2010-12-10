@@ -92,4 +92,3 @@ extends PHPUnit_Framework_TestCase
         $cacheRead->closeDba();
     }
 }
-

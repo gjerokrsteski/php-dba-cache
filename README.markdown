@@ -2,6 +2,7 @@ Introduction
 ============
 
     The php-dba-cache uses the Database (dbm-style) Abstraction Layer to cache your objects.
+    Even instances of SimpleXMLElement can be stored.
 
 Requirements & Installation
 ===========================
@@ -41,9 +42,7 @@ Requirements & Installation
 Nice to know
 ------------
 
-    After configuring and compiling PHP you must execute the following test from commandline:
-    php run-tests.php ext/dba.     This shows whether your combination of handlers works. Most
-    problematic are dbm and ndbm which conflict with many installations. The reason for this is
+    Most problematic are dbm and ndbm which conflict with many installations. The reason for this is
     that on several systems these libraries are part of more than one other library. The configuration
     test only prevents you from configuring malfaunctioning single handlers but not combinations.
 
@@ -78,7 +77,43 @@ Sample for Oracle Berkeley DB 4 with persistent connection
     // than expiration of 5 minutes == 300 seconds since now.
 
     $garbageCollection->cleanByExpiration(300);
+
     ?>
+
+Sample saving of SimpleXMLElement instances into DB 4 with persistent connection
+--------------------------------------------------------------------------------
+
+    <?php
+    $string = "<?xml version='1.0'?>
+    <document>
+     <title>Let us cache</title>
+     <from>Joe</from>
+     <to>Jane</to>
+     <body>Some content here</body>
+    </document>";
+
+    $simplexml = simplexml_load_string(
+        $string,
+        'SimpleXMLElement',
+        LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
+    );
+
+    $identifier = md5('simplexml_identifier');
+
+    $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
+    $cache = new CacheDba($path, 'c', 'db4', true);
+
+    $cache->put($identifier, $simplexml);
+
+    $getObject = $cache->get($identifier);
+
+    error_log(' - PUT IN CACHE : '.print_r($simplexml, true));
+    error_log(' - GET FROM CACHE : '.print_r($getObject, true));
+    error_log(' - IS SAME OBJECT : '.print_r(($simplexml->asXml() === $getObject->asXml())
+                                        ? 'true' : 'false', true));
+
+    ?>
+
 
 Benchmark Test of DBM Brothers
 ------------------------------
