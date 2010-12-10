@@ -1,4 +1,10 @@
 <?php
+/**
+ * CacheDba
+ *
+ * @category   CacheSerializer
+ * @author     Gjero Krsteski <gjero@krsteski.de>
+ */
 class CacheDba
 {
     /**

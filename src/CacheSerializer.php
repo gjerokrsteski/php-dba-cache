@@ -1,4 +1,10 @@
 <?php
+/**
+ * CacheSerializer
+ *
+ * @category   CacheSerializer
+ * @author     Gjero Krsteski <gjero@krsteski.de>
+ */
 class CacheSerializer
 {
     /**
