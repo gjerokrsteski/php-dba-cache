@@ -2,7 +2,7 @@
 /**
  * CacheGarbageCollector
  *
- * @category   CacheSerializer
+ * @category   CacheDba
  * @author     Gjero Krsteski <gjero@krsteski.de>
  */
 class CacheGarbageCollector

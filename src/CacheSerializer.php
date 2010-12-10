@@ -2,7 +2,7 @@
 /**
  * CacheSerializer
  *
- * @category   CacheSerializer
+ * @category   CacheDba
  * @author     Gjero Krsteski <gjero@krsteski.de>
  */
 class CacheSerializer
