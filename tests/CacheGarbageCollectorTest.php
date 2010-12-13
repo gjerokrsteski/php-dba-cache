@@ -67,8 +67,6 @@ extends PHPUnit_Framework_TestCase
      */
     public function testCleanTheGarbageCollectionBySuitableExpirationTime()
     {
-        $dba = $this->_cache->getDba();
-
         // prepare data.
         $stdClass = new stdClass();
         $stdClass->title = 'I am cached.';
