@@ -48,7 +48,7 @@ $stdClass->from = 'Joe';
 $stdClass->to = 'Hover';
 $stdClass->body = 'Yes, it works!';
 
-// create the cahe.
+// create the cache.
 $path = dirname(dirname(__FILE__)).'/tests/_drafts/backend-penetration-test.flat';
 $cache = new CacheDba($path);
 
