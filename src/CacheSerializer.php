@@ -12,48 +12,62 @@
 * obtain it through the world-wide-web, please send an email
 * to gjero@krsteski.de so we can send you a copy immediately.
 *
-* @category CacheDba
+* @category  CacheDba
 * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
-* @license http://krsteski.de/new-bsd-license New BSD License
+* @license   http://krsteski.de/new-bsd-license New BSD License
 */
 
 /**
  * CacheSerializer
  *
- * @category   CacheDba
+ * @category  CacheDba
  * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
- * @license http://krsteski.de/new-bsd-license New BSD License
+ * @license   http://krsteski.de/new-bsd-license New BSD License
  */
 class CacheSerializer
 {
-    /**
-     * @var object
-     */
-    public $object;
-
-    /**
-     * @param object $object
-     */
-    public function __construct($object)
+    public function __construct()
     {
-        $this->object = $object;
+    }
+
+    public function maskObject($item)
+    {
+        return (object) $item;
+    }
+
+    public function demaskObject($item)
+    {
+        if (isset($item->scalar))
+        {
+            return $item->scalar;
+        }
+
+        return (array) $item;
     }
 
     /**
      * Serialize the object as stdClass.
      * @return string containing a byte-stream representation.
      */
-    public function serialize()
+    public function serialize($object)
     {
-        $objectInformation = new stdClass();
+        $masked = false;
 
-        $objectInformation->type   = get_class($this->object);
-        $objectInformation->object = $this->object;
+        if (false === is_object($object))
+        {
+            $object = $this->maskObject($object);
+            $masked   = true;
+        }
+
+        $objectInformation         = new stdClass();
+        $objectInformation->type   = get_class($object);
+        $objectInformation->object = $object;
+        $objectInformation->fake   = $masked;
         $objectInformation->time   = time();
 
-        if ($this->object instanceof SimpleXMLElement)
+        if ($object instanceof SimpleXMLElement)
         {
-            $objectInformation->object = $this->object->asXml();
+            $objectInformation->object = $object->asXml();
         }
 
         return serialize($objectInformation);
@@ -63,9 +77,14 @@ class CacheSerializer
      * Unserialize the object.
      * @return stdClass
      */
-    public function unserialize()
+    public function unserialize($object)
     {
-        $objectInformation = unserialize($this->object);
+        $objectInformation = unserialize($object);
+
+        if (true === $objectInformation->fake)
+        {
+            $objectInformation->object = $this->demaskObject($objectInformation->object);
+        }
 
         if ($objectInformation->type == 'SimpleXMLElement')
         {

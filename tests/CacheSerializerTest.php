@@ -6,7 +6,7 @@ extends PHPUnit_Framework_TestCase
 {
     public function testCreatingNewSerializerObject()
     {
-        $this->assertNotNull(new CacheSerializer(new stdClass()));
+        $this->assertNotNull(new CacheSerializer());
     }
 
     public function objectsProvider()
@@ -21,6 +21,9 @@ extends PHPUnit_Framework_TestCase
           array($stdClass),
           array(new ZipArchive()),
           array(new XMLReader()),
+          array('i am a string'),
+          array(123456789),
+          array(array(1, 2, 3, '4' => 5, '6'=>7))
         );
     }
 
@@ -32,8 +35,8 @@ extends PHPUnit_Framework_TestCase
     {
         try
         {
-            $serializer = new CacheSerializer($object);
-            $serializer->serialize();
+            $serializer = new CacheSerializer();
+            $serializer->serialize($object);
         }
         catch (Exception $e)
         {
@@ -52,11 +55,11 @@ extends PHPUnit_Framework_TestCase
     {
         try
         {
-            $serializer = new CacheSerializer($object);
+            $unserializer = new CacheSerializer();
 
-            $unserializer = new CacheSerializer($serializer->serialize());
+            $serialized = $unserializer->serialize($object);
 
-            $this->assertEquals($object, $unserializer->unserialize()->object);
+            $this->assertEquals($object, $unserializer->unserialize($serialized)->object);
         }
         catch (Exception $e)
         {

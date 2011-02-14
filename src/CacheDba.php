@@ -12,17 +12,17 @@
 * obtain it through the world-wide-web, please send an email
 * to gjero@krsteski.de so we can send you a copy immediately.
 *
-* @category CacheDba
+* @category  CacheDba
 * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
-* @license http://krsteski.de/new-bsd-license New BSD License
+* @license   http://krsteski.de/new-bsd-license New BSD License
 */
 
 /**
  * CacheDba
  *
- * @category   CacheDba
-* @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
-* @license http://krsteski.de/new-bsd-license New BSD License
+ * @category  CacheDba
+ * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
+ * @license   http://krsteski.de/new-bsd-license New BSD License
  */
 class CacheDba
 {
@@ -77,14 +77,14 @@ class CacheDba
      */
     public function put($identifier, $object)
     {
-        $serializer = new CacheSerializer($object);
+        $serializer = new CacheSerializer();
 
         if (true === $this->has($identifier))
         {
-            return dba_replace($identifier, $serializer->serialize(), $this->_dba);
+            return dba_replace($identifier, $serializer->serialize($object), $this->_dba);
         }
 
-        return dba_insert($identifier, $serializer->serialize(), $this->_dba);
+        return dba_insert($identifier, $serializer->serialize($object), $this->_dba);
     }
 
     /**
@@ -101,8 +101,8 @@ class CacheDba
             return false;
         }
 
-        $serializer = new CacheSerializer($fetchObject);
-        $getObject  = $serializer->unserialize();
+        $serializer = new CacheSerializer();
+        $getObject  = $serializer->unserialize($fetchObject);
 
         if ((time() - $getObject->time) < $expiration)
         {
@@ -120,6 +120,11 @@ class CacheDba
      */
     public function delete($identifier)
     {
+        if (false === is_resource($this->_dba))
+        {
+            return false;
+        }
+
         return dba_delete($identifier, $this->_dba);
     }
 
