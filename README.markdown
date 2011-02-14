@@ -1,8 +1,8 @@
 Introduction
 ============
 
-    The php-dba-cache uses the Database (dbm-style) Abstraction Layer to cache your objects.
-    Even instances of SimpleXMLElement can be stored.
+    The php-dba-cache uses the database (dbm-style) abstraction layer to cache your objects, strings, integers or arrays. 
+    Even instances of SimpleXMLElement can be puted to the cache.
 
 Requirements & Installation
 ===========================
