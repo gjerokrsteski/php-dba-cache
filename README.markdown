@@ -8,8 +8,8 @@ Introduction
 Requirements & Installation
 ===========================
 
-    The behaviour of various aspects for the caching depends on the implementation of the
-    underlying database. I have tested it with several database-handlers like db4, flatfile,
+    The behaviour of various aspects for the caching depends on the implementation of yor
+    installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
     cdb, cdb_make, gdbm. The cdb & cdb_make family is the fastest, but you have to create
     you own garbage-collection-cleaner or you can delete it manually. Take a look at the tests
     (https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
