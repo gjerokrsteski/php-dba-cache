@@ -63,6 +63,22 @@ class CacheDba
      */
     public function __construct($path, $mode = 'c', $handler = 'flatfile', $persistently = true)
     {
+        if (false === extension_loaded('dba'))
+        {
+            throw new RuntimeException(
+                'The DBA extension is required for this wrapper,'.
+                ' but the extension is not loaded'
+            );
+        }
+
+        if (false === in_array($handler, dba_handlers(false)))
+        {
+            throw new RuntimeException(
+                'The '.$handler.' handler is required for the DBA extension,'.
+                ' but the handler is not installed'
+            );
+        }
+
         $this->_dba = (true === $persistently)
                         ? dba_popen($path, $mode, $handler)
                         : dba_open($path, $mode, $handler);
