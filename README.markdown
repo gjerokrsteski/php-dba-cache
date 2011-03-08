@@ -1,14 +1,15 @@
 Introduction
 ============
 
-    The php-dba-cache uses the Database (dbm-style) Abstraction Layer to cache your objects.
-    Even instances of SimpleXMLElement can be stored.
+    The php-dba-cache uses the database (dbm-style) abstraction layer to cache your objects, strings, integers or arrays. 
+    Even instances of SimpleXMLElement can be put to the cache. You dont have to matter about the size of the cache-file.
+    It depends on the free space of your disk.
 
 Requirements & Installation
 ===========================
 
-    The behaviour of various aspects for the caching depends on the implementation of the
-    underlying database. I have tested it with several database-handlers like db4, flatfile,
+    The behaviour of various aspects for the caching depends on the implementation of yor
+    installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
     cdb, cdb_make, gdbm. The cdb & cdb_make family is the fastest, but you have to create
     you own garbage-collection-cleaner or you can delete it manually. Take a look at the tests
     (https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
