@@ -5,6 +5,16 @@ Introduction
     Even instances of SimpleXMLElement can be put to the cache. You dont have to matter about the size of the cache-file.
     It depends on the free space of your disk.
 
+Available options
+===========================
+
+    - Open a given dba database
+    - Insert a new record with a given key
+    - Get a record with a given key
+    - Replace the value of a record with a given key
+    - Delete the record with a given key
+    - Optimize the database file
+
 Requirements & Installation
 ===========================
 
