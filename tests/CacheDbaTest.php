@@ -97,6 +97,25 @@ extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testReadAllIdsInCache()
+    {
+        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-get-all-ids.flat';
+        $cache = new CacheDba($path, 'c', 'flatfile', false);
+
+        $cache->put('array-1', array(1));
+        $cache->put('string-2', 'some big string');
+        $cache->put('float-3', 1234.87987698);
+
+        $ids = $cache->getIds();
+
+        $this->assertInternalType('array', $ids);
+        $this->assertEquals($ids[0], 'array-1');
+        $this->assertEquals($ids[1], 'string-2');
+        $this->assertEquals($ids[2], 'float-3');
+
+        unlink($path);
+    }
+
     public function testCreateAnCdbHandler()
     {
         try

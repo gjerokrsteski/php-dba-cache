@@ -168,4 +168,22 @@ class CacheDba
     {
         return $this->_dba;
     }
+
+    /**
+     * @return array of stored cache ids (string).
+     */
+    public function getIds()
+    {
+        $ids = array();
+        $dba = $this->getDba();
+        $pointer = dba_firstkey($dba);
+
+        while($pointer)
+        {
+            $ids[] = $pointer;
+            $pointer = dba_nextkey($dba);
+        }
+
+        return $ids;
+    }
 }
