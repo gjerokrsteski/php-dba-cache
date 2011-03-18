@@ -1,4 +1,5 @@
 <?php
+require_once dirname(dirname(__FILE__)).'/src/CacheDba.php';
 require_once dirname(dirname(__FILE__)).'/src/CacheSerializer.php';
 
 class CacheSerializerTest
@@ -67,6 +68,33 @@ extends PHPUnit_Framework_TestCase
                 $e->getMessage().$e->getTraceAsString()
             );
         }
+    }
+
+    public function testHandlingWithSimpleXMLElement()
+    {
+        $identifier = md5(uniqid());
+
+        $string = "<?xml version='1.0'?>
+        <document>
+         <title>Let us cache</title>
+         <from>Joe</from>
+         <to>Jane</to>
+         <body>Some content here</body>
+        </document>";
+
+        $simplexml = simplexml_load_string(
+            $string,
+            'SimpleXMLElement',
+            LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
+        );
+
+        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-with-simplexml.db4';
+        $cache = new CacheDba($path, 'c', 'db4', true);
+        $cache->put($identifier, $simplexml);
+        $object_from_cache = $cache->get($identifier);
+        $cache->closeDba();
+
+        $this->assertEquals($simplexml->asXML(), $object_from_cache->asXML());
     }
 }
 
