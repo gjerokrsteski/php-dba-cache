@@ -37,7 +37,7 @@ class CacheDba
     protected $_handler;
 
     /**
-     * @param string $path to cache-file.
+     * @param string $file the cache-file.
      *
      * @param string $mode For read/write access,
      * database creation if it doesn't currently exist.
@@ -61,7 +61,7 @@ class CacheDba
      *
      * @param booelan $persistently
      */
-    public function __construct($path, $mode = 'c', $handler = 'flatfile', $persistently = true)
+    public function __construct($file, $mode = 'c', $handler = 'flatfile', $persistently = true)
     {
         if (false === extension_loaded('dba'))
         {
@@ -79,9 +79,14 @@ class CacheDba
             );
         }
 
+        if (false === is_file($file))
+        {
+            @fopen($file, 'w+');
+        }
+
         $this->_dba = (true === $persistently)
-                        ? dba_popen($path, $mode, $handler)
-                        : dba_open($path, $mode, $handler);
+                        ? dba_popen($file, $mode, $handler)
+                        : dba_open($file, $mode, $handler);
 
         $this->_handler = $handler;
     }

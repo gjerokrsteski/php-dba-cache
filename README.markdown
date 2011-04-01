@@ -53,6 +53,9 @@ Requirements & Installation
 Nice to know
 ------------
 
+    Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
+    can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
+    are: QDBM, Berkeley DB (DB4), NDBM and least the Flatfile.
     Most problematic are dbm and ndbm which conflict with many installations. The reason for this is
     that on several systems these libraries are part of more than one other library. The configuration
     test only prevents you from configuring malfaunctioning single handlers but not combinations.

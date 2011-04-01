@@ -122,6 +122,7 @@ extends PHPUnit_Framework_TestCase
         {
             $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache-on-cdb.db';
             $cache = new CacheDba($path, "n", "cdb", true);
+            unlink($path);
         }
         catch (Exception $e)
         {
@@ -129,5 +130,62 @@ extends PHPUnit_Framework_TestCase
                 $e->getMessage().$e->getTraceAsString()
             );
         }
+    }
+
+    public function testPutTheSameIdentifierTwiceToCdbHandler()
+    {
+        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-cdb2.cdb';
+
+        // CREATE HANDLER TO WRITE.
+        $cacheMake = new CacheDba($path, 'n', 'cdb_make', true);
+
+        // first insert.
+        $this->assertTrue($cacheMake->put('key', 'data'));
+
+        // replace instead of insert.
+        $this->assertTrue($cacheMake->put('key', 'data-2'));
+
+        // for read we close the handler.
+        $cacheMake->closeDba();
+
+        // CREATE HANDLER TO READ.
+        $cacheRead = new CacheDba($path, 'r', 'cdb', true);
+
+        //check if data replaced.
+        $this->assertEquals('data', $cacheRead->get('key'));
+
+        $cacheRead->closeDba();
+
+        unlink($path);
+    }
+
+    public function testPutTheSameIdentifierTwiceToFlatfileHandler()
+    {
+        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-insert.flat';
+        $cache = new CacheDba($path, 'c', 'flatfile', false);
+
+        // first insert.
+        $this->assertTrue($cache->put('key', 'data'));
+
+        // replace instead of insert.
+        $this->assertTrue($cache->put('key', 'data-2'));
+
+        //check if data replaced.
+        $this->assertEquals('data-2', $cache->get('key'));
+    }
+
+    public function testPutTheSameIdentifierTwiceToDb4Handler()
+    {
+        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
+        $cache = new CacheDba($path, 'c', 'db4', true);
+
+        // first insert.
+        $this->assertTrue($cache->put('key', 'data'));
+
+        // replace instead of insert.
+        $this->assertTrue($cache->put('key', 'data-2'));
+
+        //check if data replaced.
+        $this->assertEquals('data-2', $cache->get('key'));
     }
 }
