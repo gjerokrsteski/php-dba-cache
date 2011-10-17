@@ -65,7 +65,7 @@ Sample for Oracle Berkeley DB 4 with persistent connection
 
     <?php
     $path = '/your/path/to/the/cahe-file/cache.db4';
-    $cache = new CacheDba($path, 'c', 'db4', true);
+    $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
 
     $yorObject = new YourObjectYouWantToPutInCache();
     $yourObjectIdentifier = md5(get_class($yorObject));
@@ -83,7 +83,7 @@ Sample for Oracle Berkeley DB 4 with persistent connection
     $cache->get($yourObjectIdentifier);
 
 
-    // For the garbage collection you can create an cron-job stating once a day.
+    // For the garbage collection you can create an cron-job starting once a day.
     $garbageCollection = new CacheGarbageCollector($cache);
     $garbageCollection->cleanAll();
 
@@ -115,7 +115,7 @@ Sample saving of SimpleXMLElement instances into DB 4 with persistent connection
     $identifier = md5('simplexml_identifier');
 
     $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
-    $cache = new CacheDba($path, 'c', 'db4', true);
+    $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
 
     $cache->put($identifier, $simplexml);
 
