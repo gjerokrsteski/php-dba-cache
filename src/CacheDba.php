@@ -35,10 +35,15 @@ class CacheDba
      * @var resource
      */
     protected $_handler;
+    
+    /**
+     * @var CacheSerializer
+     */
+    protected $_serializer;
 
     /**
      * @param string $file the cache-file.
-     *
+     * @param CacheSerializer $serializer
      * @param string $mode For read/write access,
      * database creation if it doesn't currently exist.
      *
@@ -61,7 +66,7 @@ class CacheDba
      *
      * @param booelan $persistently
      */
-    public function __construct($file, $mode = 'c', $handler = 'flatfile', $persistently = true)
+    public function __construct($file, CacheSerializer $serializer, $mode = 'c', $handler = 'flatfile', $persistently = true)
     {
         if (false === extension_loaded('dba'))
         {
@@ -88,7 +93,8 @@ class CacheDba
                         ? dba_popen($file, $mode, $handler)
                         : dba_open($file, $mode, $handler);
 
-        $this->_handler = $handler;
+        $this->_handler    = $handler;
+        $this->_serializer = $serializer;
     }
 
     /**
@@ -98,14 +104,12 @@ class CacheDba
      */
     public function put($identifier, $object)
     {
-        $serializer = new CacheSerializer();
-
         if (true === $this->has($identifier))
         {
-            return dba_replace($identifier, $serializer->serialize($object), $this->_dba);
+            return dba_replace($identifier, $this->_serializer->serialize($object), $this->_dba);
         }
 
-        return dba_insert($identifier, $serializer->serialize($object), $this->_dba);
+        return dba_insert($identifier, $this->_serializer->serialize($object), $this->_dba);
     }
 
     /**
@@ -122,8 +126,7 @@ class CacheDba
             return false;
         }
 
-        $serializer = new CacheSerializer();
-        $getObject  = $serializer->unserialize($fetchObject);
+        $getObject  = $this->_serializer->unserialize($fetchObject);
 
         if ((time() - $getObject->time) < $expiration)
         {

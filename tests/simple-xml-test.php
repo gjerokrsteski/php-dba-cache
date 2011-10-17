@@ -23,7 +23,7 @@ $simplexml = simplexml_load_string(
 $identifier = md5('simplexml_identifier');
 
 $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
-$cache = new CacheDba($path, 'c', 'db4', true);
+$cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
 
 $cache->put($identifier, $simplexml);
 

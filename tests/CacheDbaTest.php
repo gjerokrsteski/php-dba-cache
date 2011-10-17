@@ -15,7 +15,7 @@ extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/cache.flat';
-        $this->_cache = new CacheDba($path);
+        $this->_cache = new CacheDba($path, new CacheSerializer());
     }
 
     /**
@@ -31,14 +31,14 @@ extends PHPUnit_Framework_TestCase
     public function testCreateNewCacheObjectNoException()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.flat';
-        $this->_cache = new CacheDba($path);
+        $this->_cache = new CacheDba($path, new CacheSerializer());
         unlink($path);
     }
 
     public function testCreateNewCacheObjectNotpersistentlyNoException()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.flat';
-        $this->_cache = new CacheDba($path, 'c', 'flatfile', false);
+        $this->_cache = new CacheDba($path, new CacheSerializer(), 'c', 'flatfile', false);
         unlink($path);
     }
 
@@ -100,7 +100,7 @@ extends PHPUnit_Framework_TestCase
     public function testReadAllIdsInCache()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-get-all-ids.flat';
-        $cache = new CacheDba($path, 'c', 'flatfile', false);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'flatfile', false);
 
         $cache->put('array-1', array(1));
         $cache->put('string-2', 'some big string');
@@ -121,7 +121,7 @@ extends PHPUnit_Framework_TestCase
         try
         {
             $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache-on-cdb.db';
-            $cache = new CacheDba($path, "n", "cdb", true);
+            $cache = new CacheDba($path, new CacheSerializer(), "n", "cdb", true);
             unlink($path);
         }
         catch (Exception $e)
@@ -137,7 +137,7 @@ extends PHPUnit_Framework_TestCase
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-cdb2.cdb';
 
         // CREATE HANDLER TO WRITE.
-        $cacheMake = new CacheDba($path, 'n', 'cdb_make', true);
+        $cacheMake = new CacheDba($path, new CacheSerializer(), 'n', 'cdb_make', true);
 
         // first insert.
         $this->assertTrue($cacheMake->put('key', 'data'));
@@ -149,7 +149,7 @@ extends PHPUnit_Framework_TestCase
         $cacheMake->closeDba();
 
         // CREATE HANDLER TO READ.
-        $cacheRead = new CacheDba($path, 'r', 'cdb', true);
+        $cacheRead = new CacheDba($path, new CacheSerializer(), 'r', 'cdb', true);
 
         //check if data replaced.
         $this->assertEquals('data', $cacheRead->get('key'));
@@ -162,7 +162,7 @@ extends PHPUnit_Framework_TestCase
     public function testPutTheSameIdentifierTwiceToFlatfileHandler()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-insert.flat';
-        $cache = new CacheDba($path, 'c', 'flatfile', false);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'flatfile', false);
 
         // first insert.
         $this->assertTrue($cache->put('key', 'data'));
@@ -177,7 +177,7 @@ extends PHPUnit_Framework_TestCase
     public function testPutTheSameIdentifierTwiceToDb4Handler()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, 'c', 'db4', true);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
 
         // first insert.
         $this->assertTrue($cache->put('key', 'data'));

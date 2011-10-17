@@ -41,7 +41,7 @@ extends PHPUnit_Framework_TestCase
     public function testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, 'c', 'db4', false);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', false);
 
         $this->assertInstanceOf('CacheDba', $cache);
 
@@ -56,7 +56,7 @@ extends PHPUnit_Framework_TestCase
     public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, 'c', 'db4', true);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
 
         $this->assertInstanceOf('CacheDba', $cache);
 
@@ -73,7 +73,7 @@ extends PHPUnit_Framework_TestCase
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-cdb2.cdb';
 
         // create handler to write.
-        $cacheMake = new CacheDba($path, 'n', 'cdb_make', true);
+        $cacheMake = new CacheDba($path, new CacheSerializer(), 'n', 'cdb_make', true);
 
         $this->assertInstanceOf('CacheDba', $cacheMake);
 
@@ -83,7 +83,7 @@ extends PHPUnit_Framework_TestCase
         $cacheMake->closeDba();
 
         // create handler to read.
-        $cacheRead = new CacheDba($path, 'r', 'cdb', true);
+        $cacheRead = new CacheDba($path, new CacheSerializer(), 'r', 'cdb', true);
 
         $this->assertTrue($cacheRead->has(md5('test123')));
 

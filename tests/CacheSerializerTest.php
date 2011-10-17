@@ -89,7 +89,7 @@ extends PHPUnit_Framework_TestCase
         );
 
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-with-simplexml.db4';
-        $cache = new CacheDba($path, 'c', 'db4', true);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
         $cache->put($identifier, $simplexml);
         $object_from_cache = $cache->get($identifier);
         $cache->closeDba();

@@ -50,7 +50,7 @@ $stdClass->body = 'Yes, it works!';
 
 // create the cache.
 $path = dirname(dirname(__FILE__)).'/tests/_drafts/backend-penetration-test.flat';
-$cache = new CacheDba($path);
+$cache = new CacheDba($path, new CacheSerializer());
 
 _loggIdentifiers($cache->getDba());
 

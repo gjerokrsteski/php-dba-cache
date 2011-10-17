@@ -16,7 +16,7 @@ extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/garbage-collection-test-cache.flat';
-        $this->_cache = new CacheDba($path);
+        $this->_cache = new CacheDba($path,new CacheSerializer());
     }
 
     /**
@@ -127,7 +127,7 @@ extends PHPUnit_Framework_TestCase
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-cdb2.cdb';
 
         // create cdb-handler to write.
-        $cacheMake = new CacheDba($path, 'n', 'cdb_make', true);
+        $cacheMake = new CacheDba($path, new CacheSerializer(), 'n', 'cdb_make', true);
 
         $this->assertInstanceOf('CacheDba', $cacheMake);
 
@@ -149,7 +149,7 @@ extends PHPUnit_Framework_TestCase
         $cacheMake->closeDba();
 
         // create cdb-handler to read.
-        $cacheRead = new CacheDba($path, 'r', 'cdb', true);
+        $cacheRead = new CacheDba($path, new CacheSerializer(), 'r', 'cdb', true);
 
         $this->assertTrue($cacheRead->has($testIdentifier1));
         $this->assertTrue($cacheRead->has($testIdentifier2));
@@ -166,7 +166,7 @@ extends PHPUnit_Framework_TestCase
     public function testCleanTheGarbageCollectionWithDb4Handler()
     {
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, 'c', 'db4', false);
+        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', false);
 
         $this->assertInstanceOf('CacheDba', $cache);
 
