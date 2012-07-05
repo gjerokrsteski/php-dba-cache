@@ -8,12 +8,10 @@ require_once dirname(dirname(__FILE__)).'/src/CacheSerializer.php';
 
 $string = "<?xml version='1.0'?>
 <document>
- <item>
  <title>Let us cache</title>
  <from>Joe</from>
  <to>Jane</to>
  <body>Some content here</body>
- </item>
 </document>";
 
 $simplexml = simplexml_load_string(

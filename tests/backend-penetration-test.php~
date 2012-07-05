@@ -33,8 +33,6 @@ class DummyClass
   protected $data = array(1,2,3);
 }
 
-$dummyClass = new DummyClass();
-
 $string = "<?xml version='1.0'?>
 <document>
  <title>Let us cache</title>
@@ -77,10 +75,6 @@ sleep(1);
 $cache->put(md5('SimpleXMLElement'), $simplexml);
 _logger('PUT SimpleXMLElement OBJECT');
 
-$cache->put(md5('DummyClass'), $dummyClass);
-_logger('PUT DummyClass OBJECT');
-
-
 // generate random expiration-time.
 srand(time());
 $expiration = (rand()%20)+1;
@@ -91,7 +85,6 @@ $getObjects[] = array('stdClass', $cache->get(md5('stdClass'), $expiration));
 $getObjects[] = array('ZipArchive', $cache->get(md5('ZipArchive'), $expiration));
 $getObjects[] = array('XMLReader', $cache->get(md5('XMLReader'), $expiration));
 $getObjects[] = array('SimpleXMLElement', $cache->get(md5('SimpleXMLElement'), $expiration));
-$getObjects[] = array('DummyClass', $cache->get(md5('DummyClass'), $expiration));
 
 // write information.
 foreach ($getObjects as $getObject)

@@ -120,17 +120,18 @@ class CacheDba
      */
     public function get($identifier, $expiration = 300)
     {
-        $res = $this->_getObject($identifier);
+        $fetchObject = dba_fetch($identifier, $this->_dba);
 
-        if (false === $res)
+        if (false === $fetchObject)
         {
             return false;
         }
 
-        if (false === $res->ltime 
-        || (microtime(true) - $res->mtime) < $res->ltime)
+        $getObject  = $this->_serializer->unserialize($fetchObject);
+
+        if ((time() - $getObject->time) < $expiration)
         {
-            return $res->object;
+            return $getObject->object;
         }
 
         $this->delete($identifier);

@@ -85,9 +85,9 @@ extends PHPUnit_Framework_TestCase
         $garbageCollection = new CacheGarbageCollector($this->_cache);
         $garbageCollection->cleanByExpiration(1);
 
-        $this->assertFalse($this->_cache->has(md5('stdClass')));
-        $this->assertFalse($this->_cache->has(md5('ZipArchive')));
-        $this->assertFalse($this->_cache->has(md5('XMLReader')));
+        $this->assertTrue($this->_cache->has(md5('stdClass')));
+        $this->assertTrue($this->_cache->has(md5('ZipArchive')));
+        $this->assertTrue($this->_cache->has(md5('XMLReader')));
     }
 
     /**

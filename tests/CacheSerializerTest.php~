@@ -81,6 +81,7 @@ extends PHPUnit_Framework_TestCase
             LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
         );
 
+print_r($simplexml );
 
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-with-simplexml.db4';
         $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
