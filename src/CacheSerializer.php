@@ -1,21 +1,21 @@
 <?php
 /**
-* CacheSerializer
-*
-* LICENSE
-*
-* This source file is subject to the new BSD license that is bundled
-* with this package in the file LICENSE.
-* It is also available through the world-wide-web at this URL:
-* http://krsteski.de/new-bsd-license/
-* If you did not receive a copy of the license and are unable to
-* obtain it through the world-wide-web, please send an email
-* to gjero@krsteski.de so we can send you a copy immediately.
-*
-* @category CacheDba
-* @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
-* @license http://krsteski.de/new-bsd-license New BSD License
-*/
+ * CacheSerializer
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.
+ * It is also available through the world-wide-web at this URL:
+ * http://krsteski.de/new-bsd-license/
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to gjero@krsteski.de so we can send you a copy immediately.
+ *
+ * @category CacheDba
+ * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
+ * @license http://krsteski.de/new-bsd-license New BSD License
+ */
 
 /**
  * CacheSerializer
@@ -26,72 +26,64 @@
  */
 class CacheSerializer
 {
-    public function __construct()
-    {
+  /**
+   * @param mixed $object
+   * @param bool $ltime
+   * @return string containing a byte-stream representation.
+   */
+  public function serialize($object, $ltime = false)
+  {
+    $masked = false;
+
+    if (false === is_object($object)) {
+      $object = $this->mask($object);
+      $masked = true;
     }
 
-    private function mask($item)
-    {
-        return (object) $item;
+    $objectInformation         = new stdClass();
+    $objectInformation->type   = get_class($object);
+    $objectInformation->object = $object;
+    $objectInformation->fake   = $masked;
+    $objectInformation->mtime  = microtime(true);
+    $objectInformation->ltime  = $ltime;
+
+    if ($object instanceof SimpleXMLElement) {
+      $objectInformation->object = $object->asXml();
     }
 
-    private function unmask($item)
-    {
-        if (isset($item->scalar))
-        {
-            return $item->scalar;
-        }
+    return serialize($objectInformation);
+  }
 
-        return (array) $item;
+  /**
+   * @param string $object
+   * @return stdClass
+   */
+  public function unserialize($object)
+  {
+    $objectInformation = unserialize($object);
+
+    if (true === $objectInformation->fake) {
+      $objectInformation->object = $this->unmask($objectInformation->object);
     }
 
-    /**
-     * Serialize the object as stdClass.
-     * @return string containing a byte-stream representation.
-     */
-    public function serialize($object, $ltime = false)
-    {
-        $masked = false;
-
-        if (false === is_object($object))
-        {
-            $object = $this->mask($object);
-            $masked   = true;
-        }
-
-        $objectInformation         = new stdClass();
-        $objectInformation->type   = get_class($object);
-        $objectInformation->object = $object;
-        $objectInformation->fake   = $masked;
-	$objectInformation->mtime  = microtime(true);
-        $objectInformation->ltime  = $ltime;
-
-        if ($object instanceof SimpleXMLElement)
-        {
-            $objectInformation->object = $object->asXml();
-        }
-
-        return serialize($objectInformation);
+    if ($objectInformation->type == 'SimpleXMLElement') {
+      $objectInformation->object = simplexml_load_string($objectInformation->object);
     }
 
-    /**
-     * Unserialize the object.
-     * @return stdClass
-     */
-    public function unserialize($object)
-    {
-        $objectInformation = unserialize($object);
+    return $objectInformation;
+  }
 
-        if (true === $objectInformation->fake)
-        {
-            $objectInformation->object = $this->unmask($objectInformation->object);
-        }
+  private function mask($item)
+  {
+    return (object)$item;
+  }
 
-        if ($objectInformation->type == 'SimpleXMLElement')
-        {
-            $objectInformation->object = simplexml_load_string($objectInformation->object);
-        }
-
-        return $objectInformation;
+  private function unmask($item)
+  {
+    if (isset($item->scalar)) {
+      return $item->scalar;
     }
+
+    return (array)$item;
+  }
 }
