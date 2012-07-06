@@ -84,10 +84,6 @@ class CacheDba
             );
         }
 
-        if (false === is_file($file))
-        {
-            @fopen($file, 'w+');
-        }
 
         $this->_dba = (true === $persistently)
                         ? dba_popen($file, $mode, $handler)
@@ -104,7 +100,6 @@ class CacheDba
      */
     public function put($identifier, $object, $ltime = false)
     {
-
         if (true === $this->has($identifier))
         {
             return dba_replace($identifier, $this->_serializer->serialize($object,$ltime), $this->_dba);
@@ -115,23 +110,20 @@ class CacheDba
 
     /**
      * @param string $identifier
-     * @param integer $expiration
      * @return object | false
      */
-    public function get($identifier, $expiration = 300)
+    public function get($identifier)
     {
-        $fetchObject = dba_fetch($identifier, $this->_dba);
+        $res = $this->_fetch($identifier);
 
-        if (false === $fetchObject)
+        if (false === $res)
         {
             return false;
         }
 
-        $getObject  = $this->_serializer->unserialize($fetchObject);
-
-        if ((time() - $getObject->time) < $expiration)
+        if (false === $res->ltime || (microtime(true) - $res->mtime) < $res->ltime)
         {
-            return $getObject->object;
+            return $res->object;
         }
 
         $this->delete($identifier);
@@ -143,7 +135,7 @@ class CacheDba
      * @param string $identifier
      * @return object | false
      */
-    protected function _getObject($identifier)
+    protected function _fetch($identifier)
     {
     	$fetchObject = dba_fetch($identifier, $this->_dba);
 
@@ -195,20 +187,44 @@ class CacheDba
     }
 
     /**
-     * @return array of stored cache ids (string).
+     * @return ArrayObject of stored cache ids (string).
      */
     public function getIds()
     {
-        $ids = array();
+        $ids = new ArrayObject();
         $dba = $this->getDba();
         $pointer = dba_firstkey($dba);
 
         while($pointer)
         {
-            $ids[] = $pointer;
+            $ids->offsetSet(null,$pointer);
             $pointer = dba_nextkey($dba);
         }
 
         return $ids;
+    }
+
+    /**
+     * Return an array of metadatas for the given cache id.
+     *
+     * - expire : the expire timestamp
+     * - mtime : timestamp of last modification time
+     *
+     * @param string $id cache id
+     * @return array|false
+     */
+    public function getMetadatas($id)
+    {
+    	$res = $this->_fetch($id);
+    	
+    	if (true === is_object($res))
+    	{    	
+	    	return array(
+	    		'expire' => $res->mtime + $res->ltime,
+	    		'mtime'  => $res->mtime,
+	    	);
+    	}
+    	
+    	return false;
     }
 }

@@ -188,20 +188,4 @@ extends PHPUnit_Framework_TestCase
         //check if data replaced.
         $this->assertEquals('data-2', $cache->get('key'));
     }
-	
-    public function testLoadingMetadata()
-    {
-        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, new CacheSerializer(), 'c', 'db4', true);
-
-        // first insert.
-        $this->assertTrue($cache->put('key', 'data'));
-
-
-
-	$this->assertInternalType('array', $cache->getMetadatas('key'));
-	$this->assertNotEmpty($cache->getMetadatas('key'));
-
-     }
-
 }

@@ -99,12 +99,12 @@ class CacheGarbageCollector
      * @throws RuntimeException If disk_total_space=0
      * @return int integer between 0 and 100
      */
-    public function getFillingPercentage($cacheDir)
+    public function getFillingPercentage()
     {
         clearstatcache();
 
-        $free = disk_free_space($cacheDir);
-        $total = disk_total_space($cacheDir);
+        $free = disk_free_space($this->_options['cache_dir']);
+        $total = disk_total_space($this->_options['cache_dir']);
 
         if ($total == 0)
         {

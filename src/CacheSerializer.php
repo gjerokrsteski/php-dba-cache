@@ -63,7 +63,6 @@ class CacheSerializer
         $objectInformation->type   = get_class($object);
         $objectInformation->object = $object;
         $objectInformation->fake   = $masked;
-        $objectInformation->time   = time();
 	$objectInformation->mtime  = microtime(true);
         $objectInformation->ltime  = $ltime;
 
