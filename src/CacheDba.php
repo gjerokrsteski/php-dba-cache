@@ -87,11 +87,20 @@ class CacheDba
       );
     }
 
-    $this->_dba = (true === $persistently) ? dba_popen($file, $mode, $handler) : dba_open($file, $mode, $handler);
+    $this->_dba        = (true === $persistently) ? dba_popen($file, $mode, $handler) : dba_open($file, $mode, $handler);
     $this->_cacheFile  = $file;
     $this->_handler    = $handler;
     $this->_serializer = $serializer;
   }
+  
+    /**
+     * Closes an open dba resource
+     * @return void
+     */
+    public function __destruct()
+    {
+      $this->closeDba();
+    }
 
   /**
    * @param string $identifier
@@ -179,7 +188,10 @@ class CacheDba
    */
   public function closeDba()
   {
-    dba_close($this->_dba);
+    if ($this->_dba){
+      @dba_close($this->_dba);
+      $this->_dba = null;
+    }
   }
 
   /**
