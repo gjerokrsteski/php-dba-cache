@@ -21,7 +21,7 @@ Available options
     - Clean all entries
     - Clean expired entries
     - Clean entries by special expiration time
-    - Optimizes the database file automatically after cleaning processy
+    - Optimizes the database file automatically after cleaning process
     - Return the filling percentage of the backend storage
 
 Installation
