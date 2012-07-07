@@ -112,4 +112,26 @@ class CacheGarbageCollector
 
     return ((int)(100. * ($total - $free) / $total));
   }
+  
+  /**
+   * Flush the whole storage.
+   * @return boolean
+   */
+  public function flush()
+  {
+    $cacheFile = $this->_cache->getCacheFilePath();
+  
+  	if (file_exists($cacheFile)) {
+  
+  		// close the dba file before delete
+  		// and reopen on next use
+  		$this->_cache->closeDba();
+  
+  		if (!unlink($cacheFile)) {
+  			throw new RuntimeException("unlink('{$cacheFile}') failed");
+  		}
+  	}
+  
+  	return true;
+  }
 }
