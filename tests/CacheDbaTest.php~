@@ -15,7 +15,7 @@ extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/cache.flat';
-        $this->_cache = new CacheDba($path);
+        $this->_cache = new CacheDba($path, new CacheSerializer());
     }
 
     /**

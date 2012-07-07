@@ -34,8 +34,10 @@ extends PHPUnit_Framework_TestCase
      */
     public function testSerializingSomeObjects($object)
     {
+
             $serializer = new CacheSerializer();
-            $serializer->serialize($object);    
+            $serializer->serialize($object);
+    
     }
 
     /**
@@ -78,6 +80,7 @@ extends PHPUnit_Framework_TestCase
             'SimpleXMLElement',
             LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
         );
+
 
         $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-with-simplexml.db4';
         $cache = new CacheDba($path, 'db4');

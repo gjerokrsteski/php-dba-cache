@@ -141,9 +141,9 @@ class CacheDba
   /**
    * @return string
    */
-  public function getCacheFile()
+  public function getCacheFilePath()
   {
-    return $this->_cacheFile;
+    return dirname($this->_cacheFile);
   }
 
   /**

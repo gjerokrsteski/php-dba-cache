@@ -189,7 +189,7 @@ extends PHPUnit_Framework_TestCase
     {
       $garbageCollection = new CacheGarbageCollector($this->_cache);
 
-      $this->assertTrue(($garbageCollection->getFillingPercentage() > 0));
+      $this->assertTrue($garbageCollection->getFillingPercentage() > 0));
       $this->assertTrue($garbageCollection->flush());
     }
 }

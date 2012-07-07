@@ -120,7 +120,7 @@ class CacheGarbageCollector
    */
   public function flush()
   {
-    $cacheFile = $this->_cache->getCacheFile();
+    $cacheFile = $this->_cache->getCacheFilePath();
 
     if (file_exists($cacheFile)) {
 
