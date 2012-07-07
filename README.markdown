@@ -8,15 +8,21 @@ Introduction
 Available options
 ===========================
 
+    CacheDba
     - Open a given dba database
     - Insert a new record with a given key
     - Get a record with a given key
     - Replace the value of a record with a given key
     - Delete the record with a given key
-    - Optimize the database file
+    
+    CacheGarbageCollector (optional)
+    - Clean all entries
+    - Clean expired entries
+    - Clean entries by special expiration time
+    - Optimizes the database file automatically after cleaning processy
 
-Requirements & Installation
-===========================
+Requirements
+============
 
     The behaviour of various aspects for the caching depends on the implementation of yor
     installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
@@ -44,6 +50,9 @@ Requirements & Installation
     This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
     and should be avoided. However you may use this where files were created in this format.
     That happens when configure could not find any external library.
+
+Installation
+============
 
     By using the --enable-dba=shared configuration option you can build a dynamic loadable module
     to enable PHP for basic support of dbm-style databases. You also have to add support for at
@@ -82,7 +91,6 @@ Sample for Oracle Berkeley DB 4 with persistent connection
     // Than somewhere at your project.
     $cache->get($yourObjectIdentifier);
 
-
     // For the garbage collection you can create an cron-job starting once a day.
     $garbageCollection = new CacheGarbageCollector($cache);
     $garbageCollection->cleanAll();
@@ -94,8 +102,8 @@ Sample for Oracle Berkeley DB 4 with persistent connection
 
     ?>
 
-Sample saving of SimpleXMLElement instances into DB 4 with persistent connection
---------------------------------------------------------------------------------
+Saving SimpleXMLElement instances into DB 4 with persistent connection
+----------------------------------------------------------------------
 
     <?php
     $string = "<?xml version='1.0'?>
