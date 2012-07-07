@@ -14,12 +14,15 @@ Available options
     - Get a record with a given key
     - Replace the value of a record with a given key
     - Delete the record with a given key
+    - Return metadata for the given key: expire timestamp & timestamp of last modification time
+    - Get all keys from cache
     
     CacheGarbageCollector (optional)
     - Clean all entries
     - Clean expired entries
     - Clean entries by special expiration time
     - Optimizes the database file automatically after cleaning processy
+    - Return the filling percentage of the backend storage
 
 Installation
 ============
