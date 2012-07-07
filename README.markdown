@@ -44,22 +44,27 @@ DBA handlers
     (https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
     how to use the cache.
 
-    cdb = Tiny Constant Database - for reading.
+    cdb = Tiny Constant Database - for reading
+    ------------------------------------------
     Cdb is "a fast, reliable, lightweight package for creating and reading constant databases.
     " It is from the author of qmail and can be found at http://cr.yp.to/cdb.html. Since it is
     constant, we support only reading operations. And since PHP 4.3.0 we support writing
     (not updating) through the internal cdb library.
 
-    cdb_make = Tiny Constant Database - for writing.
+    cdb_make = Tiny Constant Database - for writing
+    -----------------------------------------------
     Since PHP 4.3.0 we support creation of cdb files when the bundled cdb library is used.
 
-    db4 = Oracle Berkeley DB 4 - for reading and writing.
+    db4 = Oracle Berkeley DB 4 - for reading and writing
+    ----------------------------------------------------
     DB4 is Sleepycat Software's DB4. This is available since PHP 4.3.2.
 
-    gdbm = GNU Database Manager - for reading and writing.
+    gdbm = GNU Database Manager - for reading and writing
+    -----------------------------------------------------
     Gdbm is the GNU database manager.
 
-    flatfile = default dba extension - for reading and writing.
+    flatfile = default dba extension - for reading and writing
+    ----------------------------------------------------------
     This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
     and should be avoided. However you may use this where files were created in this format.
     That happens when configure could not find any external library.
