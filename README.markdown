@@ -10,7 +10,7 @@ Available options
 
     CacheDba
     - Open a given dba database
-    - Insert a new record with a given key
+    - Insert a new record with a given key (persistently or with a given expiration time)
     - Get a record with a given key
     - Replace the value of a record with a given key
     - Delete the record with a given key
@@ -21,7 +21,17 @@ Available options
     - Clean entries by special expiration time
     - Optimizes the database file automatically after cleaning processy
 
-Requirements
+Installation
+============
+
+    "By using the --enable-dba=shared configuration option you can build a dynamic loadable module
+    to enable PHP for basic support of dbm-style databases. You also have to add support for at
+    least one of the following handlers by specifying the --with-XXXX configure switch
+    to your PHP configure line."
+    
+    More about installation: http://www.php.net/manual/en/dba.installation.php
+
+DBA handlers
 ============
 
     The behaviour of various aspects for the caching depends on the implementation of yor
@@ -50,14 +60,9 @@ Requirements
     This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
     and should be avoided. However you may use this where files were created in this format.
     That happens when configure could not find any external library.
+    
+    More about requirements: http://www.php.net/manual/en/dba.requirements.php
 
-Installation
-============
-
-    By using the --enable-dba=shared configuration option you can build a dynamic loadable module
-    to enable PHP for basic support of dbm-style databases. You also have to add support for at
-    least one of the following handlers by specifying the --with-XXXX configure switch
-    to your PHP configure line.
 
 Nice to know
 ------------
