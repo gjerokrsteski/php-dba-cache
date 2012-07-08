@@ -23,6 +23,7 @@ Available options
     - Clean entries by special expiration time
     - Optimizes the database file automatically after cleaning process
     - Return the filling percentage of the backend storage
+    - Flush the cache file
 
 Installation
 ============
