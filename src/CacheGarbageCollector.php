@@ -113,10 +113,11 @@ class CacheGarbageCollector
 
     return ((int)(100. * ($total - $free) / $total));
   }
-  
+
   /**
    * Flush the whole storage.
-   * @return boolean
+   * @throws RuntimeException If can not flush file.
+   * @return bool
    */
   public function flush()
   {

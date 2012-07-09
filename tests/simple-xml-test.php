@@ -34,5 +34,3 @@ $getObject = $cache->get($identifier);
 error_log(' - PUT IN CACHE : '.print_r($simplexml, true));
 error_log(' - GET FROM CACHE : '.print_r($getObject, true));
 error_log(' - IS SAME OBJECT : '.print_r(($simplexml->asXml() === $getObject->asXml()) ? 'true' : 'false', true));
-
-?>

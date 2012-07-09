@@ -1,6 +1,11 @@
 <?php
 /**
- * CacheDba
+ * CacheDba - This class provides the functionality required to store
+ * and retrieve PHP objects, strings, integers or arrays.
+ * It uses the database (dbm-style) abstraction layer for persistence.
+ * Even instances of SimpleXMLElement can be stored. You don't have
+ * to matter about the size of the cache-file. It depends on the free
+ * space of your disk.
  *
  * LICENSE
  *
@@ -85,8 +90,8 @@ class CacheDba
     }
 
     $this->_dba = (true === $persistently) 
-	? dba_popen($file, $mode, $handler) 
-	: dba_open($file, $mode, $handler);
+      ? dba_popen($file, $mode, $handler)
+      : dba_open($file, $mode, $handler);
 
     $this->_cacheFile  = $file;
     $this->_handler    = $handler;
