@@ -33,7 +33,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
   protected function tearDown()
   {
 	if ($this->_cache) {
-     $this->_cache->closeDba();
+	   $this->_cache->closeDba();
 	}
     parent::tearDown();
   }
@@ -188,7 +188,6 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     try {
       $cache = new CacheDba($path, 'db4', 'c', false);
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
