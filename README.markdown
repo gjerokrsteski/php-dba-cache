@@ -6,7 +6,7 @@ Introduction
     can be put to the cache. You dont have to matter about the size of the cache-file.
     It depends on the free space of your disk.
     
-    [![Build Status](https://secure.travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master)](http://travis-ci.org/gjerokrsteski/php-dba-cache)
+[![Build Status](https://secure.travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master)](http://travis-ci.org/gjerokrsteski/php-dba-cache)
 
 Available options
 ===========================
