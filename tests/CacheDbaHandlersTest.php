@@ -1,7 +1,7 @@
 <?php
 require_once dirname(dirname(__FILE__)) . '/src/CacheDba.php';
 require_once dirname(dirname(__FILE__)) . '/src/CacheSerializer.php';
-require_once dirname(__FILE__) .'DummyFixtures.php';
+require_once dirname(__FILE__) .'/DummyFixtures.php';
 
 
 class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
