@@ -24,6 +24,7 @@
              highlight="true"
              lowUpperBound="35"
              highLowerBound="70"/>
+		<log type="testdox-text" target="/testdox.txt"/>
    </logging>
 
     <filter>
