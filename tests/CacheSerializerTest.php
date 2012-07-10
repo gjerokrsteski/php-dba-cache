@@ -88,7 +88,6 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
     try {
       $cache = new CacheDba($path, 'db4');
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
