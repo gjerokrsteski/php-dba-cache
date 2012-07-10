@@ -125,7 +125,6 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
       );
       unlink($path);
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
   }
@@ -138,7 +137,6 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
     try {
       $cacheMake = new CacheDba($path, 'cdb_make', 'n');
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
@@ -155,7 +153,6 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
     try {
       $cacheRead = new CacheDba($path, 'cdb', 'r');
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
@@ -163,7 +160,5 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('data', $cacheRead->get('key'));
 
     $cacheRead->closeDba();
-
-    unlink($path);
   }
 }
