@@ -23,8 +23,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     try {
       $this->_cache = new CacheDba($path);
     } catch(RuntimeException $e) {
-      unlink($path);
-     $this->markTestSkipped($e->getMessage());
+      $this->markTestSkipped($e->getMessage());
     }
   }
 
