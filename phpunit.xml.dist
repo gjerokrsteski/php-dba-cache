@@ -5,8 +5,8 @@
     convertWarningsToExceptions="true"
     colors="true"
     processIsolation="false"
-    stopOnFailure="true"
-    syntaxCheck="false"
+    stopOnFailure="false"
+    syntaxCheck="true"
     backupGlobals="false"
     bootstrap="test-bootstrap.php">
 
