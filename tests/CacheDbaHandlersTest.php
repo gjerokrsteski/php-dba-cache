@@ -1,94 +1,174 @@
 <?php
-require_once dirname(dirname(__FILE__)).'/src/CacheDba.php';
-require_once dirname(dirname(__FILE__)).'/src/CacheSerializer.php';
+require_once dirname(dirname(__FILE__)) . '/src/CacheDba.php';
+require_once dirname(dirname(__FILE__)) . '/src/CacheSerializer.php';
 
-class CacheDbaHandlersTest
-extends PHPUnit_Framework_TestCase
+class Dummy
 {
-    protected $_object;
+  private $foo = 123;
+  protected $bar = array(1,2,3);
+  protected $moo = 'moo';
+}
 
-    protected $_identifier;
+class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
+{
+  /**
+   * @var stdClass
+   */
+  protected $_object;
 
-    /**
-     * Prepares the environment before running a test.
-     */
-    protected function setUp ()
-    {
-        parent::setUp();
+  /**
+   * @var string
+   */
+  protected $_identifier;
 
-        $stdClass = new stdClass();
-        $stdClass->title = 'Zweiundvierz';
-        $stdClass->from = 'Joe';
-        $stdClass->to = 'Jane';
-        $stdClass->body = 'Ich kenne die Antwort!';
+  /**
+   * Prepares the environment before running a test.
+   */
+  protected function setUp()
+  {
+    parent::setUp();
 
-        $this->_object = $stdClass;
-        $this->_identifier = md5('stdClass'.time());
+    $stdClass        = new stdClass();
+    $stdClass->title = 'Zweiundvierz';
+    $stdClass->from  = 'Joe';
+    $stdClass->to    = 'Jane';
+    $stdClass->body  = new Dummy();
+
+    $this->_object     = $stdClass;
+    $this->_identifier = md5('stdClass' . time());
+  }
+
+  /**
+   * Cleans up the environment after running a test.
+   */
+  protected function tearDown()
+  {
+    unset($this->_object, $this->_identifier);
+    parent::tearDown();
+  }
+
+  /**
+   * Tests support for Oracle Berkeley DB 4.
+   */
+  public function testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection()
+  {
+    try {
+      $cache = new CacheDba(
+        dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4', 'db4', 'c', false
+      );
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
     }
 
-    /**
-     * Cleans up the environment after running a test.
-     */
-    protected function tearDown ()
-    {
-        unset($this->_object, $this->_identifier);
-        parent::tearDown();
+    $this->assertInstanceOf('CacheDba', $cache);
+
+    $cache->put($this->_identifier, $this->_object);
+
+    $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+  }
+
+  /**
+   * @depends CacheDbaHandlersTest::testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection
+   */
+  public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
+  {
+    try {
+      $cache = new CacheDba(dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4', 'db4');
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
     }
 
-    /**
-     * Tests support for Oracle Berkeley DB 4.
-     */
-    public function testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection()
-    {
-        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, 'db4', 'c', false);
+    $this->assertInstanceOf('CacheDba', $cache);
 
-        $this->assertInstanceOf('CacheDba', $cache);
+    $cache->put($this->_identifier, $this->_object);
 
-        $cache->put($this->_identifier, $this->_object);
+    $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+  }
 
-        $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+  /**
+   * Tests support for CDB - Tiny Constant Database.
+   */
+  public function testCanCdbHandlerOnlyNewAndReadBeSupportedWithPersistantConnection()
+  {
+    $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-cdb2.cdb';
+
+    // create handler to write.
+    try {
+      $cacheMake = new CacheDba($path, 'cdb_make', 'n');
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
     }
 
-    /**
-     * @depends CacheDbaHandlersTest::testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection
-     */
-    public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
-    {
-        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache.db4';
-        $cache = new CacheDba($path, 'db4');
+    $this->assertInstanceOf('CacheDba', $cacheMake);
 
-        $this->assertInstanceOf('CacheDba', $cache);
+    $this->assertTrue($cacheMake->put(md5('test123'), $this->_object));
 
-        $cache->put($this->_identifier, $this->_object);
+    // for read we close the handler.
+    $cacheMake->closeDba();
 
-        $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+    // create handler to read.
+    try {
+      $cacheRead = new CacheDba($path, 'cdb', 'r');
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
     }
 
-    /**
-     * Tests support for CDB - Tiny Constant Database.
-     */
-    public function testCanCdbHandlerOnlyNewAndReadBeSupportedWithPersistantConnection()
-    {
-        $path = dirname(dirname(__FILE__)).'/tests/_drafts/test-cache-cdb2.cdb';
+    $this->assertTrue($cacheRead->has(md5('test123')));
 
-        // create handler to write.
-        $cacheMake = new CacheDba($path, 'cdb_make', 'n');
+    $this->assertInstanceOf('stdClass', $cacheRead->get(md5('test123')));
 
-        $this->assertInstanceOf('CacheDba', $cacheMake);
+    $cacheRead->closeDba();
+  }
 
-        $this->assertTrue($cacheMake->put(md5('test123'), $this->_object));
+  public function testCreateAnCdbHandler()
+  {
+  $path = dirname(dirname(__FILE__)) . '/tests/_drafts/simple-xml-test-cache-on-cdb.db';
 
-        // for read we close the handler.
-        $cacheMake->closeDba();
-
-        // create handler to read.
-        $cacheRead = new CacheDba($path, 'cdb', 'r');
-
-        $this->assertTrue($cacheRead->has(md5('test123')));
-
-        $this->assertInstanceOf('stdClass', $cacheRead->get(md5('test123')));
-
-        $cacheRead->closeDba();
+    try {
+      new CacheDba(
+        $path, "cdb", "n"
+      );
+      unlink($path);
+    } catch(RuntimeException $e) {
+      unlink($path);
+     $this->markTestSkipped($e->getMessage());
     }
+  }
+
+  public function testPutTheSameIdentifierTwiceToCdbHandler()
+  {
+    $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-cdb2.cdb';
+
+    // CREATE HANDLER TO WRITE.
+    try {
+      $cacheMake = new CacheDba($path, 'cdb_make', 'n');
+    } catch(RuntimeException $e) {
+      unlink($path);
+     $this->markTestSkipped($e->getMessage());
+    }
+
+    // first insert.
+    $this->assertTrue($cacheMake->put('key', 'data'));
+
+    // replace instead of insert.
+    $this->assertTrue($cacheMake->put('key', 'data-2'));
+
+    // for read we close the handler.
+    $cacheMake->closeDba();
+
+    // CREATE HANDLER TO READ.
+    try {
+      $cacheRead = new CacheDba($path, 'cdb', 'r');
+    } catch(RuntimeException $e) {
+      unlink($path);
+     $this->markTestSkipped($e->getMessage());
+    }
+
+    //check if data replaced.
+    $this->assertEquals('data', $cacheRead->get('key'));
+
+    $cacheRead->closeDba();
+
+    unlink($path);
+  }
 }

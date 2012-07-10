@@ -51,6 +51,10 @@ class CacheSerializer
       $objectInformation->object = $object->asXml();
     }
 
+    if (extension_loaded('igbinary') && function_exists('igbinary_serialize')) {
+      return igbinary_serialize($objectInformation);
+    }
+
     return serialize($objectInformation);
   }
 
@@ -60,7 +64,9 @@ class CacheSerializer
    */
   public function unserialize($object)
   {
-    $objectInformation = unserialize($object);
+    $objectInformation = (extension_loaded('igbinary') && function_exists('igbinary_unserialize'))
+      ? $objectInformation = igbinary_unserialize($object)
+      : $objectInformation = unserialize($object);
 
     if (true === $objectInformation->fake) {
       $objectInformation->object = $this->unmask($objectInformation->object);
