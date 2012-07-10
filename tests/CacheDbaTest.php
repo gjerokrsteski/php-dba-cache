@@ -106,7 +106,6 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
         $path, 'flatfile', 'c', false
       );
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
@@ -131,7 +130,6 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     try {
       $cache = new CacheDba($path, 'flatfile', 'c', false);
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
@@ -152,7 +150,6 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     try {
       $cache = new CacheDba($path, 'db4');
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
@@ -173,7 +170,6 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     try {
       $cache = new CacheDba($path, 'db4');
     } catch(RuntimeException $e) {
-      unlink($path);
      $this->markTestSkipped($e->getMessage());
     }
 
