@@ -51,11 +51,9 @@ class CacheSerializer
       $objectInformation->object = $object->asXml();
     }
 
-    if (extension_loaded('igbinary') && function_exists('igbinary_serialize')) {
-      return igbinary_serialize($objectInformation);
-    }
-
-    return serialize($objectInformation);
+    return (extension_loaded('igbinary') && function_exists('igbinary_serialize'))
+	  ? igbinary_serialize($objectInformation)
+	  : serialize($objectInformation);
   }
 
   /**
