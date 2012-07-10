@@ -98,14 +98,14 @@ class CacheDba
     $this->_serializer = new CacheSerializer();
   }
   
-    /**
-     * Closes an open dba resource
-     * @return void
-     */
-    public function __destruct()
-    {
-      $this->closeDba();
-    }
+	/**
+	 * Closes an open dba resource
+	 * @return void
+	 */
+	public function __destruct()
+	{
+	  $this->closeDba();
+	}
 
   /**
    * @param string $identifier
@@ -227,8 +227,8 @@ class CacheDba
   /**
    * Return an array of metadata for the given cache id.
    *
-   * - expire : the expire timestamp
-   * - mtime : timestamp of last modification time
+   * - expire = the expire timestamp
+   * - mtime = timestamp of last modification time
    *
    * @param string $id cache id
    * @return array|boolean
