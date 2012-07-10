@@ -1,21 +1,8 @@
 <?php
 require_once dirname(dirname(__FILE__)) . '/src/CacheDba.php';
 require_once dirname(dirname(__FILE__)) . '/src/CacheSerializer.php';
+require_once dirname(__FILE__) .'DummyFixtures.php';
 
-class Dummy1
-{
-  private $foo = 123;
-  protected $bar = array(1,2,3);
-  public $moo = 'moo';
-}
-
-class Dummy2 extends Dummy1
-{
-  public function __construct()
-  {
-    $this->moo = new Dummy1();
-  }
-}
 
 class CacheSerializerTest extends PHPUnit_Framework_TestCase
 {
