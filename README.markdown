@@ -23,7 +23,6 @@ Available options
     - Clean all entries
     - Clean expired entries
     - Flush the cache file
-    - Return the filling percentage of the backend storage
     - Optimizes the database file automatically after cleaning process
 
 Installation
