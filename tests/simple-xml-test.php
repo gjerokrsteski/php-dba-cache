@@ -1,10 +1,5 @@
 <?php
-error_reporting(E_ALL | E_STRICT);
-
-ini_set('display_errors', 1);
-
-require_once dirname(dirname(__FILE__)).'/src/CacheDba.php';
-require_once dirname(dirname(__FILE__)).'/src/CacheSerializer.php';
+require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'bootstrap.php';
 
 $string = "<?xml version='1.0'?>
 <document>
@@ -25,7 +20,7 @@ $simplexml = simplexml_load_string(
 $identifier = md5('simplexml_identifier');
 
 $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
-$cache = new CacheDba($path, 'db4');
+$cache = new Cache($path, 'db4');
 
 $cache->put($identifier, $simplexml, 60);
 

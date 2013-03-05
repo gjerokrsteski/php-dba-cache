@@ -48,7 +48,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
   public function testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection()
   {
     try {
-      $cache = new CacheDba(
+      $cache = new Cache(
         dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4', 'db4', 'c', false
       );
     } catch(RuntimeException $e) {
@@ -68,7 +68,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
   public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
   {
     try {
-      $cache = new CacheDba(dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4', 'db4');
+      $cache = new Cache(dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4', 'db4');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -89,7 +89,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
 
     // create handler to write.
     try {
-      $cacheMake = new CacheDba($path, 'cdb_make', 'n');
+      $cacheMake = new Cache($path, 'cdb_make', 'n');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -103,7 +103,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
 
     // create handler to read.
     try {
-      $cacheRead = new CacheDba($path, 'cdb', 'r');
+      $cacheRead = new Cache($path, 'cdb', 'r');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -120,7 +120,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
   $path = dirname(dirname(__FILE__)) . '/tests/_drafts/simple-xml-test-cache-on-cdb.db';
 
     try {
-      new CacheDba(
+      new Cache(
         $path, "cdb", "n"
       );
       unlink($path);
@@ -135,7 +135,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
 
     // CREATE HANDLER TO WRITE.
     try {
-      $cacheMake = new CacheDba($path, 'cdb_make', 'n');
+      $cacheMake = new Cache($path, 'cdb_make', 'n');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -151,7 +151,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
 
     // CREATE HANDLER TO READ.
     try {
-      $cacheRead = new CacheDba($path, 'cdb', 'r');
+      $cacheRead = new Cache($path, 'cdb', 'r');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }

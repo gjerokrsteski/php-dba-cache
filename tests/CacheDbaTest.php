@@ -7,7 +7,7 @@ require_once dirname(__FILE__) .'/DummyFixtures.php';
 class CacheDbaTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @var CacheDba
+   * @var Cache
    */
   private $_cache;
 
@@ -19,7 +19,7 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     parent::setUp();
 
     try {
-      $this->_cache = new CacheDba(dirname(dirname(__FILE__)) . '/tests/_drafts/cache.flat');
+      $this->_cache = new Cache(dirname(dirname(__FILE__)) . '/tests/_drafts/cache.flat');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -102,7 +102,7 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-get-all-ids.flat';
 
     try {
-      $cache = new CacheDba(
+      $cache = new Cache(
         $path, 'flatfile', 'c', false
       );
     } catch(RuntimeException $e) {
@@ -128,7 +128,7 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     $path  = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-insert.flat';
 
     try {
-      $cache = new CacheDba($path, 'flatfile', 'c', false);
+      $cache = new Cache($path, 'flatfile', 'c', false);
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -148,7 +148,7 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4';
 
     try {
-      $cache = new CacheDba($path, 'db4');
+      $cache = new Cache($path, 'db4');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -168,7 +168,7 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
     $path  = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4';
 
     try {
-      $cache = new CacheDba($path, 'db4');
+      $cache = new Cache($path, 'db4');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }

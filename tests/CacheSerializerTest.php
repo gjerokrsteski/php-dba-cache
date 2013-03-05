@@ -8,7 +8,7 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
 {
   public function testCreatingNewSerializerObject()
   {
-    $this->assertNotNull(new CacheSerializer());
+    $this->assertNotNull(new Serializer());
   }
 
   public function objectsProvider()
@@ -42,8 +42,7 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
    */
   public function testSerializingSomeObjects($object)
   {
-    $serializer = new CacheSerializer();
-    $serializer->serialize($object);
+    Serializer::serialize($object);
   }
 
   /**
@@ -53,11 +52,9 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
    */
   public function testUnserializingSomeObjectsAndCompareEachother($object)
   {
-    $unserializer = new CacheSerializer();
+    $serialized = Serializer::serialize($object);
 
-    $serialized = $unserializer->serialize($object);
-
-    $userItem = $unserializer->unserialize($serialized);
+    $userItem = Serializer::unserialize($serialized);
 
     $this->assertEquals($object, $userItem->object);
   }
@@ -86,7 +83,7 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
     $path  = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-with-simplexml.db4';
 
     try {
-      $cache = new CacheDba($path, 'db4');
+      $cache = new Cache($path, 'db4');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }

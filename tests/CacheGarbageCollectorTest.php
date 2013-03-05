@@ -7,7 +7,7 @@ require_once dirname(__FILE__) .'/DummyFixtures.php';
 class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @var CacheDba
+   * @var Cache
    */
   private $_cache;
 
@@ -21,7 +21,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     $path = dirname(dirname(__FILE__)) . '/tests/_drafts/garbage-collection-test-cache.flat';
 
     try {
-      $this->_cache = new CacheDba($path);
+      $this->_cache = new Cache($path);
     } catch(RuntimeException $e) {
       $this->markTestSkipped($e->getMessage());
     }
@@ -40,7 +40,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
 
   public function testCreatingGarbageCollectionObject()
   {
-    $garbageCollection = new CacheGarbageCollector($this->_cache);
+    $garbageCollection = new Sweeper($this->_cache);
 
     $this->assertInstanceOf('CacheGarbageCollector', $garbageCollection);
   }
@@ -64,7 +64,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     $this->_cache->put(md5('ZipArchive'), new ZipArchive());
     $this->_cache->put(md5('XMLReader'), new XMLReader());
 
-    $garbageCollection = new CacheGarbageCollector($this->_cache);
+    $garbageCollection = new Sweeper($this->_cache);
     $garbageCollection->cleanAll();
 
     $this->assertFalse(dba_fetch(md5('stdClass'), $dba));
@@ -92,8 +92,8 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     // wait two seconds to force the expiration-time-calculation.
     sleep(2);
 
-    $garbageCollection = new CacheGarbageCollector($this->_cache);
-    $garbageCollection->cleanByExpiration(1);
+    $garbageCollection = new Sweeper($this->_cache);
+    $garbageCollection->cleanOld();
 
     $this->assertFalse($this->_cache->has(md5('stdClass')));
     $this->assertFalse($this->_cache->has(md5('ZipArchive')));
@@ -120,8 +120,8 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     // wait one second to force the expiration-time-calculation.
     sleep(1);
 
-    $garbageCollection = new CacheGarbageCollector($this->_cache);
-    $garbageCollection->cleanByExpiration(3);
+    $garbageCollection = new Sweeper($this->_cache);
+    $garbageCollection->cleanOld();
 
     $this->assertInstanceOf('stdClass', $this->_cache->get(md5('stdClass')));
     $this->assertInstanceOf('ZipArchive', $this->_cache->get(md5('ZipArchive')));
@@ -138,7 +138,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
 
     // create cdb-handler to write.
     try {
-      $cacheMake = new CacheDba($path, 'cdb_make', 'n');
+      $cacheMake = new Cache($path, 'cdb_make', 'n');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -152,7 +152,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($cacheMake->put($testIdentifier2, new XMLReader()));
 
     // CacheGarbageCollector has no effect.
-    $garbageCollection = new CacheGarbageCollector($cacheMake);
+    $garbageCollection = new Sweeper($cacheMake);
     $garbageCollection->cleanAll();
 
     // deleting has no effect.
@@ -164,7 +164,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
 
     // create cdb-handler to read.
     try {
-      $cacheRead = new CacheDba($path, 'cdb', 'r');
+      $cacheRead = new Cache($path, 'cdb', 'r');
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -186,7 +186,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4';
 
     try {
-      $cache = new CacheDba($path, 'db4', 'c', false);
+      $cache = new Cache($path, 'db4', 'c', false);
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -199,7 +199,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('ZipArchive', $cache->get(md5('ZipArchive')));
     $this->assertInstanceOf('XMLReader', $cache->get(md5('XMLReader')));
 
-    $garbageCollection = new CacheGarbageCollector($cache);
+    $garbageCollection = new Sweeper($cache);
     $garbageCollection->cleanAll();
 
     $this->assertFalse($cache->get(md5('ZipArchive')));
@@ -212,7 +212,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
 
   public function testUtilMethods()
   {
-    $garbageCollection = new CacheGarbageCollector($this->_cache);
+    $garbageCollection = new Sweeper($this->_cache);
 
     $this->assertTrue(($garbageCollection->getFillingPercentage() > 0));
     $this->assertTrue($garbageCollection->flush());
