@@ -6,7 +6,7 @@ $config = array(
    */
   'file'         => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app.cache',
 
-  /**
+  /*
    * You have to install one of this handlers before use.
    *
    * cdb      = Tiny Constant Database - for reading.
@@ -32,12 +32,12 @@ $config = array(
    */
   'mode'         => 'c',
 
-  /**
+  /*
    * Open the database persistently
    */
   'persistently' => true,
 
-  /**
+  /*
    * The date for mat for the view.
    */
   'date_format' => 'Y-m-d H:i:s',
