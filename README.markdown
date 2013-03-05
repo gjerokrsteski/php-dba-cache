@@ -22,7 +22,6 @@ Available options
     CacheGarbageCollector (optional)
     - Clean all entries
     - Clean expired entries
-    - Clean entries by special expiration time
     - Flush the cache file
     - Return the filling percentage of the backend storage
     - Optimizes the database file automatically after cleaning process
@@ -85,7 +84,7 @@ Sample for Oracle Berkeley DB 4 with persistent connection
 
     <?php
 
-    $cache = new CacheDba(
+    $cache = new Cache(
       '/your/path/to/the/cahe-file/cache.db4', 'db4'
     );
     
@@ -104,12 +103,11 @@ Sample for Oracle Berkeley DB 4 with persistent connection
     $cache->get($yourObjectIdentifier);
     
     // For the garbage collection you can create an cron-job starting once a day.
-    $garbageCollection = new CacheGarbageCollector($cache);
-    $garbageCollection->cleanAll();
+    $sweeper = new Sweeper($cache);
+    $sweeper->cleanAll();
     
-    // or clean all objects older
-    // than expiration of 5 minutes == 300 seconds since now.
-    $garbageCollection->cleanByExpiration(300);
+    // or clean all objects older than given expiration since now.
+    $sweeper->cleanOld();
     
     ?>
 
@@ -134,7 +132,7 @@ Saving SimpleXMLElement instances into DB 4 with persistent connection
     $identifier = md5('simplexml_identifier');
 
     $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
-    $cache = new CacheDba($path, 'db4');
+    $cache = new Cache($path, 'db4');
 
     $cache->put($identifier, $simplexml);
 
