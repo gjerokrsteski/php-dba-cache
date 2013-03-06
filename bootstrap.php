@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL | E_STRICT);
+error_reporting(-1);
 
 ini_set('default_charset', 'UTF-8');
 
@@ -9,7 +9,8 @@ ini_set('display_errors', 'On');
 
 set_include_path(
     dirname(dirname(__FILE__))
-    .'/php-dba-cache'
+    .DIRECTORY_SEPARATOR
+    .'php-dba-cache'
     .PATH_SEPARATOR
     .dirname(__FILE__)
     .PATH_SEPARATOR

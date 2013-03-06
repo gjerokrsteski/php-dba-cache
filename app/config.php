@@ -14,6 +14,7 @@ $config = array(
    * db4      = Oracle Berkeley DB 4   - for reading and writing.
    * qdbm     = Quick Database Manager - for reading and writing.
    * gdbm     = GNU Database Manager   - for reading and writing.
+   * inifile  = Ini File               - for reading and writing.
    * flatfile = default dba extension  - for reading and writing.
    *
    * Use flatfile-handler only when you cannot install one,
@@ -35,7 +36,7 @@ $config = array(
   /*
    * Open the database persistently
    */
-  'persistently' => true,
+  'persistently' => false,
 
   /*
    * The date for mat for the view.

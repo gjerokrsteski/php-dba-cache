@@ -27,16 +27,17 @@
 class Serializer
 {
   /**
-   * @param mixed $object
+   * @param $object
    * @param bool $ltime
-   * @return string containing a byte-stream representation.
+   * @return string
+   * @throws RuntimeException
    */
   public static function serialize($object, $ltime = false)
   {
     $masked = false;
 
     if (false === is_object($object)) {
-      $object = static::mask($object);
+      $object = (object)$object;
       $masked = true;
     }
 
@@ -51,19 +52,36 @@ class Serializer
       $capsule->object = $object->asXml();
     }
 
-    return serialize($capsule);
+    $res = @serialize($capsule);
+
+    if ($res === false) {
+      $err = error_get_last();
+      throw new RuntimeException($err['message']);
+    }
+
+    return $res;
   }
 
   /**
-   * @param string $object
+   * @param $object
    * @return Capsule
+   * @throws RuntimeException
    */
   public static function unserialize($object)
   {
-    $capsule = unserialize($object);
+    $capsule = @unserialize($object);
+
+    if ($capsule === false) {
+      $err = error_get_last();
+      throw new RuntimeException($err['message']);
+    }
 
     if (true === $capsule->fake) {
-      $capsule->object = static::unmask($capsule->object);
+        if (isset($capsule->object->scalar)) {
+          $capsule->object = $capsule->object->scalar;
+        } else {
+          $capsule->object = (array)$capsule->object;
+        }
     }
 
     if ($capsule->type == 'SimpleXMLElement') {
@@ -71,27 +89,5 @@ class Serializer
     }
 
     return $capsule;
-  }
-
-  /**
-   * @param $item
-   * @return object
-   */
-  private static function mask($item)
-  {
-    return (object)$item;
-  }
-
-  /**
-   * @param $item
-   * @return array
-   */
-  private static function unmask($item)
-  {
-    if (isset($item->scalar)) {
-      return $item->scalar;
-    }
-
-    return (array)$item;
   }
 }

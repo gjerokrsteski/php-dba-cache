@@ -11,13 +11,13 @@ function factory($config)
   return array($cache, $sweeper);
 }
 
-// put a test-entry for two seconds
+// create an test-entry for two seconds.
 function put(Cache $cache)
 {
-  $cache->put(uniqid('test_'), array( rand(1, 100) ), 2);
+  $cache->put(uniqid('test_'), (object)array( rand(1, 100) ), 2);
 }
 
-// pretty printer for byte values
+// pretty printer for byte values.
 function bsize($s) {
 	foreach (array('','K','M','G') as $i => $k) {
 		if ($s < 1024) break;
@@ -26,16 +26,29 @@ function bsize($s) {
 	return sprintf("%5.1f %sBytes",$s,$k);
 }
 
+// retrieve an cache and a cache-sweeper.
 try {
   list($cache, $sweeper) = factory($config);
 } catch (Exception $e) {
   die($e->getMessage());
 }
 
+// load the configuration at the global namespace.
 extract($config);
 
-$authenticated = false;
+// make a list of all the available handlers.
+$available_handlers = '';
+foreach (dba_handlers(true) as $handler_name => $handler_version) {
+  $handler_version = str_replace('$', '', $handler_version);
+  if($handler == $handler_name) {
+    $handler_in_use  = "$handler_name: $handler_version <br />";
+    continue;
+  }
+  $available_handlers .= "$handler_name: $handler_version <br />";
+}
 
+// compute the user authentication.
+$authenticated = false;
 if (isset($_POST['login']) || isset($_SERVER['PHP_AUTH_USER'])) {
 	if (!isset($_SERVER['PHP_AUTH_USER']) ||
 		!isset($_SERVER['PHP_AUTH_PW']) ||
@@ -44,9 +57,8 @@ if (isset($_POST['login']) || isset($_SERVER['PHP_AUTH_USER'])) {
 		Header("WWW-Authenticate: Basic realm=\"PHP DBA Cache Login\"");
 		Header("HTTP/1.0 401 Unauthorized");
     exit;
-	} else {
-    $authenticated = true;
 	}
+    $authenticated = true;
 }
 
 if(isset($_POST['create-test-entry'])) {
@@ -160,10 +172,14 @@ $file_info  = new SplFileInfo($file);
         <table class="table table-bordered  table-striped  table-condensed">
             <tbody>
             <tr>
-                <td class="">DBA Handler</td>
-                <td><?=$handler?></td>
+                <td class="">DBA Handler In Use</td>
+                <td><?=$handler_in_use?></td>
             </tr>
             <tr>
+                <td class="">Available DBA Handlers</td>
+                <td><?=$available_handlers?></td>
+            </tr>
+                        <tr>
                 <td class="">DBA Cache File</td>
                 <td><?=$cache->getCacheFile()?></td>
             </tr>
@@ -190,8 +206,8 @@ $file_info  = new SplFileInfo($file);
                 <td><?=date($date_format, $file_info->getCTime())?></td>
             </tr>
             <tr>
-                <td class="">Last Access Time</td>
-                <td><?=date($date_format, $file_info->getATime())?></td>
+                <td class="">Last Modified Time</td>
+                <td><?=date($date_format, $file_info->getMTime())?></td>
             </tr>
             </tbody>
         </table>
@@ -204,19 +220,19 @@ $file_info  = new SplFileInfo($file);
 
         <div class="row">
             <div class="span4">
-              <div class="well">
+              <div class="well well-small">
                 <h4><?=bsize($file_info->getSize())?></h4>
                 <p>Cache file in use size</p>
               </div>
             </div>
             <div class="span4">
-              <div class="well">
+              <div class="well well-small">
                 <h4><?=bsize(disk_free_space($file_info->getPath()))?></h4>
                 <p>Cache directory free size</p>
               </div>
             </div>
             <div class="span4">
-                   <div class="well">
+                   <div class="well well-small">
                      <h4><?=bsize(disk_total_space($file_info->getPath()))?></h4>
                      <p>Cache directory total size</p>
                    </div>
@@ -278,8 +294,11 @@ $file_info  = new SplFileInfo($file);
             <button class="btn btn-success" type="submit" name="login">Login and Sweep</button>
           <? endif; ?>
 
-          <? if ($authenticated === true) : ?>
+          <? if ($authenticated === true && $cache->erasable()) : ?>
             <button class="btn btn-success" type="submit" name="delete-old">Remove old entries</button>
+          <? endif; ?>
+
+          <? if ($authenticated === true) : ?>
             <button class="btn btn-danger" type="submit" name="delete-all">Flush Cache</button>
           <? endif; ?>
         </form>
@@ -292,7 +311,6 @@ $file_info  = new SplFileInfo($file);
                     <th class="">Key</th>
                     <th>Last Modification Time</th>
                     <th>Expire Time</th>
-
                 </tr>
                 <?php
                 $key = dba_firstkey($cache->getDba());

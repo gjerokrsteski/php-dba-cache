@@ -37,7 +37,7 @@ class Cache
   protected $_dba;
 
   /**
-   * @var resource
+   * @var string
    */
   protected $_handler;
 
@@ -73,14 +73,25 @@ class Cache
   public function __construct($file, $handler = 'flatfile', $mode = 'c', $persistently = true)
   {
     if (false === extension_loaded('dba')) {
-      throw new RuntimeException('The DBA extension is required for this wrapper, but the extension is not loaded');
+      throw new RuntimeException(
+        'The DBA extension is required for this wrapper, but the extension is not loaded'
+      );
     }
 
     if (false === in_array($handler, dba_handlers(false))) {
-      throw new RuntimeException('The ' . $handler . ' handler is required for the DBA extension, but the handler is not installed');
+      throw new RuntimeException(
+        'The ' . $handler . ' handler is required for the DBA extension, but the handler is not installed'
+      );
     }
 
-    $this->_dba = (true === $persistently) ? dba_popen($file, $mode, $handler) : dba_open($file, $mode, $handler);
+    $this->_dba = (true === $persistently)
+      ? @dba_popen($file, $mode, $handler)
+      : @dba_open($file, $mode, $handler);
+
+    if ($this->_dba === false) {
+      $err = error_get_last();
+      throw new RuntimeException($err['message']);
+    }
 
     $this->_cacheFile  = $file;
     $this->_handler    = $handler;
@@ -98,7 +109,7 @@ class Cache
   /**
    * @param string $identifier
    * @param mixed $object
-   * @param bool $ltime
+   * @param int|bool $ltime Lifetime in seconds otherwise cache forever.
    * @return bool
    */
   public function put($identifier, $object, $ltime = false)
@@ -108,6 +119,16 @@ class Cache
     }
 
     return dba_insert($identifier, Serializer::serialize($object, $ltime), $this->_dba);
+  }
+
+  /**
+   * @param string $identifier
+   * @param mixed $object
+   * @return bool
+   */
+  public function forever($identifier, $object)
+  {
+    return $this->put($identifier, $object, false);
   }
 
   /**
@@ -143,7 +164,7 @@ class Cache
    * @param string $identifier
    * @return Capsule|boolean
    */
-  public  function fetch($identifier)
+  public function fetch($identifier)
   {
     $fetchObject = dba_fetch($identifier, $this->_dba);
 
@@ -164,7 +185,11 @@ class Cache
       return false;
     }
 
-    return dba_delete($identifier, $this->_dba);
+    if ($this->erasable()) {
+      return dba_delete($identifier, $this->_dba);
+    }
+
+    return true;
   }
 
   /**
@@ -225,7 +250,7 @@ class Cache
   {
     $res = $this->fetch($id);
 
-    if (true === is_object($res)) {
+    if ($res instanceof Capsule) {
       return array(
         'expire' => $res->mtime + $res->ltime,
         'mtime'  => $res->mtime,
@@ -233,5 +258,17 @@ class Cache
     }
 
     return false;
+  }
+
+  /**
+   * Ensures if a single cache-item can be deleted.
+   * @param null|string $handler
+   * @return bool
+   */
+  public function erasable($handler = null)
+  {
+    $handler = !!$handler ?: $this->_handler;
+
+    return in_array($handler, array('inifile', 'gdbm', 'qdbm', 'db4'), true);
   }
 }
