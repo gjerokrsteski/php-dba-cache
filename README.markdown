@@ -11,20 +11,20 @@ have to matter about the size of the cache-file. It depends on the free space of
 Available options
 ===========================
 
-    CacheDba
-    - Open a given dba database
-    - Insert a new record with a given key (persistently or with a given expiration time)
-    - Get a record with a given key
-    - Replace the value of a record with a given key
-    - Delete the record with a given key
-    - Return metadata for the given key: expire timestamp & timestamp of last modification time
-    - Get all keys from cache
+Cache
+- Open a given dba database
+- Insert a new record with a given key (persistently or with a given expiration time)
+- Get a record with a given key
+- Replace the value of a record with a given key
+- Delete the record with a given key
+- Return metadata for the given key: expire timestamp & timestamp of last modification time
+- Get all keys from cache
     
-    CacheGarbageCollector (optional)
-    - Clean all entries
-    - Clean expired entries
-    - Flush the cache file
-    - Optimizes the database file automatically after cleaning process
+Sweeper - CacheGarbageCollector (optional)
+- Clean all entries
+- Clean expired entries
+- Flush the cache file
+- Optimizes the database file automatically after cleaning process
 
 Installation
 ============
@@ -72,12 +72,12 @@ More about requirements: http://www.php.net/manual/en/dba.requirements.php
 Nice to know
 ------------
 
-    Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
-    can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
-    are: QDBM, Berkeley DB (DB4), NDBM and least the Flatfile.
-    Most problematic are dbm and ndbm which conflict with many installations. The reason for this is
-    that on several systems these libraries are part of more than one other library. The configuration
-    test only prevents you from configuring malfaunctioning single handlers but not combinations.
+Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
+can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
+are: QDBM, Berkeley DB (DB4), NDBM and least the Flatfile.
+Most problematic are dbm and ndbm which conflict with many installations. The reason for this is
+that on several systems these libraries are part of more than one other library. The configuration
+test only prevents you from configuring malfaunctioning single handlers but not combinations.
 
 Sample for Oracle Berkeley DB 4 with persistent connection
 ----------------------------------------------------------
@@ -149,14 +149,14 @@ Saving SimpleXMLElement instances into DB 4 with persistent connection
 Benchmark Test of DBM Brothers
 ------------------------------
 
-    This benchmark test is to calculate processing time (real time)
-    and file size of database. Writing test is to store 1,000,000 records. Reading test is
-    to fetch all of its records. Both of the key and the value of each record are such 8-byte
-    strings as `00000001', `00000002', `00000003'... Tuning parameters of each DBM are set to
-    display its best performance. Platform: Linux 2.4.31 kernel, EXT2 file system,
-    Pentium4 1.7GHz CPU, 1024MB RAM, ThinkPad T42 Compilation: gcc 3.3.2 (using -O3), glibc 2.3.3
+This benchmark test is to calculate processing time (real time)
+and file size of database. Writing test is to store 1,000,000 records. Reading test is
+to fetch all of its records. Both of the key and the value of each record are such 8-byte
+strings as `00000001', `00000002', `00000003'... Tuning parameters of each DBM are set to
+display its best performance. Platform: Linux 2.4.31 kernel, EXT2 file system,
+Pentium4 1.7GHz CPU, 1024MB RAM, ThinkPad T42 Compilation: gcc 3.3.2 (using -O3), glibc 2.3.3
 
-    Result
+Result
 
     NAME        DESCRIPTION                             WRITE TIME  READ TIME   FILE SIZE
     QDBM        Quick Database Manager 1.8.74           1.89        1.58        55257
@@ -171,5 +171,5 @@ Benchmark Test of DBM Brothers
     BDB-BT-ASC B+ tree API of BDB (ascending order)     3.04        3.06        27520
     BDB-BT-RND B+ tree API of BDB (at random)           10.03       4.15        29120
 
-    Unit of time is seconds. Unit of size is kilo bytes. Read time of SDBM can not be calculated
-    because its database is broken when more than 100000 records.
+Unit of time is seconds. Unit of size is kilo bytes. Read time of SDBM can not be calculated
+because its database is broken when more than 100000 records.
