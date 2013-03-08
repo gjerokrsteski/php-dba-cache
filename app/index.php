@@ -291,7 +291,7 @@ $file_info  = new SplFileInfo($file);
             <button class="btn btn-success" type="submit" name="create-test-entry">Create Test Entry</button>
 
           <? if ($authenticated === false) : ?>
-            <button class="btn btn-success" type="submit" name="login">Login and Sweep</button>
+            <button class="btn btn-info" type="submit" name="login">Login and Sweep</button>
           <? endif; ?>
 
           <? if ($authenticated === true && $cache->erasable()) : ?>

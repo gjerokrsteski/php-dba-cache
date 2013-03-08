@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) .'/DummyFixtures.php';
 
 
-class CacheDbaTest extends PHPUnit_Framework_TestCase
+class CacheTest extends PHPUnit_Framework_TestCase
 {
   /**
    * @var Cache
@@ -62,7 +62,6 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends CacheDbaTest::testCreateNewCacheObjectNoException
    * @dataProvider objectsProvider
    */
   public function testPutSomeObjectsIntoTheCache($identifier, $object)
@@ -77,7 +76,7 @@ class CacheDbaTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends CacheDbaTest::testPutSomeObjectsIntoTheCache
+   * @depends CacheTest::testPutSomeObjectsIntoTheCache
    * @dataProvider objectsProvider
    */
   public function testGetSomeObjectsFromTheCacheAndCompareEachother($identifier, $expectedObject)

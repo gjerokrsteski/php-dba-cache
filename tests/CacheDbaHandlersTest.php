@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) .'/DummyFixtures.php';
 
 
-class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
+class CacheHandlersTest extends PHPUnit_Framework_TestCase
 {
   /**
    * @var stdClass
@@ -53,7 +53,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
      $this->markTestSkipped($e->getMessage());
     }
 
-    $this->assertInstanceOf('CacheDba', $cache);
+    $this->assertInstanceOf('Cache', $cache);
 
     $cache->put($this->_identifier, $this->_object);
 
@@ -61,7 +61,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends CacheDbaHandlersTest::testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection
+   * @depends CacheHandlersTest::testOracleBerkeleyDb4HandlerSupportWithoutPersistantConnection
    */
   public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
   {
@@ -71,7 +71,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
      $this->markTestSkipped($e->getMessage());
     }
 
-    $this->assertInstanceOf('CacheDba', $cache);
+    $this->assertInstanceOf('Cache', $cache);
 
     $cache->put($this->_identifier, $this->_object);
 
@@ -92,7 +92,7 @@ class CacheDbaHandlersTest extends PHPUnit_Framework_TestCase
      $this->markTestSkipped($e->getMessage());
     }
 
-    $this->assertInstanceOf('CacheDba', $cacheMake);
+    $this->assertInstanceOf('Cache', $cacheMake);
 
     $this->assertTrue($cacheMake->put(md5('test123'), $this->_object));
 
