@@ -5,7 +5,7 @@ The php-dba-cache uses the database (dbm-style) abstraction layer to cache/store
 strings, integers or arrays. Even instances of SimpleXMLElement can be put to the cache. You dont 
 have to matter about the size of the cache-file. It depends on the free space of your disk.
 
-[![Build Status](https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master)]
+![Build Status](https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master)
     
 
 Available options
@@ -29,44 +29,44 @@ Available options
 Installation
 ============
 
-    "By using the --enable-dba=shared configuration option you can build a dynamic loadable module
-    to enable PHP for basic support of dbm-style databases. You also have to add support for at
-    least one of the following handlers by specifying the --with-XXXX configure switch
-    to your PHP configure line."
+"By using the --enable-dba=shared configuration option you can build a dynamic loadable module
+to enable PHP for basic support of dbm-style databases. You also have to add support for at
+least one of the following handlers by specifying the --with-XXXX configure switch
+to your PHP configure line."
     
-    More about installation: http://www.php.net/manual/en/dba.installation.php
+More about installation: http://www.php.net/manual/en/dba.installation.php
 
 DBA handlers
 ============
 
-    The behaviour of various aspects for the caching depends on the implementation of yor
-    installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
-    cdb, cdb_make, gdbm. The cdb & cdb_make family is the fastest, but you have to create
-    you own garbage-collection-cleaner or you can delete it manually. Take a look at the tests
-    (https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
-    how to use the cache.
+The behaviour of various aspects for the caching depends on the implementation of yor
+installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
+cdb, cdb_make, gdbm. The cdb & cdb_make family is the fastest, but you have to create
+you own garbage-collection-cleaner or you can delete it manually. Take a look at the tests
+(https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
+how to use the cache.
 
-    cdb = Tiny Constant Database - for reading
-    Cdb is "a fast, reliable, lightweight package for creating and reading constant databases.
-    " It is from the author of qmail and can be found at http://cr.yp.to/cdb.html. Since it is
-    constant, we support only reading operations. And since PHP 4.3.0 we support writing
-    (not updating) through the internal cdb library.
+cdb = Tiny Constant Database - for reading
+Cdb is "a fast, reliable, lightweight package for creating and reading constant databases.
+" It is from the author of qmail and can be found at http://cr.yp.to/cdb.html. Since it is
+constant, we support only reading operations. And since PHP 4.3.0 we support writing
+(not updating) through the internal cdb library.
 
-    cdb_make = Tiny Constant Database - for writing
-    Since PHP 4.3.0 we support creation of cdb files when the bundled cdb library is used.
+cdb_make = Tiny Constant Database - for writing
+Since PHP 4.3.0 we support creation of cdb files when the bundled cdb library is used.
 
-    db4 = Oracle Berkeley DB 4 - for reading and writing
-    DB4 is Sleepycat Software's DB4. This is available since PHP 4.3.2.
+db4 = Oracle Berkeley DB 4 - for reading and writing
+DB4 is Sleepycat Software's DB4. This is available since PHP 4.3.2.
 
-    gdbm = GNU Database Manager - for reading and writing
-    Gdbm is the GNU database manager.
+gdbm = GNU Database Manager - for reading and writing
+Gdbm is the GNU database manager.
 
-    flatfile = default dba extension - for reading and writing
-    This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
-    and should be avoided. However you may use this where files were created in this format.
-    That happens when configure could not find any external library.
+flatfile = default dba extension - for reading and writing
+This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
+and should be avoided. However you may use this where files were created in this format.
+That happens when configure could not find any external library.
     
-    More about requirements: http://www.php.net/manual/en/dba.requirements.php
+More about requirements: http://www.php.net/manual/en/dba.requirements.php
 
 
 Nice to know
