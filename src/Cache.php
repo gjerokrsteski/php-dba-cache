@@ -267,7 +267,7 @@ class Cache
    */
   public function erasable($handler = null)
   {
-    $handler = !!$handler ?: $this->_handler;
+    $handler = (!$handler) ? $this->_handler : $handler;
 
     return in_array($handler, array('inifile', 'gdbm', 'qdbm', 'db4'), true);
   }
