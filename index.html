@@ -125,7 +125,8 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <span class="c1">// Than somewhere at your project.</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">);</span>
 
-<span class="c1">// For the garbage collection you can create an cron-job starting once a day.</span>
+<span class="c1">// For the garbage collection </span>
+<span class="c1">// you can create an cron-job starting once a day.</span>
 <span class="nv">$sweeper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweeper</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
 <span class="nv">$sweeper</span><span class="o">-&gt;</span><span class="na">cleanAll</span><span class="p">();</span>
 
@@ -151,7 +152,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 
 <span class="nv">$identifier</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="s1">'simplexml_identifier'</span><span class="p">);</span>
 
-<span class="nv">$path</span> <span class="o">=</span> <span class="nb">dirname</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">))</span><span class="o">.</span><span class="s1">'/tests/_drafts/simple-xml-test-cache.db4'</span><span class="p">;</span>
+<span class="nv">$path</span> <span class="o">=</span> <span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">)</span><span class="o">.</span><span class="s1">'/simple-xml-test-cache.db4'</span><span class="p">;</span>
 <span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="s1">'db4'</span><span class="p">);</span>
 
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$identifier</span><span class="p">,</span> <span class="nv">$simplexml</span><span class="p">);</span>
@@ -160,8 +161,10 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 
 <span class="nb">error_log</span><span class="p">(</span><span class="s1">' - PUT IN CACHE : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$simplexml</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
 <span class="nb">error_log</span><span class="p">(</span><span class="s1">' - GET FROM CACHE : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$getObject</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
-<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - IS SAME OBJECT : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">((</span><span class="nv">$simplexml</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">()</span> <span class="o">===</span> <span class="nv">$getObject</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">())</span>
-                                    <span class="o">?</span> <span class="s1">'true'</span> <span class="o">:</span> <span class="s1">'false'</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
+
+<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - IS SAME OBJECT : '</span><span class="o">.</span>
+    <span class="nb">print_r</span><span class="p">((</span><span class="nv">$simplexml</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">()</span> <span class="o">===</span> <span class="nv">$getObject</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">())</span>
+            <span class="o">?</span> <span class="s1">'true'</span> <span class="o">:</span> <span class="s1">'false'</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
 </pre></div>
 
 <h2>Benchmark Test of DBM Brothers</h2>
@@ -175,7 +178,7 @@ Pentium4 1.7GHz CPU, 1024MB RAM, ThinkPad T42 Compilation: gcc 3.3.2 (using -O3)
 
 <p>Result</p>
 
-<pre><code>NAME        DESCRIPTION                             WRITE TIME  READ TIME   FILE SIZE
+<pre lang="cli"><code>NAME        DESCRIPTION                             WRITE TIME  READ TIME   FILE SIZE
 QDBM        Quick Database Manager 1.8.74           1.89        1.58        55257
 NDBM        New Database Manager 5.1                8.07        7.79        814457
 SDBM        Substitute Database Manager 1.0.2       11.32       0.00        606720
