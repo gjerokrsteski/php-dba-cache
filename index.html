@@ -37,8 +37,6 @@
 strings, integers or arrays. Even instances of SimpleXMLElement can be put to the cache. You dont 
 have to matter about the size of the cache-file. It depends on the free space of your disk.</p>
 
-<p><img src="https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master" alt="Build Status"></p>
-
 <h1>Available options</h1>
 
 <p>Cache</p>
@@ -109,69 +107,62 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 
 <h2>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
 
-<pre><code>&lt;?php
+<div class="highlight"><pre><span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span>
+  <span class="s1">'/your/path/to/the/cahe-file/cache.db4'</span><span class="p">,</span> <span class="s1">'db4'</span>
+<span class="p">);</span>
 
-$cache = new Cache(
-  '/your/path/to/the/cahe-file/cache.db4', 'db4'
-);
+<span class="nv">$yorObject</span>            <span class="o">=</span> <span class="k">new</span> <span class="nx">YourObjectYouWantToPutInCache</span><span class="p">();</span>
+<span class="nv">$yourObjectIdentifier</span> <span class="o">=</span> <span class="s1">'md5(get_class($yorObject))'</span><span class="p">;</span>
 
-$yorObject            = new YourObjectYouWantToPutInCache();
-$yourObjectIdentifier = 'md5(get_class($yorObject))';
+<span class="c1">// Check if your object is in the cache.</span>
+<span class="c1">// You also can ignore it, and let the CacheDba do it for you.</span>
+<span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">==</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">);</span>
+<span class="p">}</span>
 
-// Check if your object is in the cache.
-// You also can ignore it, and let the CacheDba do it for you.
-if (false == $cache-&gt;has($yourObjectIdentifier)) {
-  $cache-&gt;delete($yourObjectIdentifier);
-}
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">,</span> <span class="nv">$yorObject</span><span class="p">);</span>
 
-$cache-&gt;put($yourObjectIdentifier, $yorObject);
+<span class="c1">// Than somewhere at your project.</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">);</span>
 
-// Than somewhere at your project.
-$cache-&gt;get($yourObjectIdentifier);
+<span class="c1">// For the garbage collection you can create an cron-job starting once a day.</span>
+<span class="nv">$sweeper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweeper</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
+<span class="nv">$sweeper</span><span class="o">-&gt;</span><span class="na">cleanAll</span><span class="p">();</span>
 
-// For the garbage collection you can create an cron-job starting once a day.
-$sweeper = new Sweeper($cache);
-$sweeper-&gt;cleanAll();
-
-// or clean all objects older than given expiration since now.
-$sweeper-&gt;cleanOld();
-
-?&gt;
-</code></pre>
+<span class="c1">// or clean all objects older than given expiration since now.</span>
+<span class="nv">$sweeper</span><span class="o">-&gt;</span><span class="na">cleanOld</span><span class="p">();</span>
+</pre></div>
 
 <h2>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
 
-<pre><code>&lt;?php
-$string = "&lt;?xml version='1.0'?&gt;
-&lt;document&gt;
- &lt;title&gt;Let us cache&lt;/title&gt;
- &lt;from&gt;Joe&lt;/from&gt;
- &lt;to&gt;Jane&lt;/to&gt;
- &lt;body&gt;Some content here&lt;/body&gt;
-&lt;/document&gt;";
+<div class="highlight"><pre><span class="nv">$string</span> <span class="o">=</span> <span class="s2">"&lt;?xml version='1.0'?&gt;</span>
+<span class="s2">&lt;document&gt;</span>
+<span class="s2"> &lt;title&gt;Let us cache&lt;/title&gt;</span>
+<span class="s2"> &lt;from&gt;Joe&lt;/from&gt;</span>
+<span class="s2"> &lt;to&gt;Jane&lt;/to&gt;</span>
+<span class="s2"> &lt;body&gt;Some content here&lt;/body&gt;</span>
+<span class="s2">&lt;/document&gt;"</span><span class="p">;</span>
 
-$simplexml = simplexml_load_string(
-    $string,
-    'SimpleXMLElement',
-    LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
-);
+<span class="nv">$simplexml</span> <span class="o">=</span> <span class="nb">simplexml_load_string</span><span class="p">(</span>
+    <span class="nv">$string</span><span class="p">,</span>
+    <span class="s1">'SimpleXMLElement'</span><span class="p">,</span>
+    <span class="nx">LIBXML_NOERROR</span><span class="o">|</span><span class="nx">LIBXML_NOWARNING</span><span class="o">|</span><span class="nx">LIBXML_NONET</span>
+<span class="p">);</span>
 
-$identifier = md5('simplexml_identifier');
+<span class="nv">$identifier</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="s1">'simplexml_identifier'</span><span class="p">);</span>
 
-$path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
-$cache = new Cache($path, 'db4');
+<span class="nv">$path</span> <span class="o">=</span> <span class="nb">dirname</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">))</span><span class="o">.</span><span class="s1">'/tests/_drafts/simple-xml-test-cache.db4'</span><span class="p">;</span>
+<span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="s1">'db4'</span><span class="p">);</span>
 
-$cache-&gt;put($identifier, $simplexml);
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$identifier</span><span class="p">,</span> <span class="nv">$simplexml</span><span class="p">);</span>
 
-$getObject = $cache-&gt;get($identifier);
+<span class="nv">$getObject</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$identifier</span><span class="p">);</span>
 
-error_log(' - PUT IN CACHE : '.print_r($simplexml, true));
-error_log(' - GET FROM CACHE : '.print_r($getObject, true));
-error_log(' - IS SAME OBJECT : '.print_r(($simplexml-&gt;asXml() === $getObject-&gt;asXml())
-                                    ? 'true' : 'false', true));
-
-?&gt;
-</code></pre>
+<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - PUT IN CACHE : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$simplexml</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
+<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - GET FROM CACHE : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$getObject</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
+<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - IS SAME OBJECT : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">((</span><span class="nv">$simplexml</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">()</span> <span class="o">===</span> <span class="nv">$getObject</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">())</span>
+                                    <span class="o">?</span> <span class="s1">'true'</span> <span class="o">:</span> <span class="s1">'false'</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
+</pre></div>
 
 <h2>Benchmark Test of DBM Brothers</h2>
 
