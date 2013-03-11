@@ -142,6 +142,15 @@ error_log(' - IS SAME OBJECT : '.
             ? 'true' : 'false', true));
 ```
 
+PHP DBA Cache Monitor
+---------------------
+PHP DBA Cache Monitor is an adaptive web-interface to provide a comprehensive, easy to use 
+and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, 
+it also makes it easier to administer web-servers running DBA by providing comfortable features 
+for optimizing the cache and deleting entries from the cache. 
+ 
+ ![PHP DBA cache Monitor 2013](http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d_n.jpg "PHP DBA Cache Monitor")
+
 
 Benchmark Test of DBM Brothers
 ------------------------------
@@ -171,3 +180,4 @@ BDB-BT-RND B+ tree API of BDB (at random)           10.03       4.15        2912
 
 Unit of time is seconds. Unit of size is kilo bytes. Read time of SDBM can not be calculated
 because its database is broken when more than 100000 records.
+
