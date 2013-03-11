@@ -79,68 +79,65 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 Sample for Oracle Berkeley DB 4 with persistent connection
 ----------------------------------------------------------
 
-    <?php
+```php
+$cache = new Cache(
+  '/your/path/to/the/cahe-file/cache.db4', 'db4'
+);
 
-    $cache = new Cache(
-      '/your/path/to/the/cahe-file/cache.db4', 'db4'
-    );
-    
-    $yorObject            = new YourObjectYouWantToPutInCache();
-    $yourObjectIdentifier = 'md5(get_class($yorObject))';
-    
-    // Check if your object is in the cache.
-    // You also can ignore it, and let the CacheDba do it for you.
-    if (false == $cache->has($yourObjectIdentifier)) {
-      $cache->delete($yourObjectIdentifier);
-    }
-    
-    $cache->put($yourObjectIdentifier, $yorObject);
-    
-    // Than somewhere at your project.
-    $cache->get($yourObjectIdentifier);
-    
-    // For the garbage collection you can create an cron-job starting once a day.
-    $sweeper = new Sweeper($cache);
-    $sweeper->cleanAll();
-    
-    // or clean all objects older than given expiration since now.
-    $sweeper->cleanOld();
-    
-    ?>
+$yorObject            = new YourObjectYouWantToPutInCache();
+$yourObjectIdentifier = 'md5(get_class($yorObject))';
+
+// Check if your object is in the cache.
+// You also can ignore it, and let the CacheDba do it for you.
+if (false == $cache->has($yourObjectIdentifier)) {
+  $cache->delete($yourObjectIdentifier);
+}
+
+$cache->put($yourObjectIdentifier, $yorObject);
+
+// Than somewhere at your project.
+$cache->get($yourObjectIdentifier);
+
+// For the garbage collection you can create an cron-job starting once a day.
+$sweeper = new Sweeper($cache);
+$sweeper->cleanAll();
+
+// or clean all objects older than given expiration since now.
+$sweeper->cleanOld();
+```
 
 Saving SimpleXMLElement instances into DB 4 with persistent connection
 ----------------------------------------------------------------------
 
-    <?php
-    $string = "<?xml version='1.0'?>
-    <document>
-     <title>Let us cache</title>
-     <from>Joe</from>
-     <to>Jane</to>
-     <body>Some content here</body>
-    </document>";
+```php
+$string = "<?xml version='1.0'?>
+<document>
+ <title>Let us cache</title>
+ <from>Joe</from>
+ <to>Jane</to>
+ <body>Some content here</body>
+</document>";
 
-    $simplexml = simplexml_load_string(
-        $string,
-        'SimpleXMLElement',
-        LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
-    );
+$simplexml = simplexml_load_string(
+    $string,
+    'SimpleXMLElement',
+    LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET
+);
 
-    $identifier = md5('simplexml_identifier');
+$identifier = md5('simplexml_identifier');
 
-    $path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
-    $cache = new Cache($path, 'db4');
+$path = dirname(dirname(__FILE__)).'/tests/_drafts/simple-xml-test-cache.db4';
+$cache = new Cache($path, 'db4');
 
-    $cache->put($identifier, $simplexml);
+$cache->put($identifier, $simplexml);
 
-    $getObject = $cache->get($identifier);
+$getObject = $cache->get($identifier);
 
-    error_log(' - PUT IN CACHE : '.print_r($simplexml, true));
-    error_log(' - GET FROM CACHE : '.print_r($getObject, true));
-    error_log(' - IS SAME OBJECT : '.print_r(($simplexml->asXml() === $getObject->asXml())
-                                        ? 'true' : 'false', true));
-
-    ?>
+error_log(' - PUT IN CACHE : '.print_r($simplexml, true));
+error_log(' - GET FROM CACHE : '.print_r($getObject, true));
+error_log(' - IS SAME OBJECT : '.print_r(($simplexml->asXml() === $getObject->asXml())
+                                    ? 'true' : 'false', true));
+```
 
 
 Benchmark Test of DBM Brothers
