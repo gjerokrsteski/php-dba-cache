@@ -1,7 +1,7 @@
 language: php
 
 before_install:
-    sudo apt-get install php5-dba
+    sudo apt-get install php5-dev
     
 php:
   - 5.2
