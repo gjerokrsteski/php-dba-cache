@@ -1,8 +1,7 @@
 language: php
 
 before_install:
-    sudo apt-get install php5 php5-dev 
-    sudo ./configure --enable-dba=shared
+    sudo apt-get install php5 php5-dev libdb4.8-dev
     
 php:
   - 5.2
