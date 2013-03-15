@@ -7,7 +7,6 @@ have to matter about the size of the cache-file. It depends on the free space of
 
 [![endorse](http://api.coderwall.com/gjerokrsteski/endorsecount.png)](http://coderwall.com/gjerokrsteski)
 
-
 Available options
 ===========================
 
