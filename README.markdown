@@ -84,8 +84,8 @@ $cache = new Cache(
   '/your/path/to/the/cahe-file/cache.db4', 'db4'
 );
 
-$yorObject            = new YourObjectYouWantToPutInCache();
-$yourObjectIdentifier = 'md5(get_class($yorObject))';
+$yorObject            = new ObjectYouWantToPutInCache();
+$yourObjectIdentifier = 'your:cool:object:identifier';
 
 // Check if your object is in the cache.
 // You also can ignore it, and let the CacheDba do it for you.
