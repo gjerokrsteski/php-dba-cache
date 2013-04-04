@@ -111,8 +111,8 @@ test only prevents you from configuring malfaunctioning single handlers but not 
   <span class="s1">'/your/path/to/the/cahe-file/cache.db4'</span><span class="p">,</span> <span class="s1">'db4'</span>
 <span class="p">);</span>
 
-<span class="nv">$yorObject</span>            <span class="o">=</span> <span class="k">new</span> <span class="nx">YourObjectYouWantToPutInCache</span><span class="p">();</span>
-<span class="nv">$yourObjectIdentifier</span> <span class="o">=</span> <span class="s1">'md5(get_class($yorObject))'</span><span class="p">;</span>
+<span class="nv">$yorObject</span>            <span class="o">=</span> <span class="k">new</span> <span class="nx">ObjectYouWantToPutInCache</span><span class="p">();</span>
+<span class="nv">$yourObjectIdentifier</span> <span class="o">=</span> <span class="s1">'your:cool:object:identifier'</span><span class="p">;</span>
 
 <span class="c1">// Check if your object is in the cache.</span>
 <span class="c1">// You also can ignore it, and let the CacheDba do it for you.</span>
