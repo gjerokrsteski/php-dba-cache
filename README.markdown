@@ -6,7 +6,6 @@ strings, integers or arrays. Even instances of SimpleXMLElement can be put to th
 have to matter about the size of the cache-file. It depends on the free space of your disk.
 
 [![Dependency Status](https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec/badge.png)](https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec)
-[![Total Downloads](https://poser.pugx.org/gjerokrsteski/php-dba-cache/downloads.png)](https://packagist.org/packages/gjerokrsteski/php-dba-cache)
 
 Available options
 ===========================
