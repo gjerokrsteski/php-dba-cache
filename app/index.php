@@ -183,41 +183,41 @@ $file_info  = new SplFileInfo($file);
             <tbody>
             <tr>
                 <td class="">DBA Handler In Use</td>
-                <td><?=$handler_in_use?></td>
+                <td><?php echo $handler_in_use?></td>
             </tr>
             <tr>
                 <td class="">Available DBA Handlers</td>
-                <td><?=$available_handlers?></td>
+                <td><?php echo $available_handlers?></td>
             </tr>
                         <tr>
                 <td class="">DBA Cache File</td>
-                <td><?=$cache->getCacheFile()?></td>
+                <td><?php echo $cache->getCacheFile()?></td>
             </tr>
             <tr>
                 <td class="">PHP Version</td>
-                <td><?=phpversion()?></td>
+                <td><?php echo phpversion()?></td>
             </tr>
 
             <?php if (!empty($_SERVER['SERVER_NAME'])) : ?>
             <tr>
                 <td class="">DBA Host</td>
-                <td><?=$_SERVER['SERVER_NAME'] . ' ' . $host?></td>
+                <td><?php echo $_SERVER['SERVER_NAME'] . ' ' . $host?></td>
             </tr>
               <?php endif; ?>
 
             <?php if (!empty($_SERVER['SERVER_SOFTWARE'])) : ?>
             <tr>
                 <td class="">Server Software</td>
-                <td><?=$_SERVER['SERVER_SOFTWARE']?></td>
+                <td><?php echo $_SERVER['SERVER_SOFTWARE']?></td>
             </tr>
               <?php endif; ?>
             <tr>
                 <td class="">Start Time</td>
-                <td><?=date($date_format, $file_info->getCTime())?></td>
+                <td><?php echo date($date_format, $file_info->getCTime())?></td>
             </tr>
             <tr>
                 <td class="">Last Modified Time</td>
-                <td><?=date($date_format, $file_info->getMTime())?></td>
+                <td><?php echo date($date_format, $file_info->getMTime())?></td>
             </tr>
             </tbody>
         </table>
@@ -231,19 +231,19 @@ $file_info  = new SplFileInfo($file);
         <div class="row">
             <div class="span4">
               <div class="well well-small">
-                <h4><?=bsize($file_info->getSize())?></h4>
+                <h4><?php echo bsize($file_info->getSize())?></h4>
                 <p>Cache file in use size</p>
               </div>
             </div>
             <div class="span4">
               <div class="well well-small">
-                <h4><?=bsize(disk_free_space($file_info->getPath()))?></h4>
+                <h4><?php echo bsize(disk_free_space($file_info->getPath()))?></h4>
                 <p>Cache directory free size</p>
               </div>
             </div>
             <div class="span4">
                    <div class="well well-small">
-                     <h4><?=bsize(disk_total_space($file_info->getPath()))?></h4>
+                     <h4><?php echo bsize(disk_total_space($file_info->getPath()))?></h4>
                      <p>Cache directory total size</p>
                    </div>
                  </div>
@@ -340,9 +340,9 @@ $file_info  = new SplFileInfo($file);
                   if ($item instanceof Capsule) :
                     ?>
                   <tr>
-                      <td class=""><?=$key?></td>
-                      <td><?=date($date_format, $item->mtime)?></td>
-                      <td><?=date($date_format, ($item->mtime + $item->ltime))?></td>
+                      <td class=""><?php echo $key?></td>
+                      <td><?php echo date($date_format, $item->mtime)?></td>
+                      <td><?php echo date($date_format, ($item->mtime + $item->ltime))?></td>
                   </tr>
                     <?php
                   endif;
