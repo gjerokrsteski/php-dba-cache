@@ -1,7 +1,5 @@
 <?php
-require_once dirname(__FILE__) .'/DummyFixtures.php';
-
-class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
+class SweeperTest extends PHPUnit_Framework_TestCase
 {
   /**
    * @var Cache
@@ -15,10 +13,10 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
   {
     parent::setUp();
 
-    $path = dirname(dirname(__FILE__)) . '/tests/_drafts/garbage-collection-test-cache.inifile';
+    $path = dirname(dirname(__FILE__)) . '/tests/_drafts/garbage-collection-test-cache.gdbm';
 
     try {
-      $this->_cache = new Cache($path, 'inifile');
+      $this->_cache = new Cache($path, 'gdbm');
     } catch(RuntimeException $e) {
       $this->markTestSkipped($e->getMessage());
     }
@@ -35,20 +33,22 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     parent::tearDown();
   }
 
-  public function testCreatingGarbageCollectionObject()
-  {
-    $garbageCollection = new Sweeper($this->_cache);
 
-    $this->assertInstanceOf('Sweeper', $garbageCollection);
+  #tests
+
+
+  public function testCreatingNewObject()
+  {
+    $sweeper = new Sweeper($this->_cache);
+
+    $this->assertInstanceOf('Sweeper', $sweeper);
   }
 
   /**
-   * @depends CacheGarbageCollectorTest::testCreatingGarbageCollectionObject
+   * @depends SweeperTest::testCreatingNewObject
    */
   public function testCleanAllFromTheGarbageCollection()
   {
-    $dba = $this->_cache->getDba();
-
     // prepare data.
     $stdClass        = new stdClass();
     $stdClass->title = 'Hi firend, i am cached.';
@@ -60,7 +60,6 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
     $this->_cache->put(md5('stdClass'), $stdClass, 1);
     $this->_cache->put(md5('ZipArchive'), new ZipArchive(), 1);
     $this->_cache->put(md5('XMLReader'), new XMLReader(), 1);
-
 
     sleep(1);
 
@@ -75,7 +74,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends CacheGarbageCollectorTest::testCreatingGarbageCollectionObject
+   * @depends SweeperTest::testCreatingNewObject
    */
   public function testCleanTheGarbageCollectionByNotSuitableExpirationTime()
   {
@@ -106,7 +105,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
    * Tests support for CDB - Tiny Constant Database.
    * CDB can not be deleted - clear garbage manually.
    */
-  public function testCleanTheGarbageCollectionWithCdbHandler()
+  public function testCleanGarbageCollectionOnCdbHandler()
   {
     $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-cdb2.cdb';
 
@@ -155,7 +154,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
   /**
    * Tests support for DB4 - Oracle Berkeley DB 4.
    */
-  public function testCleanTheGarbageCollectionWithDb4Handler()
+  public function testCleanTheGarbageCollectionOnDb4Handler()
   {
     $path = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache.db4';
 
@@ -181,7 +180,7 @@ class CacheGarbageCollectorTest extends PHPUnit_Framework_TestCase
 
     $cache->closeDba();
 
-    unlink($path);
+    @unlink($path);
   }
 
   public function testUtilMethods()

@@ -14,7 +14,7 @@ function factory($config)
 // create an test-entry for two seconds.
 function put(Cache $cache)
 {
-  $cache->put(uniqid('test_'), (object)array( rand(1, 100) ), 2);
+  return $cache->put(uniqid('test_'), (object)array( rand(1, 100) ), 2);
 }
 
 // pretty printer for byte values.
@@ -24,6 +24,15 @@ function bsize($s) {
 		$s/=1024;
 	}
 	return sprintf("%5.1f %sBytes",$s,$k);
+}
+
+function flash_msg(&$check, $msg)
+{
+  if (isset($check) && $check === true) {
+    echo '<div class="alert alert-success">' . $msg . '</div>';
+  } elseif (isset($check) && $check === false) {
+    echo '<div class="alert alert-error">' . $msg . '</div>';
+  }
 }
 
 // retrieve an cache and a cache-sweeper.
@@ -61,24 +70,25 @@ if (isset($_POST['login']) || isset($_SERVER['PHP_AUTH_USER'])) {
     $authenticated = true;
 }
 
+
 if(isset($_POST['create-test-entry'])) {
-  put($cache);
+  $create_test_entry = put($cache);
 }
 
 if(isset($_POST['optimize'])) {
-  dba_optimize($cache->getDba());
+  $optimize = dba_optimize($cache->getDba());
 }
 
 if(isset($_POST['synchronize'])) {
-  dba_sync($cache->getDba());
+  $synchronize = dba_sync($cache->getDba());
 }
 
 if($authenticated && isset($_POST['delete-old'])) {
-  $sweeper->cleanOld();
+  $delete_old = true; $sweeper->cleanOld();
 }
 
 if ($authenticated && isset($_POST['delete-all'])) {
-  $sweeper->flush();
+  $delete_all = $sweeper->flush();
   list($cache, $sweeper) = factory($config);
   put($cache);
 }
@@ -138,7 +148,7 @@ $file_info  = new SplFileInfo($file);
                 <span class="icon-bar"></span>
 
             </a>
-            <a class="brand" style="color:white;" href="#">PHP DBA Cache</a>
+            <a class="brand" style="color:white;" href="#">DBA Cache Monitor</a>
 
             <div class="nav-collapse collapse" style="height: 0px;">
                 <ul class="nav">
@@ -246,6 +256,9 @@ $file_info  = new SplFileInfo($file);
 
         <h3>Tune Cache</h3>
 
+       <?php flash_msg($synchronize, 'Database synchronized'); flash_msg($optimize, 'Database optimized'); ?>
+
+
         <p class="">If you add-remove-substitute keys with data having different content length,
             the db continues to grow, wasting space. Sometimes it is necessary, to optimize or synchronize the db in
             order to remove unused data from the db itself.
@@ -285,6 +298,8 @@ $file_info  = new SplFileInfo($file);
         <a class="anchor" id="entries"></a>
 
         <h3>Cache Entries</h3>
+
+        <?php flash_msg($create_test_entry, 'Entry created'); flash_msg($delete_all, 'All entries deleted'); flash_msg($delete_old, 'All old entries deleted'); ?>
 
         <form accept-charset="utf-8" method="post" class="well" action="#entries" name="entries-acts">
 

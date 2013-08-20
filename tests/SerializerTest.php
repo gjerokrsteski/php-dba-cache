@@ -1,10 +1,9 @@
 <?php
-require_once dirname(__FILE__) .'/DummyFixtures.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DummyFixtures.php';
 
-
-class CacheSerializerTest extends PHPUnit_Framework_TestCase
+class SerializerTest extends PHPUnit_Framework_TestCase
 {
-  public function testCreatingNewSerializerObject()
+  public function testCreatingNewObject()
   {
     $this->assertNotNull(new Serializer());
   }
@@ -35,7 +34,7 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends CacheSerializerTest::testCreatingNewSerializerObject
+   * @depends SerializerTest::testCreatingNewObject
    * @dataProvider objectsProvider
    */
   public function testSerializingSomeObjects($object)
@@ -44,11 +43,11 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends CacheSerializerTest::testCreatingNewSerializerObject
-   * @depends CacheSerializerTest::testSerializingSomeObjects
+   * @depends SerializerTest::testCreatingNewObject
+   * @depends SerializerTest::testSerializingSomeObjects
    * @dataProvider objectsProvider
    */
-  public function testUnserializingSomeObjectsAndCompareEachother($object)
+  public function testUnserializingSomeObjectsAndCompareThemEachOther($object)
   {
     $serialized = Serializer::serialize($object);
 
@@ -57,14 +56,14 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($object, $userItem->object);
   }
 
-  public function testHandlingWithSimpleXMLElement()
+  public function testHandlingWithSimpleXMLElementIntoFlatfileHandler()
   {
     $identifier = md5(uniqid());
 
     // make a xml-file of 1000 nodes.
     $string = "<?xml version='1.0'?>
         <document>";
-    for ($i = 1; $i <= 1000; $i++) {
+    for ($i = 1; $i <= 100; $i++) {
       $string .= "<item>
 			 <title>Let us cache</title>
 			 <from>Joe</from>
@@ -78,10 +77,10 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
       $string, 'SimpleXMLElement', LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NONET
     );
 
-    $path  = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-with-simplexml.db4';
+    $path  = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-with-simplexml.flatfile';
 
     try {
-      $cache = new Cache($path, 'db4');
+      $cache = new Cache($path);
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -92,7 +91,7 @@ class CacheSerializerTest extends PHPUnit_Framework_TestCase
 
     $this->assertEquals($simplexml->asXML(), $object_from_cache->asXML());
 
-    unlink($path);
+    @unlink($path);
   }
 }
 

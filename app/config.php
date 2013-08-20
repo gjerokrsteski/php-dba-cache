@@ -21,7 +21,7 @@ $config = array(
    * of the libraries required by the other handlers,
    * and when you cannot use bundled cdb handler.
    */
-  'handler'      => 'db4',
+  'handler'      => 'gdbm',
 
   /*
    * The mode for read/write access, database creation if it doesn't currently exist.

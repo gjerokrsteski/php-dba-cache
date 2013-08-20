@@ -1,5 +1,5 @@
 <?php
-error_reporting(-1);
+error_reporting(E_ALL);
 
 ini_set('default_charset', 'UTF-8');
 

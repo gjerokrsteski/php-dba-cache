@@ -1,5 +1,4 @@
 <?php
-
 class Dummy
 {
   private $foo1 = 123;
