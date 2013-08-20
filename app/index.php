@@ -31,7 +31,7 @@ function flash_msg(&$check, $msg)
   if (isset($check) && $check === true) {
     echo '<div class="alert alert-success">' . $msg . '</div>';
   } elseif (isset($check) && $check === false) {
-    echo '<div class="alert alert-error">' . $msg . '</div>';
+    echo '<div class="alert alert-error"><strong>Problems on</strong> ' . $msg . '</div>';
   }
 }
 
@@ -299,7 +299,11 @@ $file_info  = new SplFileInfo($file);
 
         <h3>Cache Entries</h3>
 
-        <?php flash_msg($create_test_entry, 'Entry created'); flash_msg($delete_all, 'All entries deleted'); flash_msg($delete_old, 'All old entries deleted'); ?>
+        <?php
+          flash_msg($create_test_entry, 'Entry created');
+          flash_msg($delete_all, 'All entries deleted');
+          flash_msg($delete_old, 'All old entries deleted');
+        ?>
 
         <form accept-charset="utf-8" method="post" class="well" action="#entries" name="entries-acts">
 

@@ -1,8 +1,5 @@
 language: php
 
-before_install:
-    sudo apt-get install php5 php5-dev libdb4.8-dev
-    
 php:
   - 5.2
   - 5.3
