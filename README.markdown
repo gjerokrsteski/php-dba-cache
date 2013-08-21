@@ -20,7 +20,7 @@ Cache
 - Return metadata for the given key: expire timestamp & timestamp of last modification time
 - Get all keys from cache
     
-Sweeper - CacheGarbageCollector (optional)
+Sweep - CacheGarbageCollector (optional)
 - Clean all entries
 - Clean expired entries
 - Flush the cache file
@@ -103,11 +103,11 @@ $cache->get($yourObjectIdentifier);
 
 // For the garbage collection 
 // you can create an cron-job starting once a day.
-$sweeper = new Sweeper($cache);
-$sweeper->cleanAll();
+$sweep = new Sweeper($cache);
+$sweep->all();
 
 // or clean all objects older than given expiration since now.
-$sweeper->cleanOld();
+$sweep->old();
 ```
 
 Saving SimpleXMLElement instances into DB 4 with persistent connection
