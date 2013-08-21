@@ -103,7 +103,7 @@ $cache->get($yourObjectIdentifier);
 
 // For the garbage collection 
 // you can create an cron-job starting once a day.
-$sweep = new Sweeper($cache);
+$sweep = new Sweep($cache);
 $sweep->all();
 
 // or clean all objects older than given expiration since now.
