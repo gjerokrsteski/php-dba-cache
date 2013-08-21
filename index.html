@@ -31,13 +31,18 @@
         <hr>
 
         <section id="main_content">
-          <h1>Introduction</h1>
+          <h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>The php-dba-cache uses the database (dbm-style) abstraction layer to cache/store your PHP objects, 
 strings, integers or arrays. Even instances of SimpleXMLElement can be put to the cache. You dont 
 have to matter about the size of the cache-file. It depends on the free space of your disk.</p>
 
-<h1>Available options</h1>
+<p><a href="https://travis-ci.org/gjerokrsteski/php-dba-cache"><img src="https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master" alt="Build Status"></a>
+<a href="https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec"><img src="https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec/badge.png" alt="Dependency Status"></a></p>
+
+<h1>
+<a name="available-options" class="anchor" href="#available-options"><span class="octicon octicon-link"></span></a>Available options</h1>
 
 <p>Cache</p>
 
@@ -49,14 +54,15 @@ have to matter about the size of the cache-file. It depends on the free space of
 <li>Delete the record with a given key</li>
 <li>Return metadata for the given key: expire timestamp &amp; timestamp of last modification time</li>
 <li>Get all keys from cache</li>
-</ul><p>Sweeper - CacheGarbageCollector (optional)</p>
+</ul><p>Sweep - CacheGarbageCollector (optional)</p>
 
 <ul>
 <li>Clean all entries</li>
 <li>Clean expired entries</li>
 <li>Flush the cache file</li>
 <li>Optimizes the database file automatically after cleaning process</li>
-</ul><h1>Installation</h1>
+</ul><h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>"By using the --enable-dba=shared configuration option you can build a dynamic loadable module
 to enable PHP for basic support of dbm-style databases. You also have to add support for at
@@ -65,7 +71,8 @@ to your PHP configure line."</p>
 
 <p>More about installation: <a href="http://www.php.net/manual/en/dba.installation.php">http://www.php.net/manual/en/dba.installation.php</a></p>
 
-<h1>DBA handlers</h1>
+<h1>
+<a name="dba-handlers" class="anchor" href="#dba-handlers"><span class="octicon octicon-link"></span></a>DBA handlers</h1>
 
 <p>The behaviour of various aspects for the caching depends on the implementation of yor
 installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
@@ -96,7 +103,8 @@ That happens when configure could not find any external library.</p>
 
 <p>More about requirements: <a href="http://www.php.net/manual/en/dba.requirements.php">http://www.php.net/manual/en/dba.requirements.php</a></p>
 
-<h2>Nice to know</h2>
+<h2>
+<a name="nice-to-know" class="anchor" href="#nice-to-know"><span class="octicon octicon-link"></span></a>Nice to know</h2>
 
 <p>Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
 can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
@@ -105,7 +113,8 @@ Most problematic are dbm and ndbm which conflict with many installations. The re
 that on several systems these libraries are part of more than one other library. The configuration
 test only prevents you from configuring malfaunctioning single handlers but not combinations.</p>
 
-<h2>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
+<h2>
+<a name="sample-for-oracle-berkeley-db-4-with-persistent-connection" class="anchor" href="#sample-for-oracle-berkeley-db-4-with-persistent-connection"><span class="octicon octicon-link"></span></a>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
 
 <div class="highlight"><pre><span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span>
   <span class="s1">'/your/path/to/the/cahe-file/cache.db4'</span><span class="p">,</span> <span class="s1">'db4'</span>
@@ -127,14 +136,15 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 
 <span class="c1">// For the garbage collection </span>
 <span class="c1">// you can create an cron-job starting once a day.</span>
-<span class="nv">$sweeper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweeper</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
-<span class="nv">$sweeper</span><span class="o">-&gt;</span><span class="na">cleanAll</span><span class="p">();</span>
+<span class="nv">$sweep</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweeper</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
+<span class="nv">$sweep</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
 
 <span class="c1">// or clean all objects older than given expiration since now.</span>
-<span class="nv">$sweeper</span><span class="o">-&gt;</span><span class="na">cleanOld</span><span class="p">();</span>
+<span class="nv">$sweep</span><span class="o">-&gt;</span><span class="na">old</span><span class="p">();</span>
 </pre></div>
 
-<h2>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
+<h2>
+<a name="saving-simplexmlelement-instances-into-db-4-with-persistent-connection" class="anchor" href="#saving-simplexmlelement-instances-into-db-4-with-persistent-connection"><span class="octicon octicon-link"></span></a>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
 
 <div class="highlight"><pre><span class="nv">$string</span> <span class="o">=</span> <span class="s2">"&lt;?xml version='1.0'?&gt;</span>
 <span class="s2">&lt;document&gt;</span>
@@ -167,7 +177,8 @@ test only prevents you from configuring malfaunctioning single handlers but not 
             <span class="o">?</span> <span class="s1">'true'</span> <span class="o">:</span> <span class="s1">'false'</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
 </pre></div>
 
-<h2>PHP DBA Cache Monitor</h2>
+<h2>
+<a name="php-dba-cache-monitor" class="anchor" href="#php-dba-cache-monitor"><span class="octicon octicon-link"></span></a>PHP DBA Cache Monitor</h2>
 
 <p>PHP DBA Cache Monitor is an adaptive web-interface to provide a comprehensive, easy to use 
 and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, 
@@ -176,7 +187,8 @@ for optimizing the cache and deleting entries from the cache. </p>
 
 <p><img src="http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d.jpg" alt="PHP DBA cache Monitor 2013" title="PHP DBA Cache Monitor"></p>
 
-<h2>Benchmark Test of DBM Brothers</h2>
+<h2>
+<a name="benchmark-test-of-dbm-brothers" class="anchor" href="#benchmark-test-of-dbm-brothers"><span class="octicon octicon-link"></span></a>Benchmark Test of DBM Brothers</h2>
 
 <p>This benchmark test is to calculate processing time (real time)
 and file size of database. Writing test is to store 1,000,000 records. Reading test is
@@ -207,7 +219,7 @@ because its database is broken when more than 100000 records.</p>
 
         <footer>
           PHP DBA Cache is maintained by <a href="https://github.com/gjerokrsteski">gjerokrsteski</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
         
