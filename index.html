@@ -136,7 +136,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 
 <span class="c1">// For the garbage collection </span>
 <span class="c1">// you can create an cron-job starting once a day.</span>
-<span class="nv">$sweep</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweeper</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
+<span class="nv">$sweep</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweep</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
 <span class="nv">$sweep</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
 
 <span class="c1">// or clean all objects older than given expiration since now.</span>
