@@ -24,7 +24,7 @@
  * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
  * @license   http://krsteski.de/new-bsd-license New BSD License
  */
-class Sweeper
+class Sweep
 {
   /**
    * @var Cache
@@ -43,7 +43,7 @@ class Sweeper
    * Remove all cache entries.
    * @return void
    */
-  public function cleanAll()
+  public function all()
   {
     $this->_process();
   }
@@ -52,7 +52,7 @@ class Sweeper
    * Remove too old cache entries.
    * @return void
    */
-  public function cleanOld()
+  public function old()
   {
     $this->_process(false);
   }
@@ -86,16 +86,16 @@ class Sweeper
    */
   public function flush()
   {
-    $cacheFile = $this->_cache->getCacheFile();
+    $file = $this->_cache->getCacheFile();
 
-    if (file_exists($cacheFile)) {
+    if (file_exists($file)) {
 
       // close the dba file before delete
       // and reopen on next use
       $this->_cache->closeDba();
 
-      if (!unlink($cacheFile)) {
-        throw new RuntimeException("unlink('{$cacheFile}') failed");
+      if (!unlink($file)) {
+        throw new RuntimeException("unlink('{$file}') failed");
       }
     }
 

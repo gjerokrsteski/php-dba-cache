@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'DummyFixtures.php';
 
-class SerializerTest extends PHPUnit_Framework_TestCase
+class PackTest extends PHPUnit_Framework_TestCase
 {
   public function testCreatingNewObject()
   {
-    $this->assertNotNull(new Serializer());
+    $this->assertNotNull(new Pack());
   }
 
   public function objectsProvider()
@@ -34,24 +34,24 @@ class SerializerTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends SerializerTest::testCreatingNewObject
+   * @depends PackTest::testCreatingNewObject
    * @dataProvider objectsProvider
    */
   public function testSerializingSomeObjects($object)
   {
-    Serializer::serialize($object);
+    Pack::in($object);
   }
 
   /**
-   * @depends SerializerTest::testCreatingNewObject
-   * @depends SerializerTest::testSerializingSomeObjects
+   * @depends PackTest::testCreatingNewObject
+   * @depends PackTest::testSerializingSomeObjects
    * @dataProvider objectsProvider
    */
   public function testUnserializingSomeObjectsAndCompareThemEachOther($object)
   {
-    $serialized = Serializer::serialize($object);
+    $serialized = Pack::in($object);
 
-    $userItem = Serializer::unserialize($serialized);
+    $userItem = Pack::out($serialized);
 
     $this->assertEquals($object, $userItem->object);
   }

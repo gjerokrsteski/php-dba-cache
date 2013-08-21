@@ -39,4 +39,95 @@ class CacheHandlersTestCase extends PHPUnit_Framework_TestCase
     unset($this->_object, $this->_identifier);
     parent::tearDown();
   }
+
+
+  #general test
+
+  /**
+   * Will be overridden
+   * @var string
+   */
+  protected $_general_file = 'flatfile.db', $_general_handler = 'flatfile' , $_general_mode = 'c';
+
+
+  public function testPuttingForever()
+  {
+    try {
+      $cache = new Cache(dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/'.$this->_general_file, $this->_general_handler, $this->_general_mode);
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
+    }
+
+    $cache->forever('forever', array('forever'=>123));
+
+    $cache->closeDba();
+  }
+
+
+  public function testFetchingAllIds()
+  {
+    try {
+      $cache = new Cache($this->_general_file, $this->_general_handler, $this->_general_mode);
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
+    }
+
+    $res = $cache->getIds();
+
+    $this->assertInstanceOf('ArrayObject', $res);
+    $this->assertNotEmpty($res->getArrayCopy());
+
+    $cache->closeDba();
+  }
+
+  public function testFetchingMetaData()
+  {
+    try {
+      $cache = new Cache($this->_general_file, $this->_general_handler, $this->_general_mode);
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
+    }
+
+    $res = $cache->getMetaData($this->_identifier);
+
+    $this->assertInternalType('array', $res);
+    $this->assertNotEmpty($res);
+    $this->assertArrayHasKey('mtime', $res);
+    $this->assertArrayHasKey('expire', $res);
+
+    $cache->closeDba();
+  }
+
+
+  public function badHandlersProvider()
+  {
+    return array(
+      array('bad-bad-handler'),
+      array(123),
+      array(1),
+      array('0'),
+      array(' '),
+      array(null),
+      array(true),
+      array(false),
+    );
+  }
+
+  /**
+   * @expectedException RuntimeException
+   * @dataProvider badHandlersProvider
+   */
+  public function testIfBadHandlerGiven()
+  {
+    new Cache($this->_general_file, 'bad-bad-handler');
+  }
+
+  /**
+   * @expectedException RuntimeException
+   */
+  public function testIfBadDbFileGiven()
+  {
+    new Cache('/path/to/bad-bad-file.db', $this->_general_handler, 'r');
+  }
+
 }

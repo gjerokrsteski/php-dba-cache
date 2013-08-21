@@ -6,9 +6,9 @@ function factory($config)
 {
   extract($config);
   $cache = new Cache($file, $handler, $mode, $persistently);
-  $sweeper = new Sweeper($cache);
+  $sweep = new Sweep($cache);
 
-  return array($cache, $sweeper);
+  return array($cache, $sweep);
 }
 
 // create an test-entry for two seconds.
@@ -37,7 +37,7 @@ function flash_msg(&$check, $msg)
 
 // retrieve an cache and a cache-sweeper.
 try {
-  list($cache, $sweeper) = factory($config);
+  list($cache, $sweep) = factory($config);
 } catch (Exception $e) {
   die($e->getMessage());
 }
@@ -84,12 +84,12 @@ if(isset($_POST['synchronize'])) {
 }
 
 if($authenticated && isset($_POST['delete-old'])) {
-  $delete_old = true; $sweeper->cleanOld();
+  $delete_old = true; $sweep->old();
 }
 
 if ($authenticated && isset($_POST['delete-all'])) {
-  $delete_all = $sweeper->flush();
-  list($cache, $sweeper) = factory($config);
+  $delete_all = $sweep->flush();
+  list($cache, $sweep) = factory($config);
   put($cache);
 }
 

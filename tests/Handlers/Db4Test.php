@@ -3,12 +3,18 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 class Db4Test extends CacheHandlersTestCase
 {
+  protected function setUp()
+  {
+    parent::setUp();
+
+    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.db4';
+    $this->_general_handler = 'db4';
+  }
+
   public function testWithoutPersistentConnection()
   {
     try {
-      $cache = new Cache(
-        dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.db4', 'db4', 'c', false
-      );
+      $cache = new Cache($this->_general_file, $this->_general_handler, 'c', false);
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }
@@ -28,7 +34,7 @@ class Db4Test extends CacheHandlersTestCase
   public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
   {
     try {
-      $cache = new Cache(dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.db4', 'db4');
+      $cache = new Cache($this->_general_file, $this->_general_handler);
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }

@@ -107,37 +107,37 @@ class Cache
   }
 
   /**
-   * @param string $identifier
-   * @param mixed $object
+   * @param string $key
+   * @param mixed $value
    * @param int|bool $ltime Lifetime in seconds otherwise cache forever.
    * @return bool
    */
-  public function put($identifier, $object, $ltime = false)
+  public function put($key, $value, $ltime = false)
   {
-    if (true === $this->has($identifier)) {
-      return dba_replace($identifier, Serializer::serialize($object, $ltime), $this->_dba);
+    if (true === $this->has($key)) {
+      return dba_replace($key, Pack::in($value, $ltime), $this->_dba);
     }
 
-    return dba_insert($identifier, Serializer::serialize($object, $ltime), $this->_dba);
+    return dba_insert($key, Pack::in($value, $ltime), $this->_dba);
   }
 
   /**
-   * @param string $identifier
-   * @param mixed $object
+   * @param string $key
+   * @param mixed $value
    * @return bool
    */
-  public function forever($identifier, $object)
+  public function forever($key, $value)
   {
-    return $this->put($identifier, $object, false);
+    return $this->put($key, $value, false);
   }
 
   /**
-   * @param string $identifier
+   * @param string $key
    * @return bool
    */
-  public function get($identifier)
+  public function get($key)
   {
-    $res = $this->fetch($identifier);
+    $res = $this->fetch($key);
 
     if (false === $res) {
       return false;
@@ -147,7 +147,7 @@ class Cache
       return $res->object;
     }
 
-    $this->delete($identifier);
+    $this->delete($key);
 
     return false;
   }
@@ -161,44 +161,44 @@ class Cache
   }
 
   /**
-   * @param string $identifier
+   * @param string $key
    * @return Capsule|boolean
    */
-  public function fetch($identifier)
+  public function fetch($key)
   {
-    $fetchObject = dba_fetch($identifier, $this->_dba);
+    $fetched = dba_fetch($key, $this->_dba);
 
-    if (false === $fetchObject) {
+    if (false === $fetched) {
       return false;
     }
 
-    return Serializer::unserialize($fetchObject);
+    return Pack::out($fetched);
   }
 
   /**
-   * @param string $identifier
+   * @param string $key
    * @return boolean
    */
-  public function delete($identifier)
+  public function delete($key)
   {
     if (false === is_resource($this->_dba)) {
       return false;
     }
 
     if ($this->erasable()) {
-      return dba_delete($identifier, $this->_dba);
+      return dba_delete($key, $this->_dba);
     }
 
     return true;
   }
 
   /**
-   * @param string $identifier
+   * @param string $key
    * @return boolean
    */
-  public function has($identifier)
+  public function has($key)
   {
-    return dba_exists($identifier, $this->_dba);
+    return dba_exists($key, $this->_dba);
   }
 
   /**

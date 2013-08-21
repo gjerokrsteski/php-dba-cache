@@ -24,7 +24,7 @@
  * @copyright Copyright (c) 2010-2011 Gjero Krsteski (http://krsteski.de)
  * @license http://krsteski.de/new-bsd-license New BSD License
  */
-class Serializer
+class Pack
 {
   /**
    * @param $object
@@ -32,7 +32,7 @@ class Serializer
    * @return string
    * @throws RuntimeException
    */
-  public static function serialize($object, $ltime = false)
+  public static function in($object, $ltime = false)
   {
     $masked = false;
 
@@ -52,9 +52,7 @@ class Serializer
       $capsule->object = $object->asXml();
     }
 
-    $res = @serialize($capsule);
-
-    if ($res === false) {
+    if (false === ($res = @serialize($capsule))) {
       $err = error_get_last();
       throw new RuntimeException($err['message']);
     }
@@ -67,11 +65,9 @@ class Serializer
    * @return Capsule
    * @throws RuntimeException
    */
-  public static function unserialize($object)
+  public static function out($object)
   {
-    $capsule = @unserialize($object);
-
-    if ($capsule === false) {
+    if (false === ($capsule = @unserialize($object))) {
       $err = error_get_last();
       throw new RuntimeException($err['message']);
     }

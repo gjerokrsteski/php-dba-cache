@@ -4,6 +4,14 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 class GdbmTest extends CacheHandlersTestCase
 {
+  protected function setUp()
+  {
+    parent::setUp();
+
+    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.gdbm';
+    $this->_general_handler = 'gdbm';
+  }
+
   public function testWriteAndReadWithoutPersistentConnection()
   {
     try {

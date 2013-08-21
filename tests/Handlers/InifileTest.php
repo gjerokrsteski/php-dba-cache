@@ -4,6 +4,14 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 class InifileTest extends CacheHandlersTestCase
 {
+  protected function setUp()
+  {
+    parent::setUp();
+
+    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile';
+    $this->_general_handler = 'inifile';
+  }
+
   public function testWriteAndReadWithoutPersistentConnection()
   {
     try {

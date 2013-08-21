@@ -1,5 +1,5 @@
 <?php
-class SweeperTest extends PHPUnit_Framework_TestCase
+class SweepTest extends PHPUnit_Framework_TestCase
 {
   /**
    * @var Cache
@@ -39,13 +39,13 @@ class SweeperTest extends PHPUnit_Framework_TestCase
 
   public function testCreatingNewObject()
   {
-    $sweeper = new Sweeper($this->_cache);
+    $sweep = new Sweep($this->_cache);
 
-    $this->assertInstanceOf('Sweeper', $sweeper);
+    $this->assertInstanceOf('Sweep', $sweep);
   }
 
   /**
-   * @depends SweeperTest::testCreatingNewObject
+   * @depends SweepTest::testCreatingNewObject
    */
   public function testCleanAllFromTheGarbageCollection()
   {
@@ -63,8 +63,8 @@ class SweeperTest extends PHPUnit_Framework_TestCase
 
     sleep(1);
 
-    $garbageCollection = new Sweeper($this->_cache);
-    $garbageCollection->cleanAll();
+    $sweep = new Sweep($this->_cache);
+    $sweep->all();
 
     $this->assertFalse($this->_cache->get(md5('stdClass')));
 
@@ -74,7 +74,7 @@ class SweeperTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @depends SweeperTest::testCreatingNewObject
+   * @depends SweepTest::testCreatingNewObject
    */
   public function testCleanTheGarbageCollectionByNotSuitableExpirationTime()
   {
@@ -93,8 +93,8 @@ class SweeperTest extends PHPUnit_Framework_TestCase
     // wait one second to force the expiration-time-calculation.
     sleep(1);
 
-    $garbageCollection = new Sweeper($this->_cache);
-    $garbageCollection->cleanOld();
+    $sweep = new Sweep($this->_cache);
+    $sweep->old();
 
     $this->assertInstanceOf('stdClass', $this->_cache->get(md5('stdClass')));
     $this->assertInstanceOf('ZipArchive', $this->_cache->get(md5('ZipArchive')));
@@ -125,8 +125,8 @@ class SweeperTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($cacheMake->put($testIdentifier2, new XMLReader()));
 
     // CacheGarbageCollector has no effect.
-    $garbageCollection = new Sweeper($cacheMake);
-    $garbageCollection->cleanAll();
+    $sweep = new Sweep($cacheMake);
+    $sweep->all();
 
     // deleting has no effect.
     $cacheMake->delete($testIdentifier1);
@@ -172,8 +172,8 @@ class SweeperTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('ZipArchive', $cache->get(md5('ZipArchive')));
     $this->assertInstanceOf('XMLReader', $cache->get(md5('XMLReader')));
 
-    $garbageCollection = new Sweeper($cache);
-    $garbageCollection->cleanAll();
+    $sweep = new Sweep($cache);
+    $sweep->all();
 
     $this->assertFalse($cache->get(md5('ZipArchive')));
     $this->assertFalse($cache->get(md5('XMLReader')));
@@ -185,8 +185,8 @@ class SweeperTest extends PHPUnit_Framework_TestCase
 
   public function testUtilMethods()
   {
-    $garbageCollection = new Sweeper($this->_cache);
+    $sweep = new Sweep($this->_cache);
 
-    $this->assertTrue($garbageCollection->flush());
+    $this->assertTrue($sweep->flush());
   }
 }

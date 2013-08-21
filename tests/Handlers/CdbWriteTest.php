@@ -4,6 +4,16 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 class CdbWriteTest extends CacheHandlersTestCase
 {
+  public function testFetchingAllIds()
+  {
+    $this->markTestSkipped('sorry - this handler is not able to read');
+  }
+
+  public function testFetchingMetaData()
+  {
+    $this->markTestSkipped('sorry - this handler is not able to read');
+  }
+
   public function testWithPersistentConnection()
   {
     $path = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-serialised.cdb';

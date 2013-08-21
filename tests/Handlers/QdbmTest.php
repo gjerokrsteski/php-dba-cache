@@ -4,6 +4,15 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 class QdbmTest extends CacheHandlersTestCase
 {
+
+  protected function setUp()
+  {
+    parent::setUp();
+
+    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm';
+    $this->_general_handler = 'qdbm';
+  }
+
   public function testWriteAndReadWithoutPersistentConnection()
   {
     try {
