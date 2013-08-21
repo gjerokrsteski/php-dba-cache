@@ -12,4 +12,6 @@ notifications:
 email:
   - gjero@krsteski.de
   
+script:
+  - bin/atoum --test-all
   
