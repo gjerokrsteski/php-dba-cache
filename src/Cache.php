@@ -58,19 +58,26 @@ class Cache
    * db4      = Oracle Berkeley DB 4   - for reading and writing.
    * qdbm     = Quick Database Manager - for reading and writing.
    * gdbm     = GNU Database Manager   - for reading and writing.
+   * inifile  = Ini File               - for reading and writing.
    * flatfile = default dba extension  - for reading and writing.
    *
-   * Use flatfile-handler only when you cannot install one,
-   * of the libraries required by the other handlers,
-   * and when you cannot use bundled cdb handler.
+   * Use "flatfile" only when you cannot install one, of the libraries
+   * required by the other handlers, and when you cannot use bundled cdb handler.
    *
    * @param string $mode For read/write access, database creation if it doesn't currently exist.
+   *
+   * r  = for read access
+   * w  = for read/write access to an already existing database
+   * c  = for read/write access and database creation if it doesn't currently exist
+   * n  = for create, truncate and read/write access
+   *
+   * When you are absolutely sure that you do not require database locking you can use "-" as suffix.
    *
    * @param boolean $persistently
    *
    * @throws RuntimeException If no DBA extension or handler installed.
    */
-  public function __construct($file, $handler = 'flatfile', $mode = 'c', $persistently = true)
+  public function __construct($file, $handler = 'flatfile', $mode = 'c-', $persistently = true)
   {
     if (!extension_loaded('dba')) {
       throw new RuntimeException('missing ext/dba');

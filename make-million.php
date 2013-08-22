@@ -32,11 +32,11 @@ function address()
   );
 }
 
-$cache = new Cache(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR .'app.cache', 'gdbm', 'w', false);
+$cache = new Cache(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR .'app.flatfile', 'flatfile', 'c-', true);
 
 for ($key = 0; $key < 1000000; $key++) {
   print_r($value = address());
-  print 'SAVED='.(int)$cache->put($key, $value, rand(1, 4800)).PHP_EOL;
+  print 'SAVED='.(int)$cache->put($key, $value, rand(1, 21600)).PHP_EOL;
   sleep(1);
 }
 

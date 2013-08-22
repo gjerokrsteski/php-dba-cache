@@ -4,7 +4,7 @@ $config = array(
   /*
    * The path to the cache file.
    */
-  'file'         => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app.cache',
+  'file'         => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app.flatfile',
 
   /*
    * You have to install one of this handlers before use.
@@ -21,7 +21,7 @@ $config = array(
    * of the libraries required by the other handlers,
    * and when you cannot use bundled cdb handler.
    */
-  'handler'      => 'gdbm',
+  'handler'      => 'flatfile',
 
   /*
    * The mode for read/write access, database creation if it doesn't currently exist.
@@ -31,12 +31,12 @@ $config = array(
    * c  = for read/write access and database creation if it doesn't currently exist
    * n  = for create, truncate and read/write access
    */
-  'mode'         => 'c',
+  'mode'         => 'w-',
 
   /*
    * Open the database persistently
    */
-  'persistently' => false,
+  'persistently' => true,
 
   /*
    * The date for mat for the view.
