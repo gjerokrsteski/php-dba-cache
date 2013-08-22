@@ -61,17 +61,6 @@ class CacheHandlersTestCase extends PHPUnit_Framework_TestCase
 
     $cache->forever('forever', array('forever'=>123));
 
-    $cache->closeDba();
-  }
-
-
-  public function testFetchingAllIds()
-  {
-    try {
-      $cache = new Cache($this->_general_file, $this->_general_handler, $this->_general_mode);
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
-    }
 
     $res = $cache->getIds();
 
@@ -80,25 +69,6 @@ class CacheHandlersTestCase extends PHPUnit_Framework_TestCase
 
     $cache->closeDba();
   }
-
-  public function testFetchingMetaData()
-  {
-    try {
-      $cache = new Cache($this->_general_file, $this->_general_handler, $this->_general_mode);
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
-    }
-
-    $res = $cache->getMetaData($this->_identifier);
-
-    $this->assertInternalType('array', $res);
-    $this->assertNotEmpty($res);
-    $this->assertArrayHasKey('mtime', $res);
-    $this->assertArrayHasKey('expire', $res);
-
-    $cache->closeDba();
-  }
-
 
   public function badHandlersProvider()
   {

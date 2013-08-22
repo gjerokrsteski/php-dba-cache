@@ -67,6 +67,10 @@ class Pack
    */
   public static function out($object)
   {
+    if(empty($object) || $object == '') {
+      return false;
+    }
+
     if (false === ($capsule = @unserialize($object))) {
       $err = error_get_last();
       throw new RuntimeException($err['message']);

@@ -77,7 +77,7 @@ class Cache
    *
    * @throws RuntimeException If no DBA extension or handler installed.
    */
-  public function __construct($file, $handler = 'flatfile', $mode = 'c-', $persistently = true)
+  public function __construct($file, $handler = 'flatfile', $mode = 'c', $persistently = true)
   {
     if (!extension_loaded('dba')) {
       throw new RuntimeException('missing ext/dba');

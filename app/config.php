@@ -4,7 +4,7 @@ $config = array(
   /*
    * The path to the cache file.
    */
-  'file'         => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app.flatfile',
+  'file'         => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app.inifile',
 
   /*
    * You have to install one of this handlers before use.
@@ -21,7 +21,7 @@ $config = array(
    * of the libraries required by the other handlers,
    * and when you cannot use bundled cdb handler.
    */
-  'handler'      => 'flatfile',
+  'handler'      => 'inifile',
 
   /*
    * The mode for read/write access, database creation if it doesn't currently exist.
@@ -31,7 +31,7 @@ $config = array(
    * c  = for read/write access and database creation if it doesn't currently exist
    * n  = for create, truncate and read/write access
    */
-  'mode'         => 'w-',
+  'mode'         => 'c-',
 
   /*
    * Open the database persistently

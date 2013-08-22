@@ -31,7 +31,7 @@ function flash_msg(&$check, $msg)
   if (isset($check) && $check === true) {
     echo '<div class="alert alert-success">' . $msg . '</div>';
   } elseif (isset($check) && $check === false) {
-    echo '<div class="alert alert-error"><strong>Problems on</strong> ' . $msg . '</div>';
+    echo '<div class="alert alert-error"><strong>NO!</strong> ' . $msg . '</div>';
   }
 }
 
@@ -76,19 +76,26 @@ if(isset($_POST['create-test-entry'])) {
 }
 
 if(isset($_POST['optimize'])) {
-  $optimize = dba_optimize($cache->getDba());
+  $optimize = @dba_optimize($cache->getDba());
 }
 
 if(isset($_POST['synchronize'])) {
-  $synchronize = dba_sync($cache->getDba());
+  $synchronize = @dba_sync($cache->getDba());
 }
 
 if($authenticated && isset($_POST['delete-old'])) {
-  $delete_old = true; $sweep->old();
+  $delete_old = true;
+  $sweep->old();
 }
 
 if ($authenticated && isset($_POST['delete-all'])) {
-  $delete_all = $sweep->flush();
+
+  try{
+    $delete_all = $sweep->flush();
+  } catch (RuntimeException $re) {
+    $delete_all = false;
+  }
+
   list($cache, $sweep) = factory($config);
   put($cache);
 }
@@ -301,7 +308,7 @@ $file_info  = new SplFileInfo($file);
 
         <?php
           flash_msg($create_test_entry, 'Entry created');
-          flash_msg($delete_all, 'All entries deleted');
+          flash_msg($delete_all, 'Cache flushed');
           flash_msg($delete_old, 'All old entries deleted');
         ?>
 

@@ -32,7 +32,7 @@ function address()
   );
 }
 
-$cache = new Cache(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR .'app.flatfile', 'flatfile', 'c-', true);
+$cache = new Cache(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR .'app.inifile', 'inifile', 'c-', true);
 
 for ($key = 0; $key < 1000000; $key++) {
   print_r($value = address());

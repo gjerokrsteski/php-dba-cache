@@ -94,8 +94,8 @@ class Sweep
       // and reopen on next use
       $this->_cache->closeDba();
 
-      if (!unlink($file)) {
-        throw new RuntimeException("unlink('{$file}') failed");
+      if (!@unlink($file)) {
+        throw new RuntimeException("can not flush file '{$file}'");
       }
     }
 
