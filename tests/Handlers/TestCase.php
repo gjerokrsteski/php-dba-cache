@@ -29,6 +29,7 @@ class CacheHandlersTestCase extends PHPUnit_Framework_TestCase
 
     $this->_object     = $stdClass;
     $this->_identifier = md5('stdClass' . time());
+    $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/flatfile.db';
   }
 
   /**
@@ -53,7 +54,7 @@ class CacheHandlersTestCase extends PHPUnit_Framework_TestCase
   public function testPuttingForever()
   {
     try {
-      $cache = new Cache(dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/'.$this->_general_file, $this->_general_handler, $this->_general_mode);
+      $cache = new Cache($this->_general_file, $this->_general_handler, $this->_general_mode);
     } catch(RuntimeException $e) {
      $this->markTestSkipped($e->getMessage());
     }

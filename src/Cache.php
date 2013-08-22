@@ -72,16 +72,12 @@ class Cache
    */
   public function __construct($file, $handler = 'flatfile', $mode = 'c', $persistently = true)
   {
-    if (false === extension_loaded('dba')) {
-      throw new RuntimeException(
-        'The DBA extension is required for this wrapper, but the extension is not loaded'
-      );
+    if (!extension_loaded('dba')) {
+      throw new RuntimeException('missing ext/dba');
     }
 
-    if (false === in_array($handler, dba_handlers(false))) {
-      throw new RuntimeException(
-        'The ' . $handler . ' handler is required for the DBA extension, but the handler is not installed'
-      );
+    if (!function_exists('dba_handlers') || !in_array($handler, dba_handlers(false))) {
+      throw new RuntimeException("dba-handler '{$handler}' not supported");
     }
 
     $this->_dba = (true === $persistently)
@@ -93,8 +89,8 @@ class Cache
       throw new RuntimeException($err['message']);
     }
 
-    $this->_cacheFile  = $file;
-    $this->_handler    = $handler;
+    $this->_cacheFile = $file;
+    $this->_handler   = $handler;
   }
 
   /**
@@ -225,13 +221,14 @@ class Cache
    */
   public function getIds()
   {
-    $ids     = new ArrayObject();
-    $dba     = $this->getDba();
-    $pointer = dba_firstkey($dba);
+    $ids = new ArrayObject();
+    $dba = $this->getDba();
+    $key = dba_firstkey($dba);
 
-    while ($pointer) {
-      $ids->offsetSet(null, $pointer);
-      $pointer = dba_nextkey($dba);
+    while ($key !== false && $key !== null) {
+
+      $ids->offsetSet(null, $key);
+      $key = dba_nextkey($dba);
     }
 
     return $ids;

@@ -64,16 +64,16 @@ class Sweep
    */
   protected function _process($cleanAll = true)
   {
-    $pointer = dba_firstkey($this->_cache->getDba());
+    $key = dba_firstkey($this->_cache->getDba());
 
-    while ($pointer) {
+    while ($key !== false && $key !== null) {
       if (true === $cleanAll) {
-        $this->_cache->delete($pointer);
+        $this->_cache->delete($key);
       } else {
-        $this->_cache->get($pointer);
+        $this->_cache->get($key);
       }
 
-      $pointer = dba_nextkey($this->_cache->getDba());
+      $key = dba_nextkey($this->_cache->getDba());
     }
 
     dba_optimize($this->_cache->getDba());

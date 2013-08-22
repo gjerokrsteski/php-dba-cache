@@ -36,7 +36,8 @@ $cache = new Cache(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_S
 
 for ($key = 0; $key < 1000000; $key++) {
   print_r($value = address());
-  $cache->put($key, $value, rand(1, 4800));
+  print 'SAVED='.(int)$cache->put($key, $value, rand(1, 4800)).PHP_EOL;
+  sleep(1);
 }
 
 $cache->closeDba();

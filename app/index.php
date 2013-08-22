@@ -333,7 +333,7 @@ $file_info  = new SplFileInfo($file);
                 </tr>
                 <?php
                 $key = dba_firstkey($cache->getDba());
-                while ($key) :
+                while ($key !== false && $key !== null) :
                   /* @var $item Capsule */
                   $item = $cache->fetch($key);
 
@@ -353,6 +353,8 @@ $file_info  = new SplFileInfo($file);
             </table>
 
         </div>
+
+
     </section>
 
     <p class="muted">
