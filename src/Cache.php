@@ -117,11 +117,17 @@ class Cache
    */
   public function put($key, $value, $ltime = false)
   {
-    if (true === $this->has($key)) {
-      return dba_replace($key, Pack::in($value, $ltime), $this->_dba);
+    try {
+      $value = Pack::in($value, $ltime);
+    } catch(RuntimeException $ret) {
+      return false;
     }
 
-    return dba_insert($key, Pack::in($value, $ltime), $this->_dba);
+    if (true === $this->has($key)) {
+      return dba_replace($key, $value, $this->_dba);
+    }
+
+    return dba_insert($key, $value, $this->_dba);
   }
 
   /**
@@ -175,7 +181,11 @@ class Cache
       return false;
     }
 
-    return Pack::out($fetched);
+    try {
+      return Pack::out($fetched);
+    } catch(RuntimeException $ret) {
+      return false;
+    }
   }
 
   /**

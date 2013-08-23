@@ -56,42 +56,56 @@ class PackTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($object, $userItem->object);
   }
 
-  public function testHandlingWithSimpleXMLElementIntoFlatfileHandler()
+  public static function provideSerializedTestData()
   {
-    $identifier = md5(uniqid());
-
-    // make a xml-file of 1000 nodes.
-    $string = "<?xml version='1.0'?>
-        <document>";
-    for ($i = 1; $i <= 100; $i++) {
-      $string .= "<item>
-			 <title>Let us cache</title>
-			 <from>Joe</from>
-			 <to>Jane</to>
-			 <body>Some content here</body>
-                 </item>";
-    }
-    $string .= "</document>";
-
-    $simplexml = simplexml_load_string(
-      $string, 'SimpleXMLElement', LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NONET
+    return array(
+      array(array(21.123, 21.124, 2, 0)),
+      array((object)array('eee'=>21.123, 'asdfasdf'=>21.124)),
+      array(new Dummy2()),
+      array(new Dummy1()),
+      array(new Dummy()),
     );
+  }
 
-    $path  = dirname(dirname(__FILE__)) . '/tests/_drafts/test-cache-with-simplexml.flatfile';
+  /**
+   * @dataProvider provideSerializedTestData
+   */
+  public function testIfCanBePackedIn($data)
+  {
+    $this->assertInternalType(
 
-    try {
-      $cache = new Cache($path);
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
-    }
+      'string',
 
-    $cache->put($identifier, $simplexml);
-    $object_from_cache = $cache->get($identifier);
-    $cache->closeDba();
+      Pack::in($data),
 
-    $this->assertEquals($simplexml->asXML(), $object_from_cache->asXML());
+      'problem on asserting that '.print_r($data,true). ' can be serialized'
 
-    @unlink($path);
+    );
+  }
+
+  public static function provideNotAndBadSerializedTestData()
+  {
+    return array(
+      array(null),
+      array(''),
+      array('  '),
+      array('0'),
+      array(0),
+      array(true),
+      array('O:7:"Capsule":5:1  :4:"type";'),
+      array('{s:7:"forever";i:123;'),
+      array(array('eee'=>21.123, 'asdfasdf'=>21.124)),
+      array(array('eee'=>21.123, 'asdfasdf'=>21.124)),
+    );
+  }
+
+  /**
+   * @dataProvider provideNotAndBadSerializedTestData
+   * @expectedException RuntimeException
+   */
+  public function testFailsIfCanNotBePackedOut($data)
+  {
+    Pack::out($data);
   }
 }
 

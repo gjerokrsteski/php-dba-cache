@@ -1,8 +1,13 @@
 <?php
 ini_set('default_charset', 'UTF-8');
 date_default_timezone_set('UTC');
+
+if(PHP_SAPI !== 'cli'){
+  ob_start('mb_output_handler');
+}
+
 ini_set('display_errors', 'On');
-error_reporting(-1);
+error_reporting(E_ALL | E_STRICT);
 
 set_include_path(
     dirname(dirname(__FILE__))
