@@ -147,10 +147,7 @@ error_log(' - IS SAME OBJECT : '.
 
 PHP DBA Cache Monitor
 ---------------------
-PHP DBA Cache Monitor is an adaptive web-interface to provide a comprehensive, easy to use 
-and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, 
-it also makes it easier to administer web-servers running DBA by providing comfortable features 
-for optimizing the cache and deleting entries from the cache. 
+Responsive web-interface that provides a comprehensive, easy to use and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, it also makes it easier to administer a web-server running DBA by providing comfortable features for optimizing the cache and deleting entries from the cache.
  
  ![PHP DBA cache Monitor 2013](http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d.jpg "PHP DBA Cache Monitor")
 
