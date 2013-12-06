@@ -30,13 +30,15 @@ $config = array(
    * w  = for read/write access to an already existing database
    * c  = for read/write access and database creation if it doesn't currently exist
    * n  = for create, truncate and read/write access
+   *
+   * When you are absolutely sure that you do not require database locking you can use "-" as suffix.
    */
   'mode'         => 'c-',
 
   /*
    * Open the database persistently
    */
-  'persistently' => true,
+  'persistently' => false,
 
   /*
    * The date for mat for the view.

@@ -34,17 +34,17 @@ class Cache
   /**
    * @var resource
    */
-  protected $_dba;
+  protected $dba;
 
   /**
    * @var string
    */
-  protected $_handler;
+  protected $handler;
 
   /**
    * @var string
    */
-  protected $_cacheFile;
+  protected $storage;
 
   /**
    * @param string $file the cache-file.
@@ -87,17 +87,17 @@ class Cache
       throw new RuntimeException("dba-handler '{$handler}' not supported");
     }
 
-    $this->_dba = (true === $persistently)
+    $this->dba = (true === $persistently)
       ? @dba_popen($file, $mode, $handler)
       : @dba_open($file, $mode, $handler);
 
-    if ($this->_dba === false) {
+    if ($this->dba === false) {
       $err = error_get_last();
       throw new RuntimeException($err['message']);
     }
 
-    $this->_cacheFile = $file;
-    $this->_handler   = $handler;
+    $this->storage = $file;
+    $this->handler = $handler;
   }
 
   /**
@@ -124,10 +124,10 @@ class Cache
     }
 
     if (true === $this->has($key)) {
-      return dba_replace($key, $value, $this->_dba);
+      return dba_replace($key, $value, $this->dba);
     }
 
-    return dba_insert($key, $value, $this->_dba);
+    return dba_insert($key, $value, $this->dba);
   }
 
   /**
@@ -164,9 +164,9 @@ class Cache
   /**
    * @return string
    */
-  public function getCacheFile()
+  public function getStorage()
   {
-    return $this->_cacheFile;
+    return $this->storage;
   }
 
   /**
@@ -175,7 +175,7 @@ class Cache
    */
   public function fetch($key)
   {
-    $fetched = dba_fetch($key, $this->_dba);
+    $fetched = dba_fetch($key, $this->dba);
 
     if (false === $fetched) {
       return false;
@@ -194,12 +194,12 @@ class Cache
    */
   public function delete($key)
   {
-    if (false === is_resource($this->_dba)) {
+    if (false === is_resource($this->dba)) {
       return false;
     }
 
     if ($this->erasable()) {
-      return dba_delete($key, $this->_dba);
+      return dba_delete($key, $this->dba);
     }
 
     return true;
@@ -211,7 +211,7 @@ class Cache
    */
   public function has($key)
   {
-    return dba_exists($key, $this->_dba);
+    return dba_exists($key, $this->dba);
   }
 
   /**
@@ -219,9 +219,9 @@ class Cache
    */
   public function closeDba()
   {
-    if ($this->_dba) {
-      @dba_close($this->_dba);
-      $this->_dba = null;
+    if ($this->dba) {
+      @dba_close($this->dba);
+      $this->dba = null;
     }
   }
 
@@ -230,7 +230,7 @@ class Cache
    */
   public function getDba()
   {
-    return $this->_dba;
+    return $this->dba;
   }
 
   /**
@@ -281,7 +281,7 @@ class Cache
    */
   public function erasable($handler = null)
   {
-    $handler = (!$handler) ? $this->_handler : $handler;
+    $handler = (!$handler) ? $this->handler : $handler;
 
     return in_array($handler, array('inifile', 'gdbm', 'qdbm', 'db4'), true);
   }

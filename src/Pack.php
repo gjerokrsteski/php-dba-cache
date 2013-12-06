@@ -75,11 +75,11 @@ class Pack
     }
 
     if (true === $capsule->fake) {
-        if (isset($capsule->object->scalar)) {
-          $capsule->object = $capsule->object->scalar;
-        } else {
-          $capsule->object = (array)$capsule->object;
-        }
+      if (isset($capsule->object->scalar)) {
+        $capsule->object = $capsule->object->scalar;
+      } else {
+        $capsule->object = (array)$capsule->object;
+      }
     }
 
     if ($capsule->type == 'SimpleXMLElement') {

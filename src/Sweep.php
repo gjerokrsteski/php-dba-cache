@@ -86,7 +86,7 @@ class Sweep
    */
   public function flush()
   {
-    $file = $this->_cache->getCacheFile();
+    $file = $this->_cache->getStorage();
 
     if (file_exists($file)) {
 

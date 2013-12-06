@@ -2,10 +2,6 @@
 ini_set('default_charset', 'UTF-8');
 date_default_timezone_set('UTC');
 
-if(PHP_SAPI !== 'cli'){
-  ob_start('mb_output_handler');
-}
-
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
@@ -20,8 +16,8 @@ set_include_path(
 );
 
 $root = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-require_once $root . 'app'.DIRECTORY_SEPARATOR .'config.php';
-require_once $root . 'src'. DIRECTORY_SEPARATOR .'Cache.php';
-require_once $root . 'src'. DIRECTORY_SEPARATOR .'Pack.php';
-require_once $root  . 'src'. DIRECTORY_SEPARATOR .'Sweep.php';
-require_once $root . 'src'. DIRECTORY_SEPARATOR .'Capsule.php';
+require_once $root . 'app' . DIRECTORY_SEPARATOR . 'config.php';
+require_once $root . 'src' . DIRECTORY_SEPARATOR . 'Cache.php';
+require_once $root . 'src' . DIRECTORY_SEPARATOR . 'Pack.php';
+require_once $root . 'src' . DIRECTORY_SEPARATOR . 'Sweep.php';
+require_once $root . 'src' . DIRECTORY_SEPARATOR . 'Capsule.php';

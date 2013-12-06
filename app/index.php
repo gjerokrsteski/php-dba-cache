@@ -19,9 +19,9 @@ function put(Cache $cache)
 
 // pretty printer for byte values.
 function bsize($s) {
-	foreach (array('','K','M','G') as $i => $k) {
+	foreach (array('','K','M','G') as $k) {
 		if ($s < 1024) break;
-		$s/=1024;
+		$s /= 1024;
 	}
 	return sprintf("%5.1f %sBytes",$s,$k);
 }
@@ -132,18 +132,13 @@ $file_info  = new SplFileInfo($file);
             vertical-align : middle;
         }
     </style>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-responsive.min.css"
-          rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-responsive.min.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!-- Fav and touch icons -->
-    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="favicon.ico">
 </head>
 
 <body>
@@ -198,7 +193,7 @@ $file_info  = new SplFileInfo($file);
             </tr>
                         <tr>
                 <td class="">DBA Cache File</td>
-                <td><?php echo $cache->getCacheFile()?></td>
+                <td><?php echo $cache->getStorage()?></td>
             </tr>
             <tr>
                 <td class="">PHP Version</td>
@@ -271,7 +266,10 @@ $file_info  = new SplFileInfo($file);
             order to remove unused data from the db itself.
         </p>
 
-        <form accept-charset="utf-8" method="post" class="well" action="#memory" name="memory-acts">
+
+        <a class="anchor" id="memory"></a>
+
+        <form accept-charset="utf-8" method="post" class="well" action="#speed" name="memory-acts">
 
             <table class="table">
                 <tbody>
