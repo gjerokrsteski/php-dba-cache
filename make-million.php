@@ -14,22 +14,16 @@ function address()
   return array(
 
     // Random string with length between 8 and 16
-    substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'),
-      0,
-      rand(8, 16)),
+    substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, rand(8, 16)),
 
     // Random five digit number
     sprintf('%05d', rand(1, 99999)),
 
     // Random string with length between 8 and 16
-    substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'),
-      0,
-      rand(8, 16)),
+    substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, rand(8, 16)),
 
     // Random string with length 2
-    substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'),
-      0,
-      2)
+    substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0,  2)
   );
 }
 
