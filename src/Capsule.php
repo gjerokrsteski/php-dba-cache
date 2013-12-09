@@ -27,4 +27,18 @@
 class Capsule
 {
   public $type, $object, $fake, $mtime, $ltime;
+
+  /**
+   * @param bool $fake
+   * @param int $ltime
+   * @param object $object
+   */
+  public function __construct($fake, $ltime, $object)
+  {
+    $this->fake   = $fake;
+    $this->ltime  = $ltime;
+    $this->mtime  = microtime(true);
+    $this->object = $object;
+    $this->type   = get_class($object);
+  }
 }

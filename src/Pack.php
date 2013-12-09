@@ -34,19 +34,14 @@ class Pack
    */
   public static function in($object, $ltime = false)
   {
-    $masked = false;
+    $fake = false;
 
     if (false === is_object($object)) {
       $object = (object)$object;
-      $masked = true;
+      $fake   = true;
     }
 
-    $capsule         = new Capsule();
-    $capsule->type   = get_class($object);
-    $capsule->object = $object;
-    $capsule->fake   = $masked;
-    $capsule->mtime  = microtime(true);
-    $capsule->ltime  = $ltime;
+    $capsule = new Capsule($fake, $ltime, $object);
 
     if ($object instanceof SimpleXMLElement) {
       $capsule->object = $object->asXml();
