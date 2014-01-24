@@ -164,7 +164,7 @@ $file_info  = new SplFileInfo($file);
                         <a href="#speed">Tune Cache</a>
                     </li>
                     <li>
-                        <a href="#entries">Cache Entries</a>
+                        <a href="#entries">Sweep Cache</a>
                     </li>
                 </ul>
             </div>
@@ -310,6 +310,8 @@ $file_info  = new SplFileInfo($file);
           flash_msg($delete_old, 'All old entries deleted');
         ?>
 
+      <p class="">Sometimes it is necessary to sweep the cache from old entries or to flush it.</p>
+
         <form accept-charset="utf-8" method="post" class="well" action="#entries" name="entries-acts">
 
             <button class="btn btn-success" type="submit" name="create-test-entry">Create Test Entry</button>
@@ -326,39 +328,6 @@ $file_info  = new SplFileInfo($file);
             <button class="btn btn-danger" type="submit" name="delete-all">Flush Cache</button>
           <? endif; ?>
         </form>
-
-        <div style="height: 276px;overflow: auto;margin-bottom: 22px">
-
-            <table class="table table-bordered  table-striped  table-condensed ">
-                <tbody>
-                <tr>
-                    <th class="">Key</th>
-                    <th>Last Modification Time</th>
-                    <th>Expire Time</th>
-                </tr>
-                <?php
-                $key = dba_firstkey($cache->getDba());
-                while ($key !== false && $key !== null) :
-                  /* @var $item Capsule */
-                  $item = $cache->fetch($key);
-
-                  if ($item instanceof Capsule) :
-                    ?>
-                  <tr>
-                      <td class=""><?php echo $key?></td>
-                      <td><?php echo date($date_format, $item->mtime)?></td>
-                      <td><?php echo date($date_format, ($item->mtime + $item->ltime))?></td>
-                  </tr>
-                    <?php
-                  endif;
-                  $key = dba_nextkey($cache->getDba());
-                endwhile;
-                ?>
-                </tbody>
-            </table>
-
-        </div>
-
 
     </section>
 
