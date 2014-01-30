@@ -24,7 +24,7 @@ class Capsule
 
   /**
    * @param bool $fake
-   * @param int $ltime
+   * @param int|bool $ltime
    * @param object $object
    */
   public function __construct($fake, $ltime, $object)

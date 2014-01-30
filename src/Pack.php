@@ -22,7 +22,7 @@ class Pack
 {
   /**
    * @param $object
-   * @param bool $ltime
+   * @param int|bool $ltime
    * @return string
    * @throws RuntimeException
    */
