@@ -10,6 +10,8 @@ script:
   - apt-get install php5-curl
   - apt-get install wget
   - apt-get install php-pear
+  - pecl install phar
+  - pecl channel-update pecl.php.net
   - pear channel-update pear.php.net
   - pear channel-discover pear.phpunit.de
   - pear channel-discover components.ez.no
