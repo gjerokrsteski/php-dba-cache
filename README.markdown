@@ -9,6 +9,7 @@ have to matter about the size of the cache-file. It depends on the free space of
 [![Dependency Status](https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec/badge.png)](https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/badges/quality-score.png?s=05c35e93b4026539019555e034a9996839a3c658)](https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/)
 
+
 Available options
 ===========================
 
