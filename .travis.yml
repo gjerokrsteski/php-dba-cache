@@ -7,12 +7,17 @@ php:
   - 5.5
 
 script:
+  - apt-get install php5-curl
+  - apt-get install wget
   - apt-get install php-pear
   - pear channel-update pear.php.net
+  - pear clear-cache
+  - pear upgrade
   - pear upgrade-all
   - pear channel-discover pear.phpunit.de
   - pear channel-discover components.ez.no
   - pear channel-discover pear.symfony-project.com
+  - pear config-set auto_discover 1
   - pear install -a phpunit/PHPUnit
   - phpunit --configuration phpunit.xml --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
