@@ -30,13 +30,14 @@ function put(Cache $cache)
  * @param $size
  * @return string
  */
-function bsize($size) {
-	foreach (array('','K','M','G') as $bytes) {
-		if ($size < 1024) break;
-		$size /= 1024;
-	}
+function bsize($size)
+{
+    foreach (array('','K','M','G') as $bytes) {
+        if ($size < 1024) break;
+        $size /= 1024;
+    }
 
-	return sprintf("%5.1f %sBytes",$size,$bytes);
+    return sprintf("%5.1f %sBytes",$size,$bytes);
 }
 
 /**
@@ -76,14 +77,14 @@ foreach (dba_handlers(true) as $handler_name => $handler_version) {
 // compute the user authentication.
 $authenticated = false;
 if (isset($_POST['login']) || isset($_SERVER['PHP_AUTH_USER'])) {
-	if (!isset($_SERVER['PHP_AUTH_USER']) ||
-		!isset($_SERVER['PHP_AUTH_PW']) ||
-		$_SERVER['PHP_AUTH_USER'] != $authentication['username'] ||
-		$_SERVER['PHP_AUTH_PW'] != $authentication['password']) {
-		Header("WWW-Authenticate: Basic realm=\"PHP DBA Cache Login\"");
-		Header("HTTP/1.0 401 Unauthorized");
+    if (!isset($_SERVER['PHP_AUTH_USER']) ||
+        !isset($_SERVER['PHP_AUTH_PW']) ||
+        $_SERVER['PHP_AUTH_USER'] != $authentication['username'] ||
+        $_SERVER['PHP_AUTH_PW'] != $authentication['password']) {
+        Header("WWW-Authenticate: Basic realm=\"PHP DBA Cache Login\"");
+        Header("HTTP/1.0 401 Unauthorized");
     exit;
-	}
+    }
     $authenticated = true;
 }
 
@@ -333,17 +334,17 @@ $file_info  = new SplFileInfo($file);
 
             <button class="btn btn-success" type="submit" name="create-test-entry">Create Test Entry</button>
 
-          <? if ($authenticated === false) : ?>
+          <?php if ($authenticated === false) : ?>
             <button class="btn btn-info" type="submit" name="login">Login and Sweep</button>
-          <? endif; ?>
+          <?php endif; ?>
 
-          <? if ($authenticated === true && $cache->erasable()) : ?>
+          <?php if ($authenticated === true && $cache->erasable()) : ?>
             <button class="btn btn-success" type="submit" name="delete-old">Remove old entries</button>
-          <? endif; ?>
+          <?php endif; ?>
 
-          <? if ($authenticated === true) : ?>
+          <?php if ($authenticated === true) : ?>
             <button class="btn btn-danger" type="submit" name="delete-all">Flush Cache</button>
-          <? endif; ?>
+          <?php endif; ?>
         </form>
 
     </section>

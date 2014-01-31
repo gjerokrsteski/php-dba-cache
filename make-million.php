@@ -1,6 +1,5 @@
 <?php
-if (PHP_SAPI != 'cli')
-{
+if (PHP_SAPI != 'cli') {
   die('no trespass! call the administrator!');
 }
 
@@ -30,8 +29,7 @@ function address()
 $db    = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'app.db4';
 $cache = new Cache($db, 'db4', 'c-', true);
 
-for ($key = 0; $key < 1000000; $key++)
-{
+for ($key = 0; $key < 1000000; $key++) {
   print_r($value = address());
   print 'SAVED=' . (int)$cache->put($key, $value, rand(1, 21600)) . PHP_EOL;
   sleep(rand(1, 2));
