@@ -7,16 +7,6 @@ php:
   - 5.5
 
 script:
-  - apt-get install php5-curl
-  - apt-get install wget
-  - apt-get install php-pear
-  - pecl install phar
-  - pecl channel-update pecl.php.net
-  - pear channel-update pear.php.net
-  - pear channel-discover pear.phpunit.de
-  - pear channel-discover components.ez.no
-  - pear channel-discover pear.symfony-project.com
-  - pear install -a phpunit/PHPUnit
   - phpunit --configuration phpunit.xml --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
