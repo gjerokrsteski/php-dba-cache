@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>PHP DBA Cache by gjerokrsteski</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="PHP DBA Cache : Create a caching with the Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>PHP DBA Cache</title>
   </head>
 
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>PHP DBA Cache</h1>
-          <h2>Create a caching with the Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays.</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/gjerokrsteski/php-dba-cache">View on GitHub</a>
+
+          <h1 id="project_title">PHP DBA Cache</h1>
+          <h2 id="project_tagline">Create a caching with the Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/gjerokrsteski/php-dba-cache/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/gjerokrsteski/php-dba-cache/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
+    </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/gjerokrsteski/php-dba-cache/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/gjerokrsteski/php-dba-cache/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/gjerokrsteski/php-dba-cache" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>The php-dba-cache uses the database (dbm-style) abstraction layer to cache/store your PHP objects, 
@@ -39,7 +39,8 @@ strings, integers or arrays. Even instances of SimpleXMLElement can be put to th
 have to matter about the size of the cache-file. It depends on the free space of your disk.</p>
 
 <p><a href="https://travis-ci.org/gjerokrsteski/php-dba-cache"><img src="https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master" alt="Build Status"></a>
-<a href="https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec"><img src="https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec/badge.png" alt="Dependency Status"></a></p>
+<a href="https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec"><img src="https://www.versioneye.com/user/projects/52122a50632bac1aea0039ec/badge.png" alt="Dependency Status"></a>
+<a href="https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/"><img src="https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/badges/quality-score.png?s=05c35e93b4026539019555e034a9996839a3c658" alt="Scrutinizer Quality Score"></a></p>
 
 <h1>
 <a name="available-options" class="anchor" href="#available-options"><span class="octicon octicon-link"></span></a>Available options</h1>
@@ -116,7 +117,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <h2>
 <a name="sample-for-oracle-berkeley-db-4-with-persistent-connection" class="anchor" href="#sample-for-oracle-berkeley-db-4-with-persistent-connection"><span class="octicon octicon-link"></span></a>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
 
-<div class="highlight"><pre><span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span>
+<div class="highlight highlight-php"><pre><span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span>
   <span class="s1">'/your/path/to/the/cahe-file/cache.db4'</span><span class="p">,</span> <span class="s1">'db4'</span>
 <span class="p">);</span>
 
@@ -146,7 +147,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <h2>
 <a name="saving-simplexmlelement-instances-into-db-4-with-persistent-connection" class="anchor" href="#saving-simplexmlelement-instances-into-db-4-with-persistent-connection"><span class="octicon octicon-link"></span></a>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
 
-<div class="highlight"><pre><span class="nv">$string</span> <span class="o">=</span> <span class="s2">"&lt;?xml version='1.0'?&gt;</span>
+<div class="highlight highlight-php"><pre><span class="nv">$string</span> <span class="o">=</span> <span class="s2">"&lt;?xml version='1.0'?&gt;</span>
 <span class="s2">&lt;document&gt;</span>
 <span class="s2"> &lt;title&gt;Let us cache&lt;/title&gt;</span>
 <span class="s2"> &lt;from&gt;Joe&lt;/from&gt;</span>
@@ -180,12 +181,9 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <h2>
 <a name="php-dba-cache-monitor" class="anchor" href="#php-dba-cache-monitor"><span class="octicon octicon-link"></span></a>PHP DBA Cache Monitor</h2>
 
-<p>PHP DBA Cache Monitor is an adaptive web-interface to provide a comprehensive, easy to use 
-and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, 
-it also makes it easier to administer web-servers running DBA by providing comfortable features 
-for optimizing the cache and deleting entries from the cache. </p>
+<p>Responsive web-interface that provides a comprehensive, easy to use and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, it also makes it easier to administer a web-server running DBA by providing comfortable features for optimizing the cache and deleting entries from the cache.</p>
 
-<p><img src="http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d.jpg" alt="PHP DBA cache Monitor 2013" title="PHP DBA Cache Monitor"></p>
+<p><img src="http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d.jpg" alt="PHP DBA cache Monitor 2014" title="PHP DBA Cache Monitor"></p>
 
 <h2>
 <a name="benchmark-test-of-dbm-brothers" class="anchor" href="#benchmark-test-of-dbm-brothers"><span class="octicon octicon-link"></span></a>Benchmark Test of DBM Brothers</h2>
@@ -215,15 +213,18 @@ BDB-BT-RND B+ tree API of BDB (at random)           10.03       4.15        2912
 
 <p>Unit of time is seconds. Unit of size is kilo bytes. Read time of SDBM can not be calculated
 because its database is broken when more than 100000 records.</p>
-        </section>
-
-        <footer>
-          PHP DBA Cache is maintained by <a href="https://github.com/gjerokrsteski">gjerokrsteski</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
     </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">PHP DBA Cache maintained by <a href="https://github.com/gjerokrsteski">gjerokrsteski</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
