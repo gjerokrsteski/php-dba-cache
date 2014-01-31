@@ -1,8 +1,12 @@
 <?php
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-// produce us a cache and sweeper object please
-function factory($config)
+/**
+ * produce us a cache and sweeper object please
+ * @param array $config
+ * @return array
+ */
+function factory(array $config)
 {
   extract($config);
   $cache = new Cache($file, $handler, $mode, $persistently);
@@ -11,21 +15,34 @@ function factory($config)
   return array($cache, $sweep);
 }
 
-// create an test-entry for two seconds.
+/**
+ * create an test-entry for two seconds.
+ * @param Cache $cache
+ * @return bool
+ */
 function put(Cache $cache)
 {
   return $cache->put(uniqid('test_'), (object)array( rand(1, 100) ), 2);
 }
 
-// pretty printer for byte values.
-function bsize($s) {
-	foreach (array('','K','M','G') as $k) {
-		if ($s < 1024) break;
-		$s /= 1024;
+/**
+ * pretty printer for byte values.
+ * @param $size
+ * @return string
+ */
+function bsize($size) {
+	foreach (array('','K','M','G') as $bytes) {
+		if ($size < 1024) break;
+		$size /= 1024;
 	}
-	return sprintf("%5.1f %sBytes",$s,$k);
+
+	return sprintf("%5.1f %sBytes",$size,$bytes);
 }
 
+/**
+ * @param $check
+ * @param $msg
+ */
 function flash_msg(&$check, $msg)
 {
   if (isset($check) && $check === true) {
@@ -38,15 +55,15 @@ function flash_msg(&$check, $msg)
 // retrieve an cache and a cache-sweeper.
 try {
   list($cache, $sweep) = factory($config);
-} catch (Exception $e) {
-  die($e->getMessage());
+} catch (Exception $exception) {
+  die($exception->getMessage());
 }
 
 // load the configuration at the global namespace.
 extract($config);
 
 // make a list of all the available handlers.
-$available_handlers = '';
+$available_handlers = $handler_in_use = '';
 foreach (dba_handlers(true) as $handler_name => $handler_version) {
   $handler_version = str_replace('$', '', $handler_version);
   if($handler == $handler_name) {

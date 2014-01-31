@@ -136,7 +136,7 @@ class Cache
 
   /**
    * @param string $key
-   * @return bool
+   * @return bool|object
    */
   public function get($key)
   {
@@ -251,12 +251,13 @@ class Cache
    * - expire = the expire timestamp
    * - mtime = timestamp of last modification time
    *
-   * @param string $id cache id
-   * @return array|boolean
+   * @param string $key cache id
+   *
+*@return array|boolean
    */
-  public function getMetaData($id)
+  public function getMetaData($key)
   {
-    $res = $this->fetch($id);
+    $res = $this->fetch($key);
 
     if ($res instanceof Capsule) {
       return array(
