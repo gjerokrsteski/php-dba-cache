@@ -21,22 +21,24 @@
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
             <exclude>
+            <directory suffix=".php">app</directory>
+            <directory suffix=".php">tests</directory>
              <file>bootstrap.php</file>
             </exclude>
         </whitelist>
     </filter>
     
     <logging>
-		<log
-			type="coverage-html"
-			target="./coverage/"
-			charset="UTF-8"
-			yui="true"
-			highlight="true"
-			lowUpperBound="50"
-			highLowerBound="80"
-		/>
-		<log type="coverage-clover" target="./clover.xml" charset="UTF-8"/>
-	</logging>
+	<log
+		type="coverage-html"
+		target="./coverage/"
+		charset="UTF-8"
+		yui="true"
+		highlight="true"
+		lowUpperBound="50"
+		highLowerBound="80"
+	/>
+	<log type="coverage-clover" target="./clover.xml" charset="UTF-8"/>
+    </logging>
     
 </phpunit>
