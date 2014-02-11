@@ -252,8 +252,7 @@ class Cache
    * - mtime = timestamp of last modification time
    *
    * @param string $key cache id
-   *
-*@return array|boolean
+   * @return array|boolean
    */
   public function getMetaData($key)
   {
