@@ -13,6 +13,27 @@ class CacheDefaultTest extends CacheHandlersTestCase
     $this->_general_mode    = 'c-';
   }
 
+  public function testWriteAndReadWithoutPersistentConnection()
+  {
+    try {
+    $cache = new Cache(
+      dirname(__FILE__) .'/_drafts/test-cache-pers.flatfile', 'flatfile', 'c-', false
+    );
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
+    }
+
+    $this->assertInstanceOf('Cache', $cache);
+
+    $cache->put($this->_identifier, array('rambo' => 123));
+    $cache->get($this->_identifier);
+
+    $res = $cache->get($this->_identifier);
+
+    $this->assertInternalType('array', $res);
+    $this->assertEquals($res, array('rambo' => 123));
+  }
+
   public function testHandlingWithSimpleXMLElementIntoFlatfileHandler()
   {
     $identifier = md5(uniqid());
@@ -35,7 +56,12 @@ class CacheDefaultTest extends CacheHandlersTestCase
     );
 
     $path  = dirname(__FILE__) . '/_drafts/test-cache-with-simplexml.flatfile';
+
+    try {
     $cache = new Cache($path);
+    } catch(RuntimeException $e) {
+     $this->markTestSkipped($e->getMessage());
+    }
 
     $cache->put($identifier, $simplexml);
     $object_from_cache = $cache->get($identifier);
