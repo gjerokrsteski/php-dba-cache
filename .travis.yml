@@ -9,15 +9,6 @@ before_script:
   - phpenv rehash
 
 script:
-  - export PHP_INCLUDE_DIR=$(php-config --include-dir)
-  - export TEST_PHP_EXECUTABLE=$(php-config --php-binary)
-  - export REPORT_EXIT_STATUS=1
-  - phpize --clean
-  - phpize
-  - ./configure --enable-dba=shared
-  - make clean
-  - make
-  - make install
   - phpunit --configuration phpunit.xml --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
