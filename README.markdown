@@ -7,7 +7,7 @@ have to matter about the size of the cache-file. It depends on the free space of
 
 [![Build Status](https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master)](https://travis-ci.org/gjerokrsteski/php-dba-cache)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/badges/quality-score.png?s=05c35e93b4026539019555e034a9996839a3c658)](https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/)
-
+[![Dependency Status](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master/badge.png)](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master)
 
 Available options
 ===========================
