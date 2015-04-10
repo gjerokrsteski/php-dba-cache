@@ -10,6 +10,7 @@ have to matter about the size of the cache-file. It depends on the free space of
 [![Dependency Status](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master/badge.png)](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gjerokrsteski/php-dba-cache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+
 Available options
 ===========================
 
@@ -182,8 +183,3 @@ BDB-BT-RND B+ tree API of BDB (at random)           10.03       4.15        2912
 
 Unit of time is seconds. Unit of size is kilo bytes. Read time of SDBM can not be calculated
 because its database is broken when more than 100000 records.
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gjerokrsteski/php-dba-cache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
