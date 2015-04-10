@@ -39,7 +39,7 @@ class PackTest extends PHPUnit_Framework_TestCase
    */
   public function testSerializingSomeObjects($object)
   {
-    Pack::in($object);
+    Pack::wrap($object);
   }
 
   /**
@@ -49,9 +49,9 @@ class PackTest extends PHPUnit_Framework_TestCase
    */
   public function testUnserializingSomeObjectsAndCompareThemEachOther($object)
   {
-    $serialized = Pack::in($object);
+    $serialized = Pack::wrap($object);
 
-    $userItem = Pack::out($serialized);
+    $userItem = Pack::unwrap($serialized);
 
     $this->assertEquals($object, $userItem->object);
   }
@@ -76,7 +76,7 @@ class PackTest extends PHPUnit_Framework_TestCase
 
       'string',
 
-      Pack::in($data),
+      Pack::wrap($data),
 
       'problem on asserting that '.print_r($data,true). ' can be serialized'
 
@@ -105,7 +105,7 @@ class PackTest extends PHPUnit_Framework_TestCase
    */
   public function testFailsIfCanNotBePackedOut($data)
   {
-    Pack::out($data);
+    Pack::unwrap($data);
   }
 }
 

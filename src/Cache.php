@@ -112,7 +112,7 @@ class Cache
   public function put($key, $value, $ltime = false)
   {
     try {
-      $value = Pack::in($value, $ltime);
+      $value = Pack::wrap($value, $ltime);
     } catch(RuntimeException $ret) {
       return false;
     }
@@ -176,7 +176,7 @@ class Cache
     }
 
     try {
-      return Pack::out($fetched);
+      return Pack::unwrap($fetched);
     } catch(RuntimeException $ret) {
       return false;
     }
@@ -214,7 +214,7 @@ class Cache
   public function closeDba()
   {
     if ($this->dba) {
-      @dba_close($this->dba);
+      dba_close($this->dba);
       $this->dba = null;
     }
   }

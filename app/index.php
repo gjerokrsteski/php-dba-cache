@@ -32,6 +32,8 @@ function put(Cache $cache)
  */
 function bsize($size)
 {
+    $bytes = '';
+
     foreach (array('','K','M','G') as $bytes) {
         if ($size < 1024) break;
         $size /= 1024;

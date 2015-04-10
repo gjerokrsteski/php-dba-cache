@@ -26,7 +26,7 @@ class Pack
    * @return string
    * @throws RuntimeException
    */
-  public static function in($object, $ltime = false)
+  public static function wrap($object, $ltime = false)
   {
     $fake = false;
 
@@ -54,7 +54,7 @@ class Pack
    * @return Capsule
    * @throws RuntimeException
    */
-  public static function out($object)
+  public static function unwrap($object)
   {
     $serialized = (false !== ($capsule = @unserialize(trim($object))));
 
