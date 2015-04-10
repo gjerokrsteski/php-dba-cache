@@ -183,3 +183,7 @@ BDB-BT-RND B+ tree API of BDB (at random)           10.03       4.15        2912
 Unit of time is seconds. Unit of size is kilo bytes. Read time of SDBM can not be calculated
 because its database is broken when more than 100000 records.
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gjerokrsteski/php-dba-cache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
