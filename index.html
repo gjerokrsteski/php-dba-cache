@@ -4,9 +4,9 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -32,7 +32,7 @@
 
         <section id="main_content">
           <h1>
-<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>The php-dba-cache uses the database (dbm-style) abstraction layer to cache/store your PHP objects, 
 strings, integers or arrays. Even instances of SimpleXMLElement can be put to the cache. You dont 
@@ -40,10 +40,11 @@ have to matter about the size of the cache-file. It depends on the free space of
 
 <p><a href="https://travis-ci.org/gjerokrsteski/php-dba-cache"><img src="https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master" alt="Build Status"></a>
 <a href="https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/"><img src="https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/badges/quality-score.png?s=05c35e93b4026539019555e034a9996839a3c658" alt="Scrutinizer Quality Score"></a>
-<a href="https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master"><img src="https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master/badge.png" alt="Dependency Status"></a></p>
+<a href="https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master"><img src="https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master/badge.png" alt="Dependency Status"></a>
+<a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/gjerokrsteski/php-dba-cache/trend.png" alt="Bitdeli Badge"></a></p>
 
 <h1>
-<a name="available-options" class="anchor" href="#available-options"><span class="octicon octicon-link"></span></a>Available options</h1>
+<a id="available-options" class="anchor" href="#available-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available options</h1>
 
 <p>Cache</p>
 
@@ -55,15 +56,19 @@ have to matter about the size of the cache-file. It depends on the free space of
 <li>Delete the record with a given key</li>
 <li>Return metadata for the given key: expire timestamp &amp; timestamp of last modification time</li>
 <li>Get all keys from cache</li>
-</ul><p>Sweep - CacheGarbageCollector (optional)</p>
+</ul>
+
+<p>Sweep - CacheGarbageCollector (optional)</p>
 
 <ul>
 <li>Clean all entries</li>
 <li>Clean expired entries</li>
 <li>Flush the cache file</li>
 <li>Optimizes the database file automatically after cleaning process</li>
-</ul><h1>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+</ul>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>"By using the --enable-dba=shared configuration option you can build a dynamic loadable module
 to enable PHP for basic support of dbm-style databases. You also have to add support for at
@@ -73,7 +78,7 @@ to your PHP configure line."</p>
 <p>More about installation: <a href="http://www.php.net/manual/en/dba.installation.php">http://www.php.net/manual/en/dba.installation.php</a></p>
 
 <h1>
-<a name="dba-handlers" class="anchor" href="#dba-handlers"><span class="octicon octicon-link"></span></a>DBA handlers</h1>
+<a id="dba-handlers" class="anchor" href="#dba-handlers" aria-hidden="true"><span class="octicon octicon-link"></span></a>DBA handlers</h1>
 
 <p>The behaviour of various aspects for the caching depends on the implementation of yor
 installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
@@ -105,7 +110,7 @@ That happens when configure could not find any external library.</p>
 <p>More about requirements: <a href="http://www.php.net/manual/en/dba.requirements.php">http://www.php.net/manual/en/dba.requirements.php</a></p>
 
 <h2>
-<a name="nice-to-know" class="anchor" href="#nice-to-know"><span class="octicon octicon-link"></span></a>Nice to know</h2>
+<a id="nice-to-know" class="anchor" href="#nice-to-know" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nice to know</h2>
 
 <p>Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
 can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
@@ -115,78 +120,76 @@ that on several systems these libraries are part of more than one other library.
 test only prevents you from configuring malfaunctioning single handlers but not combinations.</p>
 
 <h2>
-<a name="sample-for-oracle-berkeley-db-4-with-persistent-connection" class="anchor" href="#sample-for-oracle-berkeley-db-4-with-persistent-connection"><span class="octicon octicon-link"></span></a>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
+<a id="sample-for-oracle-berkeley-db-4-with-persistent-connection" class="anchor" href="#sample-for-oracle-berkeley-db-4-with-persistent-connection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
 
-<div class="highlight highlight-php"><pre><span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span>
-  <span class="s1">'/your/path/to/the/cahe-file/cache.db4'</span><span class="p">,</span> <span class="s1">'db4'</span>
-<span class="p">);</span>
-
-<span class="nv">$yorObject</span>            <span class="o">=</span> <span class="k">new</span> <span class="nx">ObjectYouWantToPutInCache</span><span class="p">();</span>
-<span class="nv">$yourObjectIdentifier</span> <span class="o">=</span> <span class="s1">'your:cool:object:identifier'</span><span class="p">;</span>
-
-<span class="c1">// Check if your object is in the cache.</span>
-<span class="c1">// You also can ignore it, and let the CacheDba do it for you.</span>
-<span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">==</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">))</span> <span class="p">{</span>
-  <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">,</span> <span class="nv">$yorObject</span><span class="p">);</span>
-
-<span class="c1">// Than somewhere at your project.</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$yourObjectIdentifier</span><span class="p">);</span>
-
-<span class="c1">// For the garbage collection </span>
-<span class="c1">// you can create an cron-job starting once a day.</span>
-<span class="nv">$sweep</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sweep</span><span class="p">(</span><span class="nv">$cache</span><span class="p">);</span>
-<span class="nv">$sweep</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
-
-<span class="c1">// or clean all objects older than given expiration since now.</span>
-<span class="nv">$sweep</span><span class="o">-&gt;</span><span class="na">old</span><span class="p">();</span>
-</pre></div>
-
-<h2>
-<a name="saving-simplexmlelement-instances-into-db-4-with-persistent-connection" class="anchor" href="#saving-simplexmlelement-instances-into-db-4-with-persistent-connection"><span class="octicon octicon-link"></span></a>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
-
-<div class="highlight highlight-php"><pre><span class="nv">$string</span> <span class="o">=</span> <span class="s2">"&lt;?xml version='1.0'?&gt;</span>
-<span class="s2">&lt;document&gt;</span>
-<span class="s2"> &lt;title&gt;Let us cache&lt;/title&gt;</span>
-<span class="s2"> &lt;from&gt;Joe&lt;/from&gt;</span>
-<span class="s2"> &lt;to&gt;Jane&lt;/to&gt;</span>
-<span class="s2"> &lt;body&gt;Some content here&lt;/body&gt;</span>
-<span class="s2">&lt;/document&gt;"</span><span class="p">;</span>
-
-<span class="nv">$simplexml</span> <span class="o">=</span> <span class="nb">simplexml_load_string</span><span class="p">(</span>
-    <span class="nv">$string</span><span class="p">,</span>
-    <span class="s1">'SimpleXMLElement'</span><span class="p">,</span>
-    <span class="nx">LIBXML_NOERROR</span><span class="o">|</span><span class="nx">LIBXML_NOWARNING</span><span class="o">|</span><span class="nx">LIBXML_NONET</span>
-<span class="p">);</span>
-
-<span class="nv">$identifier</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="s1">'simplexml_identifier'</span><span class="p">);</span>
-
-<span class="nv">$path</span> <span class="o">=</span> <span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">)</span><span class="o">.</span><span class="s1">'/simple-xml-test-cache.db4'</span><span class="p">;</span>
-<span class="nv">$cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cache</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="s1">'db4'</span><span class="p">);</span>
-
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$identifier</span><span class="p">,</span> <span class="nv">$simplexml</span><span class="p">);</span>
-
-<span class="nv">$getObject</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$identifier</span><span class="p">);</span>
-
-<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - PUT IN CACHE : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$simplexml</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
-<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - GET FROM CACHE : '</span><span class="o">.</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$getObject</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
-
-<span class="nb">error_log</span><span class="p">(</span><span class="s1">' - IS SAME OBJECT : '</span><span class="o">.</span>
-    <span class="nb">print_r</span><span class="p">((</span><span class="nv">$simplexml</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">()</span> <span class="o">===</span> <span class="nv">$getObject</span><span class="o">-&gt;</span><span class="na">asXml</span><span class="p">())</span>
-            <span class="o">?</span> <span class="s1">'true'</span> <span class="o">:</span> <span class="s1">'false'</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
-</pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$cache</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Cache</span>(</span>
+<span class="pl-s1">  <span class="pl-s"><span class="pl-pds">'</span>/your/path/to/the/cahe-file/cache.db4<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>db4<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$yorObject</span>            <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ObjectYouWantToPutInCache</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$yourObjectIdentifier</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>your:cool:object:identifier<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Check if your object is in the cache.</span></span>
+<span class="pl-s1"><span class="pl-c">// You also can ignore it, and let the CacheDba do it for you.</span></span>
+<span class="pl-s1"><span class="pl-k">if</span> (<span class="pl-c1">false</span> <span class="pl-k">==</span> <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>has(<span class="pl-smi">$yourObjectIdentifier</span>)) {</span>
+<span class="pl-s1">  <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>delete(<span class="pl-smi">$yourObjectIdentifier</span>);</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>put(<span class="pl-smi">$yourObjectIdentifier</span>, <span class="pl-smi">$yorObject</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Than somewhere at your project.</span></span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>get(<span class="pl-smi">$yourObjectIdentifier</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// For the garbage collection </span></span>
+<span class="pl-s1"><span class="pl-c">// you can create an cron-job starting once a day.</span></span>
+<span class="pl-s1"><span class="pl-smi">$sweep</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Sweep</span>(<span class="pl-smi">$cache</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$sweep</span><span class="pl-k">-&gt;</span>all();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// or clean all objects older than given expiration since now.</span></span>
+<span class="pl-s1"><span class="pl-smi">$sweep</span><span class="pl-k">-&gt;</span>old();</span></pre></div>
 
 <h2>
-<a name="php-dba-cache-monitor" class="anchor" href="#php-dba-cache-monitor"><span class="octicon octicon-link"></span></a>PHP DBA Cache Monitor</h2>
+<a id="saving-simplexmlelement-instances-into-db-4-with-persistent-connection" class="anchor" href="#saving-simplexmlelement-instances-into-db-4-with-persistent-connection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$string</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;?xml version='1.0'?&gt;</span></span>
+<span class="pl-s1"><span class="pl-s">&lt;document&gt;</span></span>
+<span class="pl-s1"><span class="pl-s"> &lt;title&gt;Let us cache&lt;/title&gt;</span></span>
+<span class="pl-s1"><span class="pl-s"> &lt;from&gt;Joe&lt;/from&gt;</span></span>
+<span class="pl-s1"><span class="pl-s"> &lt;to&gt;Jane&lt;/to&gt;</span></span>
+<span class="pl-s1"><span class="pl-s"> &lt;body&gt;Some content here&lt;/body&gt;</span></span>
+<span class="pl-s1"><span class="pl-s">&lt;/document&gt;<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$simplexml</span> <span class="pl-k">=</span> <span class="pl-c1">simplexml_load_string</span>(</span>
+<span class="pl-s1">    <span class="pl-smi">$string</span>,</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>SimpleXMLElement<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">    <span class="pl-c1">LIBXML_NOERROR</span><span class="pl-k">|</span><span class="pl-c1">LIBXML_NOWARNING</span><span class="pl-k">|</span><span class="pl-c1">LIBXML_NONET</span></span>
+<span class="pl-s1">);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$identifier</span> <span class="pl-k">=</span> <span class="pl-c1">md5</span>(<span class="pl-s"><span class="pl-pds">'</span>simplexml_identifier<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$path</span> <span class="pl-k">=</span> <span class="pl-c1">dirname</span>(<span class="pl-c1">__FILE__</span>)<span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/simple-xml-test-cache.db4<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$cache</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Cache</span>(<span class="pl-smi">$path</span>, <span class="pl-s"><span class="pl-pds">'</span>db4<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>put(<span class="pl-smi">$identifier</span>, <span class="pl-smi">$simplexml</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$getObject</span> <span class="pl-k">=</span> <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>get(<span class="pl-smi">$identifier</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">error_log</span>(<span class="pl-s"><span class="pl-pds">'</span> - PUT IN CACHE : <span class="pl-pds">'</span></span><span class="pl-k">.</span><span class="pl-c1">print_r</span>(<span class="pl-smi">$simplexml</span>, <span class="pl-c1">true</span>));</span>
+<span class="pl-s1"><span class="pl-c1">error_log</span>(<span class="pl-s"><span class="pl-pds">'</span> - GET FROM CACHE : <span class="pl-pds">'</span></span><span class="pl-k">.</span><span class="pl-c1">print_r</span>(<span class="pl-smi">$getObject</span>, <span class="pl-c1">true</span>));</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">error_log</span>(<span class="pl-s"><span class="pl-pds">'</span> - IS SAME OBJECT : <span class="pl-pds">'</span></span><span class="pl-k">.</span></span>
+<span class="pl-s1">    <span class="pl-c1">print_r</span>((<span class="pl-smi">$simplexml</span><span class="pl-k">-&gt;</span>asXml() <span class="pl-k">===</span> <span class="pl-smi">$getObject</span><span class="pl-k">-&gt;</span>asXml())</span>
+<span class="pl-s1">            ? <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span> : <span class="pl-s"><span class="pl-pds">'</span>false<span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>));</span></pre></div>
+
+<h2>
+<a id="php-dba-cache-monitor" class="anchor" href="#php-dba-cache-monitor" aria-hidden="true"><span class="octicon octicon-link"></span></a>PHP DBA Cache Monitor</h2>
 
 <p>Responsive web-interface that provides a comprehensive, easy to use and of course good looking GUI. It not only gives access to statistical parameters of DBA Cache, it also makes it easier to administer a web-server running DBA by providing comfortable features for optimizing the cache and deleting entries from the cache.</p>
 
 <p><img src="http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d.jpg" alt="PHP DBA cache Monitor 2014" title="PHP DBA Cache Monitor"></p>
 
 <h2>
-<a name="benchmark-test-of-dbm-brothers" class="anchor" href="#benchmark-test-of-dbm-brothers"><span class="octicon octicon-link"></span></a>Benchmark Test of DBM Brothers</h2>
+<a id="benchmark-test-of-dbm-brothers" class="anchor" href="#benchmark-test-of-dbm-brothers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benchmark Test of DBM Brothers</h2>
 
 <p>This benchmark test is to calculate processing time (real time)
 and file size of database. Writing test is to store 1,000,000 records. Reading test is
@@ -217,7 +220,7 @@ because its database is broken when more than 100000 records.</p>
 
         <footer>
           PHP DBA Cache is maintained by <a href="https://github.com/gjerokrsteski">gjerokrsteski</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
         
