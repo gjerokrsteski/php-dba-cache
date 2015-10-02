@@ -17,15 +17,12 @@ require_once BASE_PATH . 'app' . DS . 'config.php';
 
 spl_autoload_register(
     function ($class) {
-        static $classes = null;
-        if ($classes === null) {
-            $classes = array(
-                'PhpDbaCache\\Cache'   => '/Cache.php',
-                'PhpDbaCache\\Pack'    => '/Pack.php',
-                'PhpDbaCache\\Sweep'   => '/Sweep.php',
-                'PhpDbaCache\\Capsule' => '/Capsule.php',
-            );
-        }
+        static $classes = array(
+            'PhpDbaCache\\Cache'   => '/Cache.php',
+            'PhpDbaCache\\Pack'    => '/Pack.php',
+            'PhpDbaCache\\Sweep'   => '/Sweep.php',
+            'PhpDbaCache\\Capsule' => '/Capsule.php',
+        );
 
         if (isset($classes[$class])) {
             require BASE_PATH . '/src' . $classes[$class];
