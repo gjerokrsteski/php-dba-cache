@@ -25,11 +25,11 @@ class QdbmTest extends CacheHandlersTestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        $this->assertInstanceOf('Cache', $cache);
+        $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
         $cache->put($this->_identifier, $this->_object);
 
-        $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->_identifier));
     }
 
     /**
@@ -43,10 +43,10 @@ class QdbmTest extends CacheHandlersTestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        $this->assertInstanceOf('Cache', $cache);
+        $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
         $cache->put($this->_identifier, $this->_object);
 
-        $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->_identifier));
     }
 }

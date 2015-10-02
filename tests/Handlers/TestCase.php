@@ -66,7 +66,7 @@ class CacheHandlersTestCase extends \PHPUnit_Framework_TestCase
 
         $res = $cache->getIds();
 
-        $this->assertInstanceOf('ArrayObject', $res);
+        $this->assertInstanceOf('\PhpDbaCache\ArrayObject', $res);
         $this->assertNotEmpty($res->getArrayCopy());
 
         $cache->closeDba();

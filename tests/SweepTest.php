@@ -44,7 +44,7 @@ class SweepTest extends \PHPUnit_Framework_TestCase
     {
         $sweep = new \PhpDbaCache\Sweep($this->_cache);
 
-        $this->assertInstanceOf('Sweep', $sweep);
+        $this->assertInstanceOf('\PhpDbaCache\Sweep', $sweep);
     }
 
     /**
@@ -99,9 +99,9 @@ class SweepTest extends \PHPUnit_Framework_TestCase
         $sweep = new \Sweep($this->_cache);
         $sweep->old();
 
-        $this->assertInstanceOf('stdClass', $this->_cache->get(md5('stdClass')));
-        $this->assertInstanceOf('ZipArchive', $this->_cache->get(md5('ZipArchive')));
-        $this->assertInstanceOf('XMLReader', $this->_cache->get(md5('XMLReader')));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $this->_cache->get(md5('stdClass')));
+        $this->assertInstanceOf('\PhpDbaCache\ZipArchive', $this->_cache->get(md5('ZipArchive')));
+        $this->assertInstanceOf('\PhpDbaCache\XMLReader', $this->_cache->get(md5('XMLReader')));
     }
 
     /**
@@ -119,7 +119,7 @@ class SweepTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        $this->assertInstanceOf('Cache', $cacheMake);
+        $this->assertInstanceOf('\PhpDbaCache\Cache', $cacheMake);
 
         $testIdentifier1 = md5('ZipArchive' . time());
         $testIdentifier2 = md5('XMLReader' . time());
@@ -148,8 +148,8 @@ class SweepTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($cacheRead->has($testIdentifier1));
         $this->assertTrue($cacheRead->has($testIdentifier2));
 
-        $this->assertInstanceOf('ZipArchive', $cacheRead->get($testIdentifier1));
-        $this->assertInstanceOf('XMLReader', $cacheRead->get($testIdentifier2));
+        $this->assertInstanceOf('\PhpDbaCache\ZipArchive', $cacheRead->get($testIdentifier1));
+        $this->assertInstanceOf('\PhpDbaCache\XMLReader', $cacheRead->get($testIdentifier2));
 
         $cacheRead->closeDba();
     }
@@ -167,13 +167,13 @@ class SweepTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        $this->assertInstanceOf('Cache', $cache);
+        $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
         $cache->put(md5('ZipArchive'), new \ZipArchive());
         $cache->put(md5('XMLReader'), new \XMLReader());
 
-        $this->assertInstanceOf('ZipArchive', $cache->get(md5('ZipArchive')));
-        $this->assertInstanceOf('XMLReader', $cache->get(md5('XMLReader')));
+        $this->assertInstanceOf('\PhpDbaCache\ZipArchive', $cache->get(md5('ZipArchive')));
+        $this->assertInstanceOf('\PhpDbaCache\XMLReader', $cache->get(md5('XMLReader')));
 
         $sweep = new \PhpDbaCache\Sweep($cache);
         $sweep->all();

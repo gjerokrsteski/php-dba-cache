@@ -293,9 +293,10 @@ $file_info = new SplFileInfo($file);
 
         <h3>Tune Cache</h3>
 
-        <?php flash_msg($synchronize, 'Database synchronized');
-        flash_msg($optimize, 'Database optimized'); ?>
-
+        <?php
+        flash_msg($synchronize, 'Database synchronized');
+        flash_msg($optimize, 'Database optimized');
+        ?>
 
         <p class="">If you add-remove-substitute keys with data having different content length,
             the db continues to grow, wasting space. Sometimes it is necessary, to optimize or synchronize the db in

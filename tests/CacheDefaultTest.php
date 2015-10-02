@@ -24,7 +24,7 @@ class CacheDefaultTest extends CacheHandlersTestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        $this->assertInstanceOf('Cache', $cache);
+        $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
         $cache->put($this->_identifier, array('rambo' => 123));
         $cache->get($this->_identifier);

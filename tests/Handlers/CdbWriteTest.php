@@ -27,7 +27,7 @@ class CdbWriteTest extends CacheHandlersTestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        $this->assertInstanceOf('Cache', $cacheMake);
+        $this->assertInstanceOf('\PhpDbaCache\Cache', $cacheMake);
 
         $this->assertTrue($cacheMake->put(md5('test123'), $this->_object));
 
