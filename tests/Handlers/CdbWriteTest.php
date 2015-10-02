@@ -29,7 +29,7 @@ class CdbWriteTest extends CacheHandlersTestCase
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cacheMake);
 
-        $this->assertTrue($cacheMake->put(md5('test123'), $this->_object));
+        $this->assertTrue($cacheMake->put(md5('test123'), $this->testObject));
 
         // for read we close the handler.
         $cacheMake->closeDba();

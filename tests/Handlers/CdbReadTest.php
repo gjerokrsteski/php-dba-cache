@@ -9,10 +9,10 @@ class CdbReadTest extends \PhpDbaCache\Tests\CacheHandlersTestCase
     {
         parent::setUp();
 
-        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-serialised.cdb';
-        $this->_general_handler = 'cdb';
-        $this->_general_mode = 'r';
-        $this->_identifier = md5('test123');
+        $this->generalCacheFile = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-serialised.cdb';
+        $this->generalHandler = 'cdb';
+        $this->generalMode = 'r';
+        $this->identifier = md5('test123');
     }
 
     public function testPuttingForever()

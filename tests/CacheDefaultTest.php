@@ -9,9 +9,9 @@ class CacheDefaultTest extends CacheHandlersTestCase
     {
         parent::setUp();
 
-        $this->_general_file = dirname(__FILE__) . '/_drafts/test-cache.flatfile';
-        $this->_general_handler = 'flatfile';
-        $this->_general_mode = 'c-';
+        $this->generalCacheFile = dirname(__FILE__) . '/_drafts/test-cache.flatfile';
+        $this->generalHandler = 'flatfile';
+        $this->generalMode = 'c-';
     }
 
     public function testWriteAndReadWithoutPersistentConnection()
@@ -26,10 +26,10 @@ class CacheDefaultTest extends CacheHandlersTestCase
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
-        $cache->put($this->_identifier, array('rambo' => 123));
-        $cache->get($this->_identifier);
+        $cache->put($this->identifier, array('rambo' => 123));
+        $cache->get($this->identifier);
 
-        $res = $cache->get($this->_identifier);
+        $res = $cache->get($this->identifier);
 
         $this->assertInternalType('array', $res);
         $this->assertEquals($res, array('rambo' => 123));

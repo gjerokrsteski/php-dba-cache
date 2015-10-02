@@ -9,8 +9,8 @@ class InifileTest extends CacheHandlersTestCase
     {
         parent::setUp();
 
-        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile';
-        $this->_general_handler = 'inifile';
+        $this->generalCacheFile = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile';
+        $this->generalHandler = 'inifile';
     }
 
     public function testWriteAndReadWithoutPersistentConnection()
@@ -25,9 +25,9 @@ class InifileTest extends CacheHandlersTestCase
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
-        $cache->put($this->_identifier, array('rambo' => 123));
+        $cache->put($this->identifier, array('rambo' => 123));
 
-        $res = $cache->get($this->_identifier);
+        $res = $cache->get($this->identifier);
 
         $this->assertInternalType('array', $res);
         $this->assertEquals($res, array('rambo' => 123));

@@ -6,14 +6,29 @@ require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'DummyFixtures.p
 class CacheHandlersTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var stdClass
+     * @var \stdClass
      */
-    protected $_object;
+    protected $testObject;
 
     /**
      * @var string
      */
-    protected $_identifier;
+    protected $identifier;
+
+    /**
+     * @var string
+     */
+    protected $generalCacheFile = 'flatfile.db';
+
+    /**
+     * @var string
+     */
+    protected $generalHandler = 'flatfile';
+
+    /**
+     * @var string
+     */
+    protected $generalMode = 'c';
 
     /**
      * Prepares the environment before running a test.
@@ -28,9 +43,9 @@ class CacheHandlersTestCase extends \PHPUnit_Framework_TestCase
         $stdClass->to = 'Jane';
         $stdClass->body = new \Fixtures\Dummy();
 
-        $this->_object = $stdClass;
-        $this->_identifier = md5('stdClass' . time());
-        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/flatfile.db';
+        $this->testObject = $stdClass;
+        $this->identifier = md5('stdClass' . time());
+        $this->generalCacheFile = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/flatfile.db';
     }
 
     /**
@@ -38,25 +53,14 @@ class CacheHandlersTestCase extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        unset($this->_object, $this->_identifier);
+        unset($this->testObject, $this->identifier);
         parent::tearDown();
     }
-
-
-    #general test
-
-    /**
-     * Will be overridden
-     *
-     * @var string
-     */
-    protected $_general_file = 'flatfile.db', $_general_handler = 'flatfile', $_general_mode = 'c';
-
 
     public function testPuttingForever()
     {
         try {
-            $cache = new \PhpDbaCache\Cache($this->_general_file, $this->_general_handler, $this->_general_mode);
+            $cache = new \PhpDbaCache\Cache($this->generalCacheFile, $this->generalHandler, $this->generalMode);
         } catch (\RuntimeException $e) {
             $this->markTestSkipped($e->getMessage());
         }
@@ -91,7 +95,7 @@ class CacheHandlersTestCase extends \PHPUnit_Framework_TestCase
      */
     public function testIfBadHandlerGiven()
     {
-        new \PhpDbaCache\Cache($this->_general_file, 'bad-bad-handler');
+        new \PhpDbaCache\Cache($this->generalCacheFile, 'bad-bad-handler');
     }
 
     /**
@@ -99,7 +103,7 @@ class CacheHandlersTestCase extends \PHPUnit_Framework_TestCase
      */
     public function testIfBadDbFileGiven()
     {
-        new \PhpDbaCache\Cache('/path/to/bad-bad-file.db', $this->_general_handler, 'r');
+        new \PhpDbaCache\Cache('/path/to/bad-bad-file.db', $this->generalHandler, 'r');
     }
 
 }

@@ -9,8 +9,8 @@ class GdbmTest extends CacheHandlersTestCase
     {
         parent::setUp();
 
-        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.gdbm';
-        $this->_general_handler = 'gdbm';
+        $this->generalCacheFile = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.gdbm';
+        $this->generalHandler = 'gdbm';
     }
 
     public function testWriteAndReadWithoutPersistentConnection()
@@ -25,9 +25,9 @@ class GdbmTest extends CacheHandlersTestCase
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
-        $cache->put($this->_identifier, $this->_object);
+        $cache->put($this->identifier, $this->testObject);
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->_identifier));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->identifier));
     }
 
     /**
@@ -43,9 +43,9 @@ class GdbmTest extends CacheHandlersTestCase
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
-        $cache->put($this->_identifier, $this->_object);
+        $cache->put($this->identifier, $this->testObject);
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->_identifier));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->identifier));
     }
 
 }

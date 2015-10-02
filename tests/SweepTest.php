@@ -7,7 +7,7 @@ class SweepTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PhpDbaCache\Cache
      */
-    private $_cache;
+    private $cache;
 
     /**
      * Prepares the environment before running a test.
@@ -19,7 +19,7 @@ class SweepTest extends \PHPUnit_Framework_TestCase
         $path = dirname(dirname(__FILE__)) . '/tests/_drafts/garbage-collection-test-cache.gdbm';
 
         try {
-            $this->_cache = new \PhpDbaCache\Cache($path, 'gdbm');
+            $this->cache = new \PhpDbaCache\Cache($path, 'gdbm');
         } catch (\RuntimeException $e) {
             $this->markTestSkipped($e->getMessage());
         }
@@ -30,8 +30,8 @@ class SweepTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        if ($this->_cache) {
-            $this->_cache->closeDba();
+        if ($this->cache) {
+            $this->cache->closeDba();
         }
         parent::tearDown();
     }
@@ -42,7 +42,7 @@ class SweepTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatingNewObject()
     {
-        $sweep = new \PhpDbaCache\Sweep($this->_cache);
+        $sweep = new \PhpDbaCache\Sweep($this->cache);
 
         $this->assertInstanceOf('\PhpDbaCache\Sweep', $sweep);
     }
@@ -60,20 +60,20 @@ class SweepTest extends \PHPUnit_Framework_TestCase
         $stdClass->body = 'Yes, it works!';
 
         // put some data to the cache.
-        $this->_cache->put(md5('stdClass'), $stdClass, 1);
-        $this->_cache->put(md5('ZipArchive'), new \ZipArchive(), 1);
-        $this->_cache->put(md5('XMLReader'), new \XMLReader(), 1);
+        $this->cache->put(md5('stdClass'), $stdClass, 1);
+        $this->cache->put(md5('ZipArchive'), new \ZipArchive(), 1);
+        $this->cache->put(md5('XMLReader'), new \XMLReader(), 1);
 
         sleep(1);
 
-        $sweep = new \PhpDbaCache\Sweep($this->_cache);
+        $sweep = new \PhpDbaCache\Sweep($this->cache);
         $sweep->all();
 
-        $this->assertFalse($this->_cache->get(md5('stdClass')));
+        $this->assertFalse($this->cache->get(md5('stdClass')));
 
-        $this->assertFalse($this->_cache->get(md5('ZipArchive')));
+        $this->assertFalse($this->cache->get(md5('ZipArchive')));
 
-        $this->assertFalse($this->_cache->get(md5('XMLReader')));
+        $this->assertFalse($this->cache->get(md5('XMLReader')));
     }
 
     /**
@@ -89,19 +89,19 @@ class SweepTest extends \PHPUnit_Framework_TestCase
         $stdClass->body = 'Yes, it works fine!';
 
         // put some data to the cache.
-        $this->_cache->put(md5('stdClass'), $stdClass);
-        $this->_cache->put(md5('ZipArchive'), new \ZipArchive());
-        $this->_cache->put(md5('XMLReader'), new \XMLReader());
+        $this->cache->put(md5('stdClass'), $stdClass);
+        $this->cache->put(md5('ZipArchive'), new \ZipArchive());
+        $this->cache->put(md5('XMLReader'), new \XMLReader());
 
         // wait one second to force the expiration-time-calculation.
         sleep(1);
 
-        $sweep = new \Sweep($this->_cache);
+        $sweep = new \Sweep($this->cache);
         $sweep->old();
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $this->_cache->get(md5('stdClass')));
-        $this->assertInstanceOf('\PhpDbaCache\ZipArchive', $this->_cache->get(md5('ZipArchive')));
-        $this->assertInstanceOf('\PhpDbaCache\XMLReader', $this->_cache->get(md5('XMLReader')));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $this->cache->get(md5('stdClass')));
+        $this->assertInstanceOf('\PhpDbaCache\ZipArchive', $this->cache->get(md5('ZipArchive')));
+        $this->assertInstanceOf('\PhpDbaCache\XMLReader', $this->cache->get(md5('XMLReader')));
     }
 
     /**
@@ -188,7 +188,7 @@ class SweepTest extends \PHPUnit_Framework_TestCase
 
     public function testUtilMethods()
     {
-        $sweep = new \PhpDbaCache\Sweep($this->_cache);
+        $sweep = new \PhpDbaCache\Sweep($this->cache);
 
         $this->assertTrue($sweep->flush());
     }

@@ -10,23 +10,23 @@ class Db4Test extends CacheHandlersTestCase
     {
         parent::setUp();
 
-        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.db4';
-        $this->_general_handler = 'db4';
+        $this->generalCacheFile = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.db4';
+        $this->generalHandler = 'db4';
     }
 
     public function testWithoutPersistentConnection()
     {
         try {
-            $cache = new \PhpDbaCache\Cache($this->_general_file, $this->_general_handler, 'c', false);
+            $cache = new \PhpDbaCache\Cache($this->generalCacheFile, $this->generalHandler, 'c', false);
         } catch (\RuntimeException $e) {
             $this->markTestSkipped($e->getMessage());
         }
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
-        $cache->put($this->_identifier, $this->_object);
+        $cache->put($this->identifier, $this->testObject);
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->_identifier));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->identifier));
 
         $cache->closeDba();
     }
@@ -37,16 +37,16 @@ class Db4Test extends CacheHandlersTestCase
     public function testOracleBerkeleyDb4HandlerBeSupportedWithPersistantConnection()
     {
         try {
-            $cache = new \PhpDbaCache\Cache($this->_general_file, $this->_general_handler);
+            $cache = new \PhpDbaCache\Cache($this->generalCacheFile, $this->generalHandler);
         } catch (\RuntimeException $e) {
             $this->markTestSkipped($e->getMessage());
         }
 
         $this->assertInstanceOf('\PhpDbaCache\Cache', $cache);
 
-        $cache->put($this->_identifier, $this->_object);
+        $cache->put($this->identifier, $this->testObject);
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->_identifier));
+        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->identifier));
 
         $cache->closeDba();
     }
