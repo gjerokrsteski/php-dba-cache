@@ -1,50 +1,52 @@
 <?php
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
+namespace PhpDbaCache\Tests;
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestCase.php';
 
 class QdbmTest extends CacheHandlersTestCase
 {
 
-  protected function setUp()
-  {
-    parent::setUp();
+    protected function setUp()
+    {
+        parent::setUp();
 
-    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm';
-    $this->_general_handler = 'qdbm';
-  }
-
-  public function testWriteAndReadWithoutPersistentConnection()
-  {
-    try {
-      $cache = new Cache(
-        dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm', 'qdbm', 'c', false
-      );
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
+        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm';
+        $this->_general_handler = 'qdbm';
     }
 
-    $this->assertInstanceOf('Cache', $cache);
+    public function testWriteAndReadWithoutPersistentConnection()
+    {
+        try {
+            $cache = new \PhpDbaCache\Cache(
+                dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm', 'qdbm', 'c', false
+            );
+        } catch (\RuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
 
-    $cache->put($this->_identifier, $this->_object);
+        $this->assertInstanceOf('Cache', $cache);
 
-    $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
-  }
+        $cache->put($this->_identifier, $this->_object);
 
-  /**
-   * @depends CacheHandlersTest::testSupportWithoutPersistentConnection
-   */
-  public function testWriteAndReaddWithPersistentConnection()
-  {
-    try {
-      $cache = new Cache(dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm', 'qdbm');
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
+        $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
     }
 
-    $this->assertInstanceOf('Cache', $cache);
+    /**
+     * @depends CacheHandlersTest::testSupportWithoutPersistentConnection
+     */
+    public function testWriteAndReaddWithPersistentConnection()
+    {
+        try {
+            $cache = new \PhpDbaCache\Cache(dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.qdbm', 'qdbm');
+        } catch (\RuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
 
-    $cache->put($this->_identifier, $this->_object);
+        $this->assertInstanceOf('Cache', $cache);
 
-    $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
-  }
+        $cache->put($this->_identifier, $this->_object);
+
+        $this->assertInstanceOf('stdClass', $cache->get($this->_identifier));
+    }
 }

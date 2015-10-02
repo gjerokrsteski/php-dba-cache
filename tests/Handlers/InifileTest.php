@@ -1,34 +1,35 @@
 <?php
+namespace PhpDbaCache\Tests;
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestCase.php';
 
 class InifileTest extends CacheHandlersTestCase
 {
-  protected function setUp()
-  {
-    parent::setUp();
+    protected function setUp()
+    {
+        parent::setUp();
 
-    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile';
-    $this->_general_handler = 'inifile';
-  }
-
-  public function testWriteAndReadWithoutPersistentConnection()
-  {
-    try {
-      $cache = new Cache(
-        dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile', 'inifile', 'c', false
-      );
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
+        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile';
+        $this->_general_handler = 'inifile';
     }
 
-    $this->assertInstanceOf('Cache', $cache);
+    public function testWriteAndReadWithoutPersistentConnection()
+    {
+        try {
+            $cache = new \PhpDbaCache\Cache(
+                dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.inifile', 'inifile', 'c', false
+            );
+        } catch (\RuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
 
-    $cache->put($this->_identifier, array('rambo' => 123));
+        $this->assertInstanceOf('Cache', $cache);
 
-    $res = $cache->get($this->_identifier);
+        $cache->put($this->_identifier, array('rambo' => 123));
 
-    $this->assertInternalType('array', $res);
-    $this->assertEquals($res, array('rambo' => 123));
-  }
+        $res = $cache->get($this->_identifier);
+
+        $this->assertInternalType('array', $res);
+        $this->assertEquals($res, array('rambo' => 123));
+    }
 }

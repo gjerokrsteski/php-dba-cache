@@ -1,73 +1,75 @@
 <?php
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
+namespace PhpDbaCache\Tests;
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestCase.php';
 
 class FlatfileTest extends CacheHandlersTestCase
 {
-  protected function setUp()
-  {
-    parent::setUp();
+    protected function setUp()
+    {
+        parent::setUp();
 
-    $this->_general_file    = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.flatfile';
-    $this->_general_handler = 'flatfile';
-    $this->_general_mode    = 'c-';
-  }
-
-  public function testWriteAndReadWithoutPersistentConnection()
-  {
-    try {
-      $cache = new Cache(
-        dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-pers.flatfile', 'flatfile', 'c-', false
-      );
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
+        $this->_general_file = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache.flatfile';
+        $this->_general_handler = 'flatfile';
+        $this->_general_mode = 'c-';
     }
 
-    $this->assertInstanceOf('Cache', $cache);
+    public function testWriteAndReadWithoutPersistentConnection()
+    {
+        try {
+            $cache = new \PhpDbaCache\Cache(
+                dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-pers.flatfile', 'flatfile', 'c-', false
+            );
+        } catch (\RuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
 
-    $cache->put($this->_identifier, array('rambo' => 123));
+        $this->assertInstanceOf('Cache', $cache);
 
-    $res = $cache->get($this->_identifier);
+        $cache->put($this->_identifier, array('rambo' => 123));
 
-    $this->assertInternalType('array', $res);
-    $this->assertEquals($res, array('rambo' => 123));
-  }
+        $res = $cache->get($this->_identifier);
 
-  public function testHandlingWithSimpleXMLElementIntoFlatfileHandler()
-  {
-    $identifier = md5(uniqid());
+        $this->assertInternalType('array', $res);
+        $this->assertEquals($res, array('rambo' => 123));
+    }
 
-    // make a xml-file of 1000 nodes.
-    $string = "<?xml version='1.0'?>
+    public function testHandlingWithSimpleXMLElementIntoFlatfileHandler()
+    {
+        $identifier = md5(uniqid());
+
+        // make a xml-file of 1000 nodes.
+        $string = "<?xml version='1.0'?>
         <document>";
-    for ($i = 1; $i <= 100; $i++) {
-      $string .= "<item>
+        for ($i = 1; $i <= 100; $i++) {
+            $string .= "<item>
 			 <title>Let us cache</title>
 			 <from>Joe</from>
 			 <to>Jane</to>
 			 <body>Some content here</body>
                  </item>";
+        }
+        $string .= "</document>";
+
+        $simplexml = simplexml_load_string(
+            $string, 'SimpleXMLElement', LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NONET
+        );
+
+        $path = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-with-simplexml.flatfile';
+
+        try {
+            $cache = new \PhpDbaCache\Cache($path);
+        } catch (\RuntimeException $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
+
+        $cache->put($identifier, $simplexml);
+        $object_from_cache = $cache->get($identifier);
+        $cache->closeDba();
+
+        $this->assertEquals($simplexml->asXML(), $object_from_cache->asXML());
+
+        @unlink($path);
     }
-    $string .= "</document>";
-
-    $simplexml = simplexml_load_string(
-      $string, 'SimpleXMLElement', LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NONET
-    );
-
-    $path  = dirname(dirname(dirname(__FILE__))) . '/tests/_drafts/test-cache-with-simplexml.flatfile';
-
-    try {
-      $cache = new Cache($path);
-    } catch(RuntimeException $e) {
-     $this->markTestSkipped($e->getMessage());
-    }
-
-    $cache->put($identifier, $simplexml);
-    $object_from_cache = $cache->get($identifier);
-    $cache->closeDba();
-
-    $this->assertEquals($simplexml->asXML(), $object_from_cache->asXML());
-
-    @unlink($path);
-  }
 }
