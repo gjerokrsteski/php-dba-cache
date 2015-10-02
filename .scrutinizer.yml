@@ -16,19 +16,7 @@ tools:
         command:              phpcpd
         excluded_dirs:
             - tests
-        
-    
-    # PHP CS Fixer (http://http://cs.sensiolabs.org/).
-    php_cs_fixer:
-        enabled:              true
-        command:              php-cs-fixer
-        config:
-            level:            psr2
-        filter:
-            excluded_paths:
-                - 'tests/*'
-        
-    
+
     # Analyzes the size and structure of a PHP project.
     php_loc:
         enabled:              true
