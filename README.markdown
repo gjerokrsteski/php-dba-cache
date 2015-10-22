@@ -95,7 +95,7 @@ $yourObjectIdentifier = 'your:cool:object:identifier';
 
 // Check if your object is in the cache.
 // You also can ignore it, and let the CacheDba do it for you.
-if (false == $cache->has($yourObjectIdentifier)) {
+if (true === $cache->has($yourObjectIdentifier)) {
   $cache->delete($yourObjectIdentifier);
 }
 
