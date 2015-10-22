@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -122,7 +122,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <h2>
 <a id="sample-for-oracle-berkeley-db-4-with-persistent-connection" class="anchor" href="#sample-for-oracle-berkeley-db-4-with-persistent-connection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample for Oracle Berkeley DB 4 with persistent connection</h2>
 
-<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$cache</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Cache</span>(</span>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$cache</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Cache</span>(</span>
 <span class="pl-s1">  <span class="pl-s"><span class="pl-pds">'</span>/your/path/to/the/cahe-file/cache.db4<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>db4<span class="pl-pds">'</span></span></span>
 <span class="pl-s1">);</span>
 <span class="pl-s1"></span>
@@ -131,7 +131,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-c">// Check if your object is in the cache.</span></span>
 <span class="pl-s1"><span class="pl-c">// You also can ignore it, and let the CacheDba do it for you.</span></span>
-<span class="pl-s1"><span class="pl-k">if</span> (<span class="pl-c1">false</span> <span class="pl-k">==</span> <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>has(<span class="pl-smi">$yourObjectIdentifier</span>)) {</span>
+<span class="pl-s1"><span class="pl-k">if</span> (<span class="pl-c1">true</span> <span class="pl-k">===</span> <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>has(<span class="pl-smi">$yourObjectIdentifier</span>)) {</span>
 <span class="pl-s1">  <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>delete(<span class="pl-smi">$yourObjectIdentifier</span>);</span>
 <span class="pl-s1">}</span>
 <span class="pl-s1"></span>
@@ -151,7 +151,7 @@ test only prevents you from configuring malfaunctioning single handlers but not 
 <h2>
 <a id="saving-simplexmlelement-instances-into-db-4-with-persistent-connection" class="anchor" href="#saving-simplexmlelement-instances-into-db-4-with-persistent-connection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Saving SimpleXMLElement instances into DB 4 with persistent connection</h2>
 
-<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$string</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;?xml version='1.0'?&gt;</span></span>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$string</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;?xml version='1.0'?&gt;</span></span>
 <span class="pl-s1"><span class="pl-s">&lt;document&gt;</span></span>
 <span class="pl-s1"><span class="pl-s"> &lt;title&gt;Let us cache&lt;/title&gt;</span></span>
 <span class="pl-s1"><span class="pl-s"> &lt;from&gt;Joe&lt;/from&gt;</span></span>
