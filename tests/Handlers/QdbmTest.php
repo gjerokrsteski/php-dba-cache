@@ -29,7 +29,7 @@ class QdbmTest extends CacheHandlersTestCase
 
         $cache->put($this->identifier, $this->testObject);
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->identifier));
+        $this->assertInstanceOf('\stdClass', $cache->get($this->identifier));
     }
 
     /**
@@ -47,6 +47,6 @@ class QdbmTest extends CacheHandlersTestCase
 
         $cache->put($this->identifier, $this->testObject);
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cache->get($this->identifier));
+        $this->assertInstanceOf('\stdClass', $cache->get($this->identifier));
     }
 }

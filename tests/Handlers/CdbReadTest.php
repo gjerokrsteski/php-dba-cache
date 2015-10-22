@@ -47,7 +47,7 @@ class CdbReadTest extends \PhpDbaCache\Tests\CacheHandlersTestCase
 
         $this->assertTrue($cacheRead->has(md5('test123')));
 
-        $this->assertInstanceOf('\PhpDbaCache\stdClass', $cacheRead->get(md5('test123')));
+        $this->assertInstanceOf('\stdClass', $cacheRead->get(md5('test123')));
 
         $cacheRead->closeDba();
     }

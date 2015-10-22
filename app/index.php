@@ -92,8 +92,8 @@ if (isset($_POST['login']) || isset($_SERVER['PHP_AUTH_USER'])) {
         $_SERVER['PHP_AUTH_USER'] != $authentication['username'] ||
         $_SERVER['PHP_AUTH_PW'] != $authentication['password']
     ) {
-        Header("WWW-Authenticate: Basic realm=\"PHP DBA Cache Login\"");
-        Header("HTTP/1.0 401 Unauthorized");
+        header("WWW-Authenticate: Basic realm=\"PHP DBA Cache Login\"");
+        header("HTTP/1.0 401 Unauthorized");
         exit;
     }
     $authenticated = true;
@@ -118,10 +118,9 @@ if ($authenticated && isset($_POST['delete-old'])) {
 }
 
 if ($authenticated && isset($_POST['delete-all'])) {
-
     try {
         $delete_all = $sweep->flush();
-    } catch (RuntimeException $re) {
+    } catch (\RuntimeException $re) {
         $delete_all = false;
     }
 
@@ -139,7 +138,7 @@ if (isset($_SERVER['SERVER_ADDR'])) {
 }
 
 clearstatcache();
-$file_info = new SplFileInfo($file);
+$file_info = new \SplFileInfo($file);
 ?>
 <!DOCTYPE html>
 <html lang="en">
