@@ -2,13 +2,12 @@ Introduction
 ============
 
 The php-dba-cache uses the database (dbm-style) abstraction layer to cache/store your PHP objects, 
-strings, integers or arrays. Even instances of SimpleXMLElement can be put to the cache. You dont 
+strings, integers or arrays. Even instances of SimpleXMLElement can be put to the cache. You don`t
 have to matter about the size of the cache-file. It depends on the free space of your disk.
 
 [![Build Status](https://travis-ci.org/gjerokrsteski/php-dba-cache.png?branch=master)](https://travis-ci.org/gjerokrsteski/php-dba-cache)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/badges/quality-score.png?s=05c35e93b4026539019555e034a9996839a3c658)](https://scrutinizer-ci.com/g/gjerokrsteski/php-dba-cache/)
 [![Dependency Status](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master/badge.png)](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gjerokrsteski/php-dba-cache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 
 Available options

@@ -154,12 +154,6 @@ $file_info = new \SplFileInfo($file);
             padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
         }
 
-        .memory-usage {
-            min-height: 32px;
-            max-height: 42px;
-            text-align: center;
-            vertical-align: middle;
-        }
     </style>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-responsive.min.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
