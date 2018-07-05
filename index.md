@@ -10,77 +10,6 @@ have to matter about the size of the cache-file. It depends on the free space of
 [![Dependency Status](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master/badge.png)](https://www.versioneye.com/php/gjerokrsteski:php-dba-cache/dev-master)
 
 
-Available options
-===========================
-
-Cache
-- Open a given dba database
-- Insert a new record with a given key (persistently or with a given expiration time)
-- Get a record with a given key
-- Replace the value of a record with a given key
-- Delete the record with a given key
-- Return metadata for the given key: expire timestamp & timestamp of last modification time
-- Get all keys from cache
-    
-Sweep - CacheGarbageCollector (optional)
-- Clean all entries
-- Clean expired entries
-- Flush the cache file
-- Optimizes the database file automatically after cleaning process
-
-Installation
-============
-
-"By using the --enable-dba=shared configuration option you can build a dynamic loadable module
-to enable PHP for basic support of dbm-style databases. You also have to add support for at
-least one of the following handlers by specifying the --with-XXXX configure switch
-to your PHP configure line."
-    
-More about installation: http://www.php.net/manual/en/dba.installation.php
-
-DBA handlers
-============
-
-The behaviour of various aspects for the caching depends on the implementation of yor
-installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
-cdb, cdb_make, gdbm. The cdb & cdb_make family is the fastest, but you have to create
-you own garbage-collection-cleaner or you can delete it manually. Take a look at the tests
-(https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
-how to use the cache.
-
-cdb = Tiny Constant Database - for reading
-Cdb is "a fast, reliable, lightweight package for creating and reading constant databases.
-" It is from the author of qmail and can be found at http://cr.yp.to/cdb.html. Since it is
-constant, we support only reading operations. And since PHP 4.3.0 we support writing
-(not updating) through the internal cdb library.
-
-cdb_make = Tiny Constant Database - for writing
-Since PHP 4.3.0 we support creation of cdb files when the bundled cdb library is used.
-
-db4 = Oracle Berkeley DB 4 - for reading and writing
-DB4 is Sleepycat Software's DB4. This is available since PHP 4.3.2.
-
-gdbm = GNU Database Manager - for reading and writing
-Gdbm is the GNU database manager.
-
-flatfile = default dba extension - for reading and writing
-This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
-and should be avoided. However you may use this where files were created in this format.
-That happens when configure could not find any external library.
-    
-More about requirements: http://www.php.net/manual/en/dba.requirements.php
-
-
-Nice to know
-------------
-
-Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
-can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
-are: QDBM, Berkeley DB (DB4), NDBM and least the Flatfile.
-Most problematic are dbm and ndbm which conflict with many installations. The reason for this is
-that on several systems these libraries are part of more than one other library. The configuration
-test only prevents you from configuring malfaunctioning single handlers but not combinations.
-
 Sample for Oracle Berkeley DB 4 with persistent connection
 ----------------------------------------------------------
 
@@ -153,6 +82,78 @@ Responsive web-interface that provides a comprehensive, easy to use and of cours
  
  ![PHP DBA cache Monitor 2014](http://farm9.staticflickr.com/8528/8547311457_9e4a7ca45d.jpg "PHP DBA Cache Monitor")
 
+
+
+Available options
+===========================
+
+Cache
+- Open a given dba database
+- Insert a new record with a given key (persistently or with a given expiration time)
+- Get a record with a given key
+- Replace the value of a record with a given key
+- Delete the record with a given key
+- Return metadata for the given key: expire timestamp & timestamp of last modification time
+- Get all keys from cache
+    
+Sweep - CacheGarbageCollector (optional)
+- Clean all entries
+- Clean expired entries
+- Flush the cache file
+- Optimizes the database file automatically after cleaning process
+
+Installation
+============
+
+"By using the --enable-dba=shared configuration option you can build a dynamic loadable module
+to enable PHP for basic support of dbm-style databases. You also have to add support for at
+least one of the following handlers by specifying the --with-XXXX configure switch
+to your PHP configure line."
+    
+More about installation: http://www.php.net/manual/en/dba.installation.php
+
+DBA handlers
+============
+
+The behaviour of various aspects for the caching depends on the implementation of yor
+installed dba-type database. I have tested it with several database-handlers like db4, flatfile,
+cdb, cdb_make, gdbm. The cdb & cdb_make family is the fastest, but you have to create
+you own garbage-collection-cleaner or you can delete it manually. Take a look at the tests
+(https://github.com/gjerokrsteski/php-dba-cache/tree/master/tests) to better understand
+how to use the cache.
+
+cdb = Tiny Constant Database - for reading
+Cdb is "a fast, reliable, lightweight package for creating and reading constant databases.
+" It is from the author of qmail and can be found at http://cr.yp.to/cdb.html. Since it is
+constant, we support only reading operations. And since PHP 4.3.0 we support writing
+(not updating) through the internal cdb library.
+
+cdb_make = Tiny Constant Database - for writing
+Since PHP 4.3.0 we support creation of cdb files when the bundled cdb library is used.
+
+db4 = Oracle Berkeley DB 4 - for reading and writing
+DB4 is Sleepycat Software's DB4. This is available since PHP 4.3.2.
+
+gdbm = GNU Database Manager - for reading and writing
+Gdbm is the GNU database manager.
+
+flatfile = default dba extension - for reading and writing
+This is available since PHP 4.3.0 for compatibility with the deprecated dbm extension only
+and should be avoided. However you may use this where files were created in this format.
+That happens when configure could not find any external library.
+    
+More about requirements: http://www.php.net/manual/en/dba.requirements.php
+
+
+Nice to know
+------------
+
+Not all of the DBA-style databases can replace key-value pairs, like the CDB. The CDB database
+can handle only with fixed key-value pairs. The best and fastest handlers for DBA-style caching
+are: QDBM, Berkeley DB (DB4), NDBM and least the Flatfile.
+Most problematic are dbm and ndbm which conflict with many installations. The reason for this is
+that on several systems these libraries are part of more than one other library. The configuration
+test only prevents you from configuring malfaunctioning single handlers but not combinations.
 
 Benchmark Test of DBM Brothers
 ------------------------------
