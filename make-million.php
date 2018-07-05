@@ -11,7 +11,6 @@ ini_set("memory_limit", "-1");
 function generateAddressFixture()
 {
     return array(
-
         // Random string with length between 8 and 16
         substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, rand(8, 16)),
         // Random five digit number
@@ -29,7 +28,6 @@ $cache = new \PhpDbaCache\Cache($db, 'db4', 'c-', true);
 for ($key = 0; $key < 1000000; $key++) {
     print_r($value = generateAddressFixture());
     print 'SAVED=' . (int)$cache->put($key, $value, rand(1, 21600)) . PHP_EOL;
-    sleep(rand(0, 1));
 }
 
 $cache->closeDba();
