@@ -1,5 +1,5 @@
 title: PHP DBA Cache
-description: Create a caching with the Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays.
+description: Create a caching with the PHP Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays.
 google_analytics: 
 show_downloads: true
 theme: jekyll-theme-hacker
