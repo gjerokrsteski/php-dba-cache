@@ -1,10 +1,10 @@
 {
   "name" : "gjerokrsteski/php-dba-cache",
-  "description" : "Create a caching with the Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays",
+  "description" : "Create a caching with the PHP Database (dbm-style) Abstraction Layer to cache your objects, strings, integers or arrays",
   "type" : "library",
   "license" : "BSD",
   "homepage" : "http://gjerokrsteski.github.io/php-dba-cache/",
-  "keywords" : ["dba", "cache", "storage"],
+  "keywords" : ["dba", "cache", "storage", "php", "caching"],
   "support" : {
     "email" : "gjero@krsteski.de",
     "source" : "https://github.com/gjerokrsteski/php-dba-cache"
@@ -14,7 +14,7 @@
       "name" : "Gjero Krsteski",
       "email" : "gjero@krsteski.de",
       "homepage" : "http://krsteski.de/",
-      "role" : "Developer"
+      "role" : "Main Developer"
     }
   ],
   "require" : {
